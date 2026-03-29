@@ -1,0 +1,102 @@
+#home {
+    background-color: white;
+    width: 100%;
+    min-height: 100%;
+    display: grid;
+    gap: 60px;
+    padding: 40px 70px;
+    box-sizing: border-box;
+}
+/* SECTIONS */
+
+.home-section {
+    background-color: rgba(198, 212, 225, 0.8);
+    width: 100%;
+    border-radius: 15px;
+    border: 2.4px solid black;
+    display: flex;
+    padding: 20px 80px;
+}
+
+.home-subsection {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.home-section > div {
+    width: 100%;
+}
+
+
+/* TITLE */
+
+.home-section h1 {
+    color: #bdb8ad;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+/* SECTION TITLE */
+
+.home-sectiontitle {
+    width: 100%;
+    background-color: #bdb8ad;
+    text-align: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 8px;
+}
+
+/* PURPOSE */
+
+#home-sectionpurpose {
+    display: flex;
+    gap: 70px;
+}
+
+#home-purpose {
+    flex: 1;
+    border: 2px solid black;
+    border-radius: 15px;
+}       
+
+#home-instructions {
+    flex: 2;
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+/* INSTRUCTIONS*/
+
+.home-instruction {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+
+
+/* TUTORIAL */
+
+.home-tutorial {
+    flex: 1;
+}                          
+
+#home-tutorial {
+    border: 2.5px solid black;
+    border-radius: 15px;
+}
+
+
+#home-tutorial h3 {
+    text-align: center;
+}
+
+#home-tutorial ul {
+    
+    list-style: none;
+}

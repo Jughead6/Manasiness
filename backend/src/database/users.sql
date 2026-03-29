@@ -1,0 +1,7 @@
+CREATE TABLE users (
+    id_user PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name_user VARCHAR(100) NOT NULL,
+    phone_user VARCHAR(100) NOT NULL UNIQUE,
+    role_user VARCHAR(100) NOT NULL
+),
+

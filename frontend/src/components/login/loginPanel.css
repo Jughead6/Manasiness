@@ -1,0 +1,254 @@
+/* ─── Reset base ─── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ─── Contenedor principal ─── */
+#loginPanel {
+    min-height: 100vh;
+    background-color: #dcebf2;
+}
+
+/* ─── Sección superior oscura (banner) ─── */
+#loginTopSection {
+    position: relative;
+    height: 280px;
+    background: linear-gradient(90deg, #06111d 0%, #0c1f33 45%, #18314b 100%);
+    overflow: visible;
+}
+
+#loginBannerContainer {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#loginBanner {
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    display: block;
+}
+
+#loginDividerBand {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, #14263a 0%, #0f2238 50%, #14263a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Sección inferior celeste ─── */
+#loginBottomSection {
+    position: relative;
+    min-height: calc(100vh - 280px);
+    background: #dcebf2;
+    padding-bottom: 40px;
+}
+
+#loginFormContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: -36px;
+    padding: 0 16px;
+}
+
+/* ─── Card del formulario ─── */
+#loginFormCard {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(180deg, #f5fbfe 0%, #eef8fc 100%);
+    border: 1px solid #bfe3ee;
+    border-radius: 22px;
+    padding: 32px 40px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 24px 60px rgba(18, 55, 78, 0.16);
+}
+
+/* ─── Monito — hecho con ayuda de IA ─── */
+#loginMonkeyContainer {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+#loginMonkeyFace {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #bcecf7;
+    border: 5px solid #5d798c;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginMonkeyEar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #bcecf7;
+    border: 4px solid #5d798c;
+    position: absolute;
+    top: 42px;
+}
+
+.loginMonkeyEarLeft  { left: 6px; }
+.loginMonkeyEarRight { right: 6px; }
+
+#loginMonkeyInnerFace {
+    width: 90px;
+    height: 98px;
+    border-radius: 50px 50px 42px 42px;
+    background: #f5fbfe;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+#loginMonkeyHair {
+    width: 40px;
+    height: 16px;
+    background: #f5fbfe;
+    position: absolute;
+    top: -5px;
+    clip-path: polygon(0% 100%, 14% 24%, 29% 70%, 43% 8%, 57% 60%, 72% 16%, 86% 72%, 100% 34%, 100% 100%);
+}
+
+#loginMonkeyEyes {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.loginMonkeyEye {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4b5f70;
+    transition: opacity 0.25s ease;
+}
+
+#loginMonkeyNose {
+    width: 12px;
+    height: 8px;
+    border-radius: 20px;
+    background: #607687;
+}
+
+#loginMonkeyMouth {
+    width: 24px;
+    height: 10px;
+    border-bottom: 3px solid #607687;
+    border-radius: 0 0 20px 20px;
+}
+
+#loginMonkeyHands {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.loginMonkeyHand {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #f5fbfe;
+    border: 4px solid #5d798c;
+    position: absolute;
+    top: 84px;
+    transition: all 0.28s ease;
+}
+
+.loginMonkeyHandLeft  { left: 12px; }
+.loginMonkeyHandRight { right: 12px; }
+
+/* Animación: manos tapando ojos cuando el input está activo */
+.loginMonkeyCover .loginMonkeyHandLeft  { top: 50px; left: 26px; }
+.loginMonkeyCover .loginMonkeyHandRight { top: 50px; right: 26px; }
+.loginMonkeyCover .loginMonkeyEye       { opacity: 0; }
+
+/* ─── Textos del card ─── */
+#loginTitle {
+    font-size: 2.4rem;
+    color: #235eb0;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+#loginSubtitle {
+    font-size: 1rem;
+    color: #4f7185;
+    margin-bottom: 26px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ─── Formulario ─── */
+#loginForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#loginLabel {
+    font-size: 1.6rem;
+    color: #2d85a0;
+    font-weight: 700;
+}
+
+#loginInput {
+    width: 100%;
+    height: 60px;
+    border: 2px solid #74d2e7;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 0 18px;
+    font-size: 1.2rem;
+    color: #264252;
+    outline: none;
+    transition: 0.2s;
+}
+
+#loginInput::placeholder { color: #9abcca; }
+
+#loginInput:focus {
+    border-color: #53bed8;
+    box-shadow: 0 0 0 4px rgba(83, 190, 216, 0.16);
+}
+
+#loginButton {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #67cde4 0%, #47b7d4 100%);
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#loginButton:hover  { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(71, 183, 212, 0.22); }
+#loginButton:active { transform: translateY(0); }
