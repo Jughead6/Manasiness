@@ -1,0 +1,16 @@
+#category-filterbar ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+#category-filtertitle {
+    text-align: center;
+    margin-bottom: 10px;
+} 
+
+.category-fillters {
+    display: flex;
+    gap: 8px;
+}

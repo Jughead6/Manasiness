@@ -1,0 +1,10 @@
+#section-title {
+    border: 1px solid black;
+    align-content: center;
+    padding: 20px 15px;
+    background-color: #c6d4e1;
+}
+
+#section-title h1, #section-title h2 {
+    text-align: center;
+}

@@ -1,0 +1,9 @@
+#category-buttons {
+    display: flex;
+    padding: 0px;
+    gap: 12px;
+}
+
+#category-buttons > button {
+    padding: 5px;
+}

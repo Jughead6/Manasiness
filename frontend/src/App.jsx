@@ -1,8 +1,7 @@
-import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Login from './pages/login/Login.jsx';
-import DashboardLayout from './components/public/dashboardLayout/dashboardLayout.jsx';
+import DashboardLayout from './components/dashboard/dashboardLayout/dashboardLayout.jsx';
 
 import Home from './components/dashboard/home/home.jsx'
 

@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     background-color: #44749d;
-    position: absolute; 
     height: 100vh;
     padding: 50px 70px;
+    
 }
 
 #dashboard ul {
@@ -14,10 +14,13 @@
 /* TITLE */
 #dashboard-manasiness {
     color: #bdb8ad;         
-    font-size: 40px;
+    font-size: 30px;
     font-family: "Oswald";
     letter-spacing: 2px;
+    text-decoration: none;
+
 }
+
 
 /* CATEGORIES */
 #dashboard-list {

@@ -1,26 +1,16 @@
 import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, Pickaxe, ChartColumnDecreasing, PillBottle, LockKeyhole } from "lucide-react"
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import './dashboard.css'
-
-import Home from '../../dashboard/home/home.jsx'
-
-import Categories from '../../../pages/actions/categories/categories.jsx';
-import Products from '../../../pages/actions/products/products.jsx';
-import Users from '../../../pages/actions/users/Users.jsx'
-
-import Sales from '../../../pages/yourspace/sales/Sales.jsx';
-import Customers from '../../../pages/yourspace/customers/Customers.jsx';
-
-import Workers from '../../../pages/admin/workers/Workers.jsx';
-import Statistics from '../../../pages/admin/statistics/statistics.jsx';
-import Suppliers from '../../../pages/admin/suppliers/Suppliers.jsx';
-import Password from '../../../pages/admin/password/Password.jsx';
 
 function Dashboard() {
     return (
         <div id='dashboard'>
             <div>
-                <h2 id="dashboard-manasiness">Manasiness</h2>
+                <div>
+                    <Link to="/dashboard" id="dashboard-manasiness">
+                        <h2>Manasiness</h2>
+                    </Link>
+                </div>
             </div>
             <div id="dashboard-list">
                 <ul>
