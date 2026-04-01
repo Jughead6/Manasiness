@@ -1,8 +1,14 @@
 import './Sales.css'
 
+import YourSpaceTitle from '../../../components/public/yourspace/title/yourspacetitle'
+import YourSpaceLayout from '../../../components/public/yourspace/layout/yourspacelayout'
+
 function Sales() {
     return (
-        <div>Sales</div>
+        <div id="sales">
+            <YourSpaceTitle yourspace="Sales"/>
+            <YourSpaceLayout/>
+        </div>
     )
 }
 

@@ -1,4 +1,4 @@
-#section-categories {
+#action-content {
     border: 1px solid black;
     display: flex;
     gap: 20px;
@@ -7,26 +7,25 @@
     align-items: center;
     padding: 30px 40px;
     background-color: #c6d4e1;
-    
 }
 
-.categories {
+.content-card {
     background-color: #bdb8ad;
     border: 2px solid black;
 }
 
-#categories img {
+.content-card img {
     width: 250px;
     height: 150px;
 }
 
-.categories > h3 {
+.content-card > h3 {
     border-bottom: 2px solid black;
     padding: 7px;
     text-align: center;
 }
 
-.categories > h4 {
+.content-card > h4 {
     border-top: 2px solid black;
     padding: 5px;
 }

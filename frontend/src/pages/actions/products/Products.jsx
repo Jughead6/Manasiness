@@ -1,8 +1,8 @@
 import './Products.css'
 
-import SectionTitle from '../../../components/public/actions/sectiontitle/sectiontitle.jsx'
-import SectionLayout from '../../../components/public/actions/sectionlayout/sectionlayout.jsx'
-import SectionCategories from '../../../components/public/actions/sectionactions/sectionactions.jsx'
+import ActionTitle from '../../../components/public/actions/title/actiontitle.jsx'
+import ActionLayout from '../../../components/public/actions/layout/actionlayout.jsx'
+import ActionContent from '../../../components/public/actions/content/actioncontent.jsx'
 
 
 
@@ -17,9 +17,9 @@ function Products() {
 
     return (
         <div id="products">
-            <SectionTitle  title="Welcome to Products" subtitle="In this section you can create, edit and view the products you have"/>
-            <SectionLayout/>
-            <SectionCategories action={products}/>
+            <ActionTitle  title="Welcome to Products" subtitle="In this section you can create, edit and view the products you have"/>
+            <ActionLayout/>
+            <ActionContent action={products}/>
         </div>
     )
 }

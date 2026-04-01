@@ -1,8 +1,8 @@
-import './categorybutton.css'
+import './actionbuttons.css'
 
-function CategoryButton() {
+function ActionButtons() {
     return (
-        <div id="category-buttons">
+        <div id="action-buttons">
             <button>Create</button>
             <button>Edit</button>
             <button>Delete</button>
@@ -10,4 +10,4 @@ function CategoryButton() {
     )
 }
 
-export default CategoryButton
+export default ActionButtons

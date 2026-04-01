@@ -1,0 +1,17 @@
+#yourspace-layout {
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #c6d4e1;
+}
+
+#yourspace-functions {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    background-color: #bdb8ad;
+}

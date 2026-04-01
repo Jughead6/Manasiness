@@ -1,27 +1,27 @@
-import './filterbar.css'
+import './actionfilter.css'
 
-function FilterBar() {
+function ActionFilter() {
     return (
-        <div id="category-filterbar">
-            <h3 id="category-filtertitle">Filtrar por</h3>
+        <div id="action-filterbar">
+            <h3 id="action-filtertitle">Filter By</h3>
             <ul>
-                <li className="category-fillters">
+                <li className="action-filters">
                     <label htmlFor="filter-az">A-Z</label>
                     <input type="radio" name="filter" id="filter-az"></input>
                 </li>
-                <li className="category-fillters">
+                <li className="action-filters">
                     <label htmlFor="filter-za">Z-A</label>
                     <input type="radio" name="filter" id="filter-za"></input>
                 </li>
-                <li className="category-fillters">
+                <li className="action-filters">
                     <label htmlFor="filter-morerecently">More recently</label>
                     <input type="radio" name="filter" id="filter-morerecently"></input>
                 </li>
-                <li className="category-fillters">
+                <li className="action-filters">
                     <label htmlFor="filter-oldest">Oldest</label>
                     <input type="radio" name="filter" id="filter-oldest"></input>
                 </li>
-                <li className="category-fillters">
+                <li className="action-filters">
                     <label htmlFor="filter-clearfilter">Clear Filter</label>
                     <input type="radio" name="filter" id="filter-clearfilter"></input>
                 </li>
@@ -30,4 +30,4 @@ function FilterBar() {
     )
 }
 
-export default FilterBar
+export default ActionFilter

@@ -76,7 +76,7 @@ function Dashboard() {
                             <li>
                                 <NavLink to="/dashboard/suppliers" className='dashboard-subcategory'>
                                     <PillBottle className='dashboard-icon'/>
-                                    WoSuppliersrkers
+                                    Suppliers
                                 </NavLink>
                             </li>
                             <li>

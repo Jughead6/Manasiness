@@ -1,0 +1,21 @@
+#yourspace-filter {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #ebe7e0;
+}
+
+#yourspace-filter > h2 {
+    text-align: center;
+}
+
+#yourspace-filter > ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+#yourspace-filter > ul > li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
