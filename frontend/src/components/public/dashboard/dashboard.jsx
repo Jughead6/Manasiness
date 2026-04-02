@@ -1,4 +1,4 @@
-import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, Pickaxe, ChartColumnDecreasing, PillBottle, LockKeyhole } from "lucide-react"
+import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, Pickaxe, ChartColumnDecreasing, PillBottle, LockKeyhole, BriefcaseBusiness  } from "lucide-react"
 import { NavLink, Link } from 'react-router-dom'
 import './dashboard.css'
 
@@ -54,6 +54,12 @@ function Dashboard() {
                                     Orders
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/dashboard/staff" className='dashboard-subcategory'>
+                                    <BriefcaseBusiness className='dashboard-icon'/>
+                                    Staff
+                                </NavLink>
+                            </li>
                         </ul>
                     </li>
 
@@ -79,10 +85,10 @@ function Dashboard() {
                                 </NavLink>
                             </li>
                         </ul>
-                    </li>
+                    </li>   
 
                     
-                    <li className='dashboard-sublists'> 
+                    {/* <li className='dashboard-sublists'> 
                         <h3 className='dashboard-category'>ADMIN</h3>
                         <ul>
 
@@ -95,7 +101,7 @@ function Dashboard() {
                                 </NavLink>
                             </li>
                         </ul>
-                    </li>
+                    </li> */}
                 </ul>   
             </div>
         </div>

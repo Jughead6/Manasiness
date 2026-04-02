@@ -1,9 +1,0 @@
-#action-buttons {
-    display: flex;
-    padding: 0px;
-    gap: 12px;
-}
-
-#action-buttons > button {
-    padding: 5px;
-}

@@ -5,16 +5,17 @@ import DashboardLayout from './components/dashboard/dashboardLayout/dashboardLay
 
 import Home from './components/dashboard/home/home.jsx'
 
-import Categories from './pages/actions/categories/categories.jsx';
-import Products from './pages/actions/products/products.jsx';
-import Users from './pages/actions/users/Users.jsx'
+import Categories from './pages/actions/Categories.jsx'
+import Products from './pages/actions/products.jsx';
+import Users from './pages/actions/Users.jsx'
 
-import Sales from './pages/yourspace/sales/Sales.jsx';
-import Orders from './pages/yourspace/orders/orders.jsx';
+import Sales from './pages/yourspace/Sales.jsx';
+import Orders from './pages/yourspace/Orders.jsx';
+import Staff from './pages/yourspace/Staff.jsx'
 
-import Workers from './pages/users/workers/Workers.jsx';
-import Suppliers from './pages/users/suppliers/Suppliers.jsx';
-import Customers from './pages/users/customers/Customers.jsx'
+import Workers from './pages/users/Workers.jsx';
+import Suppliers from './pages/users/Suppliers.jsx';
+import Customers from './pages/users/Customers.jsx'
 
 import Password from './pages/admin/password/Password.jsx'
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="users" element={<Users />} />
           <Route path="sales" element={<Sales />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="staff" element={<Staff />} />
           <Route path="customers" element={<Customers />} />
           <Route path="workers" element={<Workers />} />
           <Route path="suppliers" element={<Suppliers />} />
