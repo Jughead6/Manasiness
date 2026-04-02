@@ -4,7 +4,7 @@ import YourSpaceFilter from './filter/yourspacefilter'
 import YourSpaceData from './data/yourspacedata'
 import YourSpaceButtons from './buttons/yourspacebuttons'
 
-function YourSpaceLayout() {
+function YourSpaceLayout({ data, user }) {
     return (
         <div id="yourspace-layout">
             <div id="yourspace-functions">
@@ -12,7 +12,7 @@ function YourSpaceLayout() {
                 <YourSpaceButtons/>
             </div>
             <div>
-                <YourSpaceData/>
+                <YourSpaceData data={data} user={user}/>
             </div>
         </div>
     )

@@ -1,17 +1,18 @@
-import './Sales.css'
+import './Orders.css'
+
 import { useEffect, useState } from 'react'
 
 import YourSpaceTitle from '../../../components/public/yourspace/title/yourspacetitle'
 import YourSpaceLayout from '../../../components/public/yourspace/layout/yourspacelayout'
-import { getSales } from '../../../components/yourspace/sales/salescontent'
+import { getOrders } from '../../../components/yourspace/orders/orderscontent'
 
-function Sales() {
-    const [sales, setSales] = useState([])
+function Orders() {
+    const [orders, setOrders] = useState([])
 
     useEffect(() => {
         async function loadSales() {
-            const result = await getSales()
-            setSales(result)
+            const result = await getOrders()
+            setOrders(result)
         }
 
         loadSales()
@@ -20,9 +21,10 @@ function Sales() {
     return (
         <div id="sales">
             <YourSpaceTitle yourspace="Sales" />
-            <YourSpaceLayout data={sales} user="worker" />
+            <YourSpaceLayout data={orders} user="customer" />
         </div>
     )
 }
 
-export default Sales
+export default Orders
+

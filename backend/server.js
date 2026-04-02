@@ -1,22 +1,10 @@
 import express from "express"
-import pkg from "pg"
 import cors from "cors"
-import dotenv from "dotenv"
-dotenv.config()
+import pool from "./src/config/db.js"
 
-const { Pool } = pkg
 const app = express()
 
 app.use(express.json())
-
-const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-})
-
 app.use(cors())
 
 app.get("/categories", async (req, res) => {
@@ -27,6 +15,73 @@ app.get("/categories", async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 })
+
+app.get("/products", async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT products.*, categories.name AS category
+            FROM products
+            JOIN categories ON products.category_id = categories.id
+        `)
+        res.json(result.rows)
+    } catch (error) {
+        res.status(500).json({ error: error.message})   
+    }
+})
+
+app.get("/users", async (req, res) => {
+    try {
+        const response = await pool.query("SELECT * FROM users")
+        res.json(response.rows)
+    } catch (error) {
+        res.status(500).json({ error: error.message})
+    }
+})
+
+app.get("/sales", async (req, res) => {
+    try {
+        const response = await pool.query(`
+            SELECT 
+                sales.id,
+                sales.date,
+                products.name AS product,
+                users.name AS worker,
+                sales.price,
+                sales.quantity,
+                sales.state
+            FROM sales
+            JOIN products ON sales.product_id = products.id
+            JOIN users ON sales.user_id = users.id
+        `)
+
+        res.json(response.rows)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
+app.get("/orders", async (req, res) => {
+    try {
+        const response = await pool.query(`
+            SELECT
+                orders.id,
+                orders.date,
+                products.name AS product,
+                users.name AS customer,
+                orders.price,
+                orders.quantity,
+                orders.state
+            FROM orders
+            JOIN products ON orders.product_id = products.id
+            JOIN users ON orders.user_id = users.id
+        `)
+
+        res.json(response.rows)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
 
 app.listen(3000, () => {
     console.log("Servidor corriendo")

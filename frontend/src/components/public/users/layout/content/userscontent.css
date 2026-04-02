@@ -1,0 +1,43 @@
+#users-content {
+    border: 1px solid black;
+    margin-top: 35px;
+    padding: 30px 40px;
+    background-color: #c6d4e1;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.content-user {
+    width: 220px;
+    border: 2px solid black;
+    background-color: #bdb8ad;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.content-user > h3 {
+    width: 100%;
+    text-align: center;
+    padding: 7px;
+    margin-bottom: 12px;
+}
+
+.content-user > img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+}
+
+.content-user > button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 8px;
+}

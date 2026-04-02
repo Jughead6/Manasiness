@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
 import './Categories.css'
+import { useState, useEffect } from 'react'
 
 import ActionTitle from '../../../components/public/actions/title/actiontitle.jsx'
 import ActionLayout from '../../../components/public/actions/layout/actionlayout.jsx'
 import ActionContent from '../../../components/public/actions/content/actioncontent.jsx'
-import { getCategories } from '../../../components/categories/categoriescontent.jsx'
+import { getCategories } from '../../../components/actions/categories/categoriescontent.jsx'
 
 function Categories() {
     const [categories, setCategories] = useState([])

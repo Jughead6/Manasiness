@@ -49,9 +49,33 @@ function Dashboard() {
                                 </NavLink>
                             </li>
                             <li>
+                                <NavLink to="/dashboard/orders" className='dashboard-subcategory'>
+                                    <ChartColumnDecreasing className='dashboard-icon'/>
+                                    Orders
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li className='dashboard-sublists'>
+                        <h3 className='dashboard-category'>USERS</h3>
+                        <ul>
+                            <li>
                                 <NavLink to="/dashboard/customers" className='dashboard-subcategory'>
                                     <FileUser className='dashboard-icon'/>
                                     Customers
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/suppliers" className='dashboard-subcategory'>
+                                    <PillBottle className='dashboard-icon'/>
+                                    Suppliers
+                                </NavLink>
+                            </li>
+                                                        <li>
+                                <NavLink to="/dashboard/workers" className='dashboard-subcategory'>
+                                    <FileUser className='dashboard-icon'/>
+                                    Workers
                                 </NavLink>
                             </li>
                         </ul>
@@ -61,24 +85,9 @@ function Dashboard() {
                     <li className='dashboard-sublists'> 
                         <h3 className='dashboard-category'>ADMIN</h3>
                         <ul>
-                            <li>
-                                <NavLink to="/dashboard/workers" className='dashboard-subcategory'>
-                                    <FileUser className='dashboard-icon'/>
-                                    Workers
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/statistics" className='dashboard-subcategory'>
-                                    <ChartColumnDecreasing className='dashboard-icon'/>
-                                    Statistics
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/suppliers" className='dashboard-subcategory'>
-                                    <PillBottle className='dashboard-icon'/>
-                                    Suppliers
-                                </NavLink>
-                            </li>
+
+
+
                             <li>
                                 <NavLink to="/dashboard/password" className='dashboard-subcategory'>
                                     <LockKeyhole className='dashboard-icon'/>

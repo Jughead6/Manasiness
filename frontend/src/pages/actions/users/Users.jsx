@@ -1,19 +1,18 @@
 import './Users.css'
+import { useState, useEffect } from 'react'
 
 import ActionTitle from '../../../components/public/actions/title/actiontitle.jsx'
 import ActionLayout from '../../../components/public/actions/layout/actionlayout.jsx'
 import ActionContent from '../../../components/public/actions/content/actioncontent.jsx'
-
+import { getUsers } from '../../../components/actions/users/userscontent.jsx'
 
 
 function Users() {
-    const users = [
-        ["Users: Carlos Ramirez", "https://randomuser.me/api/portraits/men/32.jpg", "Phone: 987654321", "Role: Admin"],
-        ["Users: Lucia Torres", "https://randomuser.me/api/portraits/women/44.jpg", "Phone: 912345678", "Role: Seller"],
-        ["Users: Jorge Mendoza", "https://randomuser.me/api/portraits/men/18.jpg", "Phone: 956781234", "Role: Cashier"],
-        ["Users: Andrea Flores", "https://randomuser.me/api/portraits/women/21.jpg", "Phone: 934567812", "Role: Manager"],
-        ["Users: Luis Herrera", "https://randomuser.me/api/portraits/men/51.jpg", "Phone: 978123456", "Role: Store Assistant"]
-    ]
+    const [users, setUsers ] = useState([])
+
+    useEffect(() => {
+        getUsers().then(setUsers)
+    }, [])
 
     return (
         <div id="users">

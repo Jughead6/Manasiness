@@ -10,12 +10,13 @@ import Products from './pages/actions/products/products.jsx';
 import Users from './pages/actions/users/Users.jsx'
 
 import Sales from './pages/yourspace/sales/Sales.jsx';
-import Customers from './pages/yourspace/customers/Customers.jsx';
+import Orders from './pages/yourspace/orders/orders.jsx';
 
-import Workers from './pages/admin/workers/Workers.jsx';
-import Statistics from './pages/admin/statistics/statistics.jsx';
-import Suppliers from './pages/admin/suppliers/Suppliers.jsx';
-import Password from './pages/admin/password/Password.jsx';
+import Workers from './pages/users/workers/Workers.jsx';
+import Suppliers from './pages/users/suppliers/Suppliers.jsx';
+import Customers from './pages/users/customers/Customers.jsx'
+
+import Password from './pages/admin/password/Password.jsx'
 
 function App() {
   return (
@@ -29,9 +30,9 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="users" element={<Users />} />
           <Route path="sales" element={<Sales />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="customers" element={<Customers />} />
           <Route path="workers" element={<Workers />} />
-          <Route path="statistics" element={<Statistics />} />
           <Route path="suppliers" element={<Suppliers />} />
           <Route path="password" element={<Password />} />
         </Route>
