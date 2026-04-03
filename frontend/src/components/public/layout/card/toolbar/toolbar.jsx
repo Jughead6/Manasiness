@@ -4,7 +4,7 @@ import SearchBar from './searchbar/searchbar'
 
 function ToolBarCard({ action }) {
     return (
-        <div id="action-search">
+        <div className="toolbar">
             <SearchBar action={action}/>
         </div>
     )

@@ -1,0 +1,13 @@
+
+.detail-toolbar {
+    border: 1px solid black;
+    background-color: #c6d4e1;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.detail-toolbar > button {
+    padding: 20px;
+}

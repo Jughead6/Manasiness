@@ -1,4 +1,4 @@
-#table-content {
+.table-content {
     border: 1px solid black;
     width: 100%;
     text-align: center;
@@ -6,7 +6,7 @@
     padding: 15px 15px;
 }
 
-#table-content > table {
+.table-content > table {
     border: 1px solid black;
     width: 100%;
     background-color: black;

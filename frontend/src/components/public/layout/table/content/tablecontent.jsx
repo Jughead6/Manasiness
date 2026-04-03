@@ -2,7 +2,7 @@ import './tablecontent.css'
 
 function TableContent({ data, columns }) {
     return (
-        <div id="table-content">
+        <div className="table-content">
             <table>
                 <thead>
                     <tr>

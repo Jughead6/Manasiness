@@ -19,6 +19,10 @@ import Customers from './pages/users/Customers.jsx'
 
 import Password from './pages/admin/password/Password.jsx'
 
+import EntityDetail from './pages/entities/detail/entitydetail.jsx';
+
+import Tester from './pages/TESTER.jsx';
+
 function App() {
   return (
     <BrowserRouter>
@@ -28,8 +32,11 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Home />} />
           <Route path="categories" element={<Categories />} />
+          <Route path="categories/:id" element={<EntityDetail route="categories"/>} />
           <Route path="products" element={<Products />} />
+          <Route path="products/:id" element={<EntityDetail route="products"/>} />
           <Route path="users" element={<Users />} />
+          <Route path="users/:id" element={<EntityDetail route="users"/>} />
           <Route path="sales" element={<Sales />} />
           <Route path="orders" element={<Orders />} />
           <Route path="staff" element={<Staff />} />
@@ -37,6 +44,7 @@ function App() {
           <Route path="workers" element={<Workers />} />
           <Route path="suppliers" element={<Suppliers />} />
           <Route path="password" element={<Password />} />
+          <Route path="tester" element={<Tester/>} />
         </Route>
       </Routes>
     </BrowserRouter>

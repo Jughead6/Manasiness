@@ -5,7 +5,7 @@ import TableButtons from './button/tablebuttons'
 
 function ToolBarTable() {
     return (
-        <div id="layout-toolbar">
+        <div className="layout-toolbar">
             <TableFilter />
             <TableButtons />
         </div>

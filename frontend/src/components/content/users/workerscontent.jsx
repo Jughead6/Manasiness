@@ -6,6 +6,7 @@ export async function getWorkers() {
 
 function workersContent(data) {
     return data.map((item) => ({
+        id: item.id,
         name: item.name,
         image: item.image
     }))

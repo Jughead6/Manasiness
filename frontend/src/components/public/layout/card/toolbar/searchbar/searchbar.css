@@ -1,9 +1,9 @@
-#action-searchbar {
+.action-searchbar {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-#action-searchinput {
+.searchinput {
     padding: 6px 10px;
 }

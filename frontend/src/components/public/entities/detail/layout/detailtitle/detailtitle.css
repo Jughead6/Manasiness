@@ -1,8 +1,6 @@
-.toolbar {
-    width: 100%;
+.detai-title {
     border: 1px solid black;
     padding: 20px;
-    justify-items: center;
+    text-align: center;
     background-color: #c6d4e1;
 }
-

@@ -15,7 +15,7 @@ function Categories() {
     return (
         <div className="page">
             <PageTitle title="Welcome to Categories" subtitle="In this section you can create, edit and view the categories you have"/>
-            <LayoutCard action={categories}/>
+            <LayoutCard data={categories} action="Categories" route="categories"/>
         </div>
     )
 }

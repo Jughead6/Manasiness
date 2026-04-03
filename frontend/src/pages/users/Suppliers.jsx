@@ -15,7 +15,7 @@ function Suppliers() {
     return (
         <div className="page">
             <PageTitle  title="Your Suppliers" subtitle="In this section you can view your suppliers"/>
-            <LayoutCard action={suppliers} />
+            <LayoutCard data={suppliers} action="suppliers" route="suppliers"/>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-#table-buttons {
+.table-buttons {
     border: 1px solid black;
     display: flex;
     padding: 10px;
@@ -6,6 +6,6 @@
     background-color: #ebe7e0;
 }
 
-#table-buttons > button {
+.table-buttons > button {
     padding: 7px;
 }

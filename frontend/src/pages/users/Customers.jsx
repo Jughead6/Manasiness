@@ -15,7 +15,7 @@ function Customers() {
     return (
         <div className="page">
             <PageTitle  title="Your Customers" subtitle="In this section you can view your customers"/>
-            <LayoutCard action={customers} />
+            <LayoutCard data={customers} action="Customers" route="customers"/>
         </div>
     )
 }

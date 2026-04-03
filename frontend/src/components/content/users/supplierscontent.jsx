@@ -1,3 +1,4 @@
+
 export async function getSuppliers() {
     const response = await fetch('http://localhost:3000/suppliers')
     const data = await response.json()
@@ -6,6 +7,7 @@ export async function getSuppliers() {
 
 function suppliersContent(data) {
     return data.map((item) => ({
+        id: item.id,
         name: item.name,
         image: item.image
     }))

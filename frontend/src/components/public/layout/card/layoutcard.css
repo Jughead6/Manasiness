@@ -1,4 +1,4 @@
-#layout-card {
+.layout-card {
     border: 1px solid black;
     padding: 40px;
     display: flex;

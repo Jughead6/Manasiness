@@ -14,7 +14,7 @@ function Products() {
     return (
         <div className="page">
             <PageTitle  title="Welcome to Products" subtitle="In this section you can create, edit and view the products you have"/>
-            <LayoutCard action={products}/>
+            <LayoutCard data={products} action="Products" route="products"/>
 
         </div>
     )

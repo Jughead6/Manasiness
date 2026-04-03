@@ -7,7 +7,7 @@ import ToolBarTable from './toolbar/toolbar.jsx'
 
 function LayoutTable({ data, columns }) {
     return (
-        <div id="layout-table">
+        <div className="layout-table">
                 <ToolBarTable/>
                 <TableContent data={data} columns={columns} />
         </div>

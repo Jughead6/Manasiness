@@ -2,7 +2,7 @@ import './tablebuttons.css'
 
 function TableButtons() {
     return (
-        <div id="table-buttons">
+        <div className="table-buttons">
             <button>Register</button>
             <button>Cancel</button>
         </div>

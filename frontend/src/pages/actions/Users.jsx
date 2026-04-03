@@ -15,7 +15,7 @@ function Users() {
     return (
         <div className="page">
             <PageTitle  title="Welcome to Users" subtitle="In this section you can create, edit and view the Users you have"/>
-            <LayoutCard action={users}/>
+            <LayoutCard data={users} action="Users" route="users"/>
         </div>
     )
 }

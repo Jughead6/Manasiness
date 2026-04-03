@@ -5,9 +5,9 @@ function SearchBar({ action }) {
     return (
         
             <form>
-                <div id="searchbar-card">
+                <div className="searchbar-card">
                     <Search/>
-                    <input id="action-searchinput" placeholder={`Search ${action}`} type="text" />
+                    <input className="searchinput" placeholder={`Search ${action}`} type="text" />
                 </div>
             </form>
     

@@ -4,15 +4,15 @@ import './dashboard.css'
 
 function Dashboard() {
     return (
-        <div id='dashboard'>
+        <div className='dashboard'>
             <div>
                 <div>
-                    <Link to="/dashboard" id="dashboard-manasiness">
+                    <Link to="/dashboard" className="dashboard-manasiness">
                         <h2>Manasiness</h2>
                     </Link>
                 </div>
             </div>
-            <div id="dashboard-list">
+            <div className="dashboard-list">
                 <ul>
                     <li className='dashboard-sublists'>
                         <h3 className='dashboard-category'>ACTIONS</h3>
