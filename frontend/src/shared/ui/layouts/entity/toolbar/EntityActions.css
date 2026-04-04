@@ -1,0 +1,13 @@
+.shared-entity-actions {
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #c6d4e1;
+}
+
+.shared-entity-actions > button {
+    padding: 10px;
+}

@@ -1,0 +1,12 @@
+.shared-person-actions {
+    border: 1px solid black;
+    padding: 25px;
+    background-color: #ebe7e0;
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+.shared-person-actions > button{
+    padding: 5px;
+}
