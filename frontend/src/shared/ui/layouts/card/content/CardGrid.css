@@ -1,0 +1,44 @@
+.shared-card-grid {
+    border: 1px solid black;
+    margin-top: 35px;
+    padding: 30px 40px;
+    background-color: #c6d4e1;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.shared-card-item {
+    width: 220px;
+    border: 2px solid black;
+    background-color: #bdb8ad;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.shared-card-item > h3 {
+    width: 100%;
+    text-align: center;
+    padding: 7px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid black;
+}
+
+.shared-card-item > img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+}
+
+.shared-card-item > button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 8px;
+}

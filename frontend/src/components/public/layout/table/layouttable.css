@@ -1,9 +1,0 @@
-#layout-table {
-    border: 1px solid black;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #c6d4e1;
-}
-

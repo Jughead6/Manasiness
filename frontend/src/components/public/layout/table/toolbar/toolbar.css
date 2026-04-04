@@ -1,8 +1,0 @@
-#layout-toolbar {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid black;
-    background-color: #bdb8ad;
-}

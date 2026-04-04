@@ -1,0 +1,10 @@
+.shared-page-title {
+    border: 1px solid black;
+    align-content: center;
+    padding: 20px 15px;
+    background-color: #c6d4e1;
+}
+
+.shared-page-title h1, .shared-page-title h2 {
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+.shared-table-filter {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #ebe7e0;
+}
+
+.shared-table-filter > h2 {
+    text-align: center;
+}
+
+.shared-table-filter > ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.shared-table-filter > ul > li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.shared-table-filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

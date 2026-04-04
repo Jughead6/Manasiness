@@ -1,0 +1,25 @@
+.shared-data-table {
+    border: 1px solid black;
+    width: 100%;
+    text-align: center;
+    background-color: #ebe7e0;
+    padding: 15px 15px;
+}
+
+.shared-data-table > table {
+    border: 1px solid black;
+    width: 100%;
+    background-color: black;
+}
+
+.shared-data-table-head {
+
+    padding: 3px;
+    background-color: rgb(133, 128, 128);
+}
+
+.shared-data-table-cell {
+
+    padding: 3px;
+    background-color: white;
+}

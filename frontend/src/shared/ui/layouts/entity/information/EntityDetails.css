@@ -1,0 +1,27 @@
+.shared-entity-details {
+    border: 1px solid black;
+    display: flex;
+    background-color: #d3d3d3;
+}
+
+.shared-entity-details-image {
+    border-right: 1px solid black;
+}
+
+.shared-entity-details-image > img {
+    width: 400px;
+    height: 400px;
+}
+
+.shared-entity-details-content {
+    padding: 30px;
+    width: 100%;
+    line-height: 50px;
+    background-color: #ebe7e0;
+    border: 1px solid black;
+    margin: 25px;
+}
+
+.shared-entity-details-content > h2{
+    text-align: center;
+}

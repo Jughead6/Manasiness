@@ -1,0 +1,8 @@
+.shared-person-layout {
+    border: 1px solid black;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #c6d4e1;
+}

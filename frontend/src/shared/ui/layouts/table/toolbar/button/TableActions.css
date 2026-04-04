@@ -1,0 +1,11 @@
+.shared-table-actions {
+    border: 1px solid black;
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    background-color: #ebe7e0;
+}
+
+.shared-table-actions > button {
+    padding: 7px;
+}
