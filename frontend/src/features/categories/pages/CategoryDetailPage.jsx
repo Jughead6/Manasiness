@@ -1,5 +1,3 @@
-
-
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
@@ -9,9 +7,12 @@ import EntityLayout  from '../../../shared/ui/layouts/entity/EntityLayout.jsx'
 import { getCategoryById } from '../api/categories.api.js'
 import { mapCategoryToDetail } from '../mappers/categories.mapper.js'
 
+import CategoryDesactivationModal from '../components/CategoryDesactivationModal.jsx'
+
 function CategoryDetailPage() {
     const { id } = useParams()
     const [ detail, setDetail ] = useState(null)
+    const [isDesactivationOpen, setIsDesactivationOpen] = useState(false)
 
     useEffect(() => {
         getCategoryById(id).then((data) => {
@@ -25,8 +26,9 @@ function CategoryDetailPage() {
 
     return (
         <>
-            <EntityTitle entity="Category" idx={id} />
-            <EntityLayout detail={detail} />
+            <EntityTitle entity="Category" idx={id}/>
+            <EntityLayout detail={detail} onDesactivateClick={() => setIsDesactivationOpen(true)}/>
+            {isDesactivationOpen && <CategoryDesactivationModal onClose={() => setIsDesactivationOpen(false)} />}
         </>
     )
 }

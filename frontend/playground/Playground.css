@@ -1,0 +1,49 @@
+.playground {
+    flex: 1;
+    display: flex;
+}
+
+.form {
+    flex: 1;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column; 
+
+}
+
+.hero {
+    border-bottom: 1px solid black; 
+    padding: 20px;
+    line-height: 37px;
+    background-color: #bdb8ad;
+}
+
+.content {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ebe7e0;
+    height: 100%;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.buttons > button{
+    padding: 8px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input > input {
+    padding: 10px;
+}

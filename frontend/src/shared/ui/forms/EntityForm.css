@@ -1,0 +1,47 @@
+.shared-entity-form {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid black;
+    border-radius: 18px;
+    background-color: #c6d4e1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.shared-entity-form-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.shared-entity-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.shared-entity-form-group > input,
+.shared-entity-form-group > textarea {
+    padding: 9px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.shared-entity-form-group > textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+.shared-entity-form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.shared-entity-form-actions > button {
+    padding: 8px 14px;
+}

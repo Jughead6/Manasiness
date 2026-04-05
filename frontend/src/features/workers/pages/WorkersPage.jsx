@@ -16,10 +16,10 @@ function Workers() {
     }, [])
 
     return (
-        <div className="page">
+        <>
             <PageTitle  title="Your Workers" subtitle="In this section you can view your workers"/>
             <CardLayout data={workers} action="workers" route="workers"/>
-        </div>
+        </>
     )
 }
 

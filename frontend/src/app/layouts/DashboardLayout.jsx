@@ -6,11 +6,11 @@ function DashboardLayout() {
     return (
         <div id="dashboardlayout">
             <div id="dashboardlayout-sidebar">
-                <DashboardSidebar />
+                <DashboardSidebar/>
             </div>
             <div id="dashboardlayout-content">
                 <div className="dashboardlayout-page">
-                    <Outlet />
+                    <Outlet/>
                 </div>
             </div>
         </div>

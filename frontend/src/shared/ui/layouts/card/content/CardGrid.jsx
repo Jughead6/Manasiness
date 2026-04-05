@@ -10,7 +10,7 @@ function CardGrid({ action, route }) {
             {action.map((item) => (
                 <div className="shared-card-item" key={item.id}>
                     <h3>{item.name}</h3>
-                    <img src={item.image} alt={item.name} />
+                    <img src={item.image} alt={item.name}/>
                     <button onClick={() => navigate(`/dashboard/${route}/${item.id}`)}>View</button>
                 </div>
             ))}

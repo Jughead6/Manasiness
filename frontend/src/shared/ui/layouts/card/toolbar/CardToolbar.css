@@ -4,5 +4,7 @@
     padding: 20px;
     justify-items: center;
     background-color: #c6d4e1;
+    display: flex;
+    justify-content: space-between;
 }
 

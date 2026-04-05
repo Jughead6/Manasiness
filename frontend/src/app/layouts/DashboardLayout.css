@@ -10,13 +10,15 @@
 #dashboardlayout-content {
     flex: 1;
     overflow-y: auto;
+    display: flex;
 }
 
 .dashboardlayout-page {
-    min-height: 100vh;
+    flex: 1;
     width: 100%;
     padding: 30px 80px;
     display: flex;
     flex-direction: column;
     gap: 25px;
+    box-sizing: border-box;
 }

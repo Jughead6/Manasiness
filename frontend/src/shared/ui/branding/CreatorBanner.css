@@ -1,0 +1,23 @@
+.shared-creator-banner {
+    border: 1px solid black;
+    border-radius: 18px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    background-color: #ebe7e0;
+}
+
+.shared-creator-banner > img {
+    width: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.shared-creator-banner-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    line-height: 40px;
+}

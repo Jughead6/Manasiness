@@ -3,11 +3,11 @@ import './TableToolbar.css'
 import TableFilter from './filter/TableFilter'
 import TableActions from './button/TableActions'
 
-function TableToolbar() {
+function TableToolbar({onCreateClick}) {
     return (
         <div className="shared-table-toolbar">
-            <TableFilter />
-            <TableActions />
+            <TableFilter/>
+            <TableActions onClick={onCreateClick}/>
         </div>
     )
 }

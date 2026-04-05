@@ -1,0 +1,48 @@
+.playground {
+    flex: 1;
+    display: flex;
+}
+
+.shared-entity-edit-form {
+    flex: 1;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.shared-entity-edit-form-hero {
+    border-bottom: 1px solid black;
+    padding: 20px;
+    line-height: 37px;
+    background-color: #bdb8ad;
+}
+
+.shared-entity-edit-form-content {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ebe7e0;
+    height: 100%;
+}
+
+.shared-entity-edit-form-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.shared-entity-edit-form-actions > button {
+    padding: 8px;
+}
+
+.shared-entity-edit-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.shared-entity-edit-form-group > input {
+    padding: 10px;
+}

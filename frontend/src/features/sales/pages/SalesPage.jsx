@@ -7,8 +7,11 @@ import TableLayout from '../../../shared/ui/layouts/table/TableLayout.jsx'
 import { getSales } from '../api/sales.api'
 import { mapSalesToTables } from '../mappers/sales.mapper.js'
 
+import SaleRegisterModal from '../components/SaleRegisterModal.jsx'
+
 function SalesPage() {
     const [sales, setSales] = useState([])
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
 
     const salesColumns = [
         { key: 'date', label: 'Date' },
@@ -27,8 +30,11 @@ function SalesPage() {
 
     return (
         <>
-            <PageTitle title="Your Sales" subtitle="In this section you can view your sales record." />
-            <TableLayout data={sales} columns={salesColumns} />
+            <PageTitle title="Your Sales" subtitle="In this section you can view your sales record."/>
+            <TableLayout data={sales} columns={salesColumns} onCreateClick={() => setIsRegisterModalOpen(true)}/>
+            {isRegisterModalOpen && <SaleRegisterModal onClose={() => setIsRegisterModalOpen(false)} />}
+
+                
         </>
     )
 }

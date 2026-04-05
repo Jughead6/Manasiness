@@ -4,7 +4,7 @@ function EntityDetails({ detail }) {
     return (
         <div className="shared-entity-details">
             <div className="shared-entity-details-image">
-                <img src={detail.image} alt={detail.name} />
+                <img src={detail.image} alt={detail.name}/>
             </div>
             <div className="shared-entity-details-content">
                 <h2>Information</h2>

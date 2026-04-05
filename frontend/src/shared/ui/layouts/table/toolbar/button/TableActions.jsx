@@ -1,10 +1,9 @@
 import './TableActions.css'
 
-function TableActions() {
+function TableActions({ onClick }) {
     return (
         <div className="shared-table-actions">
-            <button>Register</button>
-            <button>Cancel</button>
+            <button onClick={onClick}>Register</button>
         </div>
     )
 }

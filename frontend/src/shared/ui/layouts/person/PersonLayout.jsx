@@ -7,9 +7,9 @@ import PersonActions from './buttons/PersonActions.jsx'
 function PersonLayout({ data, columns, sectionTitle }) {
     return (
         <div className="shared-person-layout">
-            <PersonToolbar />
-            <PersonHistory data={data} columns={columns} sectionTitle={sectionTitle} />
-            <PersonActions />
+            <PersonToolbar/>
+            <PersonHistory data={data} columns={columns} sectionTitle={sectionTitle}/>
+            <PersonActions/>
         </div>
     )
 }

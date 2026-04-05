@@ -1,0 +1,35 @@
+.shared-desactivation-panel {
+    border: 1px solid black;
+    background-color: white;
+    height: 280px;
+    width: 580px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shared-desactivation-hero {
+    border-bottom: 1px solid black;
+    padding: 15px;
+    background-color: #bdb8ad;
+}
+
+.shared-desactivation-warning {
+    height: 100%;
+    padding: 15px;
+    line-height: 30px;
+    background-color: #ebe7e0;
+}
+
+.shared-desactivation-panel-actions {
+    display: flex;
+    margin-top: auto;
+    border-top: 1px solid black;
+    padding: 14px;
+    gap: 15px;
+    justify-content: flex-end;
+    background-color: #bdb8ad;
+}
+
+.shared-desactivation-panel-actions > button {
+    padding: 8px;
+}

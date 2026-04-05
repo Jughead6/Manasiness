@@ -25,12 +25,12 @@ function CustomerDetailPage() {
 
     return (
         <>
-            <PersonTitle title="Customer" name={detail.name} />
+            <PersonTitle title="Customer" name={detail.name}/>
             <PersonLayout
                 data={detail.details}
                 columns={['Date', 'Product', 'Price', 'Quantity', 'State']}
                 sectionTitle="Sales"
-            />
+           />
         </>
     )
 }
