@@ -3,22 +3,21 @@
     display: flex;
 }
 
-.form {
+.shared-entity-edit-form {
     flex: 1;
     border: 1px solid black;
     display: flex;
-    flex-direction: column; 
-
+    flex-direction: column;
 }
 
-.hero {
-    border-bottom: 1px solid black; 
+.shared-entity-edit-form-hero {
+    border-bottom: 1px solid black;
     padding: 20px;
     line-height: 37px;
     background-color: #bdb8ad;
 }
 
-.content {
+.shared-entity-edit-form-content {
     padding: 50px;
     display: flex;
     flex-direction: column;
@@ -29,21 +28,21 @@
     height: 100%;
 }
 
-.buttons {
+.shared-entity-edit-form-actions {
     display: flex;
     gap: 20px;
 }
 
-.buttons > button{
+.shared-entity-edit-form-actions > button {
     padding: 8px;
 }
 
-.input {
+.shared-entity-edit-form-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.input > input {
+.shared-entity-edit-form-group > input {
     padding: 10px;
 }

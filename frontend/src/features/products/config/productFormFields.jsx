@@ -42,3 +42,36 @@ export const productFormFields = [
         type: 'number'
     }
 ]
+
+export const productEditFields = [
+    {
+        label: 'Name',
+        placeholder: 'Write the name product',
+        id: 'product-name',
+        type: 'text'
+    },
+    {
+        label: 'Category',
+        placeholder: 'Write the category',
+        id: 'product-category',
+        type: 'text'
+    },
+    {
+        label: 'Cost Price',
+        placeholder: 'Write the cost price',
+        id: 'product-cost-price',
+        type: 'number'
+    },
+    {
+        label: 'Sale Price',
+        placeholder: 'Write the sale price',
+        id: 'product-sale-price',
+        type: 'number'
+    },
+    {
+        label: 'Stock',
+        placeholder: 'Write the stock',
+        id: 'product-stock',
+        type: 'number'
+    }
+]

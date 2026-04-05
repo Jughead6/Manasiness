@@ -8,8 +8,11 @@ import TableLayout from '../../../shared/ui/layouts/table/TableLayout.jsx'
 import { getStaff } from '../api/staff.api.js'
 import { mapStaffToTables } from '../mappers/staff.mapper.js'
 
+import StaffRegisterModal from '../components/StaffRegisterModal.jsx'
+
 function StaffPage() {
     const [staff, setStaff] = useState([])
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
 
     const staffColumns = [
         { key: 'date', label: 'Date' },
@@ -27,7 +30,8 @@ function StaffPage() {
     return (
         <>
             <PageTitle title="Your Staff" subtitle="In this section you can view your staff record."/>
-            <TableLayout data={staff} columns={staffColumns}/>
+            <TableLayout data={staff} columns={staffColumns} onCreateClick={() => setIsRegisterModalOpen(true)}/>
+            {isRegisterModalOpen && <StaffRegisterModal onClose={() => setIsRegisterModalOpen(false)} />}
         </>
     )
 }

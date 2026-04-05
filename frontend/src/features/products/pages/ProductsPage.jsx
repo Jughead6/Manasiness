@@ -21,7 +21,7 @@ function ProductsPage() {
     return (
         <>
             <PageTitle title="Welcome to Products" subtitle="In this section you can create, edit and view the products you have"/>
-            <CardLayout data={products} action="Products" route="products" onCreateClick={() => setIsCreateModalOpen(true)}/>
+            <CardLayout data={products} action="Products" route="products" onCreateClick={() => setIsCreateModalOpen(true)} />
             {isCreateModalOpen && <ProductCreateModal onClose={() => setIsCreateModalOpen(false)}/>}
         </>
     )

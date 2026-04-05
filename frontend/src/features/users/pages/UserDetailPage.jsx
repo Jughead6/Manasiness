@@ -1,5 +1,3 @@
-
-
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
@@ -9,9 +7,12 @@ import EntityLayout  from '../../../shared/ui/layouts/entity/EntityLayout.jsx'
 import { getUserById } from '../api/users.api.js'
 import { mapUserToDetail } from '../mappers/users.mapper.js'
 
+import UsersDesactivationModal from '../components/UsersDesactivationModal.jsx'
+
 function UserDetailPage() {
     const { id } = useParams()
     const [ detail, setDetail ] = useState(null)
+    const [ isDesactivationOpen, setIsDesactivationOpen ] = useState(false)
 
     useEffect(() => {
         getUserById(id).then((data) => {
@@ -26,7 +27,8 @@ function UserDetailPage() {
     return (
         <>
             <EntityTitle entity="User" idx={id}/>
-            <EntityLayout detail={detail}/>
+            <EntityLayout detail={detail} onDesactivateClick={() => setIsDesactivationOpen(true)}/>
+            {isDesactivationOpen && <UsersDesactivationModal onClose={() => setIsDesactivationOpen(false)} />}
         </>
     )
 }

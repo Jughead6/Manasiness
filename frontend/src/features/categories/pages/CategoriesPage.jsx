@@ -10,7 +10,7 @@ import CategoryCreateModal from '../components/CategoryCreateModal.jsx'
 
 function CategoriesPage() {
     const [categories, setCategories] = useState([])
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [ isCreateModalOpen, setIsCreateModalOpen ] = useState(false)
 
     useEffect(() => {
         getCategories().then((data) => {

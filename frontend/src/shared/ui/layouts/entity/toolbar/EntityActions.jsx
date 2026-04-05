@@ -1,10 +1,13 @@
 import './EntityActions.css'
+import { useNavigate } from 'react-router-dom'
 
-function EntityActions() {
+function EntityActions({ onDesactivateClick }) {
+    const navigate = useNavigate()
+
     return (
         <div className="shared-entity-actions">
-            <button>Editar</button>
-            <button>Eliminar</button>
+            <button onClick={() => navigate(`edit`)}>Edit</button>
+            <button onClick={onDesactivateClick}>Desactivate</button>
         </div>
     )
 }

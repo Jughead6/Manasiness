@@ -6,7 +6,7 @@ import { userFormFields } from '../config/userFormFields.jsx'
 
 function UserCreateModal({ onClose }) {
     return (
-        <ModalOverlay onClose={onClose}>
+        <ModalOverlay  onClose={onClose}>
             <>
                 <EntityForm
                     sectionLabel="Users ----"

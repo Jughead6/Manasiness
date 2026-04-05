@@ -1,0 +1,24 @@
+.shared-register-form {
+    padding: 25px;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+.shared-register-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.shared-register-form-field > input {
+    padding: 12px;
+}
+
+.shared-register-form-actions {
+    display: flex;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.shared-register-form-actions > button {
+    padding: 8px;
+}
