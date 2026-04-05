@@ -6,8 +6,8 @@ import EntityActions from './toolbar/EntityActions.jsx'
 function EntityLayout({ detail }) {
     return (
         <div className="shared-entity-layout">
-            <EntityDetails detail={detail} />
-            <EntityActions />
+            <EntityDetails detail={detail}/>
+            <EntityActions/>
         </div>
     )
 }

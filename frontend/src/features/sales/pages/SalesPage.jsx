@@ -27,8 +27,8 @@ function SalesPage() {
 
     return (
         <>
-            <PageTitle title="Your Sales" subtitle="In this section you can view your sales record." />
-            <TableLayout data={sales} columns={salesColumns} />
+            <PageTitle title="Your Sales" subtitle="In this section you can view your sales record."/>
+            <TableLayout data={sales} columns={salesColumns}/>
         </>
     )
 }

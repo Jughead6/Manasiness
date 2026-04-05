@@ -1,11 +1,13 @@
 import './CardToolbar.css'
 
-import SearchBarCard from './searchbar/CardSearchInput.jsx'
+import CardSearchInput from './searchbar/CardSearchInput.jsx'
+import CardButtonCreate from './buttons/CardButtonCreate.jsx'
 
-function CardToolbar({ action }) {
+function CardToolbar({ action, onCreateClick }) {
     return (
         <div className="shared-card-toolbar">
-            <SearchBarCard action={action}/>
+            <CardSearchInput action={action} />
+            {onCreateClick && <CardButtonCreate onClick={onCreateClick} />}
         </div>
     )
 }

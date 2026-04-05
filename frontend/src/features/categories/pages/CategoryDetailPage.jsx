@@ -25,8 +25,8 @@ function CategoryDetailPage() {
 
     return (
         <>
-            <EntityTitle entity="Category" idx={id} />
-            <EntityLayout detail={detail} />
+            <EntityTitle entity="Category" idx={id}/>
+            <EntityLayout detail={detail}/>
         </>
     )
 }

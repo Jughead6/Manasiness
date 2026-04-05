@@ -9,6 +9,7 @@ import EntityLayout  from '../../../shared/ui/layouts/entity/EntityLayout.jsx'
 import { getProductById } from '../api/products.api.js'
 import { mapProductToDetail } from '../mappers/products.mapper.js'
 
+
 function ProductDetailPage() {
     const { id } = useParams()
     const [ detail, setDetail ] = useState(null)
@@ -25,8 +26,8 @@ function ProductDetailPage() {
 
     return (
         <div>
-            <EntityTitle entity="Product" idx={id} />
-            <EntityLayout detail={detail} />
+            <EntityTitle entity="Product" idx={id}/>
+            <EntityLayout detail={detail}/>
         </div>
     )
 }

@@ -6,8 +6,8 @@ import DataTable from './content/DataTable.jsx'
 function TableLayout({ data, columns }) {
     return (
         <div className="shared-table-layout">
-            <TableToolbar />
-            <DataTable data={data} columns={columns} />
+            <TableToolbar/>
+            <DataTable data={data} columns={columns}/>
         </div>
     )
 }

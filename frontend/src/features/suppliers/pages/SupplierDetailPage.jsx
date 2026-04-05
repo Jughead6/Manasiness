@@ -25,7 +25,7 @@ function SupplierDetailPage() {
 
     return (
         <>
-            <PersonTitle title="Supplier" name={detail.name} />
+            <PersonTitle title="Supplier" name={detail.name}/>
             <PersonLayout
                 data={detail.details}
                 columns={['Date', 'Product', 'Price', 'Quantity', 'State']}

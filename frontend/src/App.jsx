@@ -37,31 +37,32 @@ import CustomerDetailPage from './features/customers/pages/CustomerDetailPage.js
 
 
 
-import Playground from '../playground/page/playground.jsx';
+import Playground from '../playground/Playground.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Playground />} />
+        <Route path="/" element={<Playground/>}/>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="categories" element={<CategoriesPage />} />
-          <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>} />
-          <Route path="products" element={<ProductsPage />} />
-          <Route path="products/:id" element={<ProductDetailPage route="products"/>} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="users/:id" element={<UserDetailPage route="users"/>} />
-          <Route path="sales" element={<SalesPage />} />
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="staff" element={<StaffPage />} />
-          <Route path="customers" element={<CustomersPage />} />
-          <Route path="customers/:id" element={<CustomerDetailPage route="customers"/>} />
-          <Route path="workers" element={<WorkersPage />} />
-          <Route path="workers/:id" element={<WorkerDetailPage route="workers"/>} />
-          <Route path="suppliers" element={<SuppliersPage />} />
-          <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>} />
+        <Route path="/dashboard" element={<DashboardLayout/>}>
+          <Route index element={<HomePage/>}/>
+          <Route path="categories" element={<CategoriesPage/>}/>
+          <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>}/>
+          <Route path="products" element={<ProductsPage/>}/>
+          <Route path="products/:id" element={<ProductDetailPage route="products"/>}/>
+          <Route path="users" element={<UsersPage/>}/>
+          <Route path="users/:id" element={<UserDetailPage route="users"/>}/>
+          <Route path="sales" element={<SalesPage/>}/>
+          <Route path="orders" element={<OrdersPage/>}/>
+          <Route path="staff" element={<StaffPage/>}/>
+          <Route path="customers" element={<CustomersPage/>}/>
+          <Route path="customers/:id" element={<CustomerDetailPage route="customers"/>}/>
+          <Route path="workers" element={<WorkersPage/>}/>
+          <Route path="workers/:id" element={<WorkerDetailPage route="workers"/>}/>
+          <Route path="suppliers" element={<SuppliersPage/>}/>
+          <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>}/>
+          <Route path="playground" element={<Playground/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

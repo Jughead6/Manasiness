@@ -5,7 +5,7 @@ import PersonHistoryFilter from './filter/PersonHistoryFilter.jsx'
 function PersonToolbar() {
     return (
         <div className="shared-person-toolbar">
-            <PersonHistoryFilter />
+            <PersonHistoryFilter/>
         </div>
     )
 }

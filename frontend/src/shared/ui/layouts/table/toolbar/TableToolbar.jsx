@@ -6,8 +6,8 @@ import TableActions from './button/TableActions'
 function TableToolbar() {
     return (
         <div className="shared-table-toolbar">
-            <TableFilter />
-            <TableActions />
+            <TableFilter/>
+            <TableActions/>
         </div>
     )
 }

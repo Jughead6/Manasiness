@@ -24,14 +24,14 @@ function WorkerDetailPage() {
     }
 
     return (
-        <div className="page">
-            <PersonTitle title="Worker" name={detail.name} />
+        <>
+            <PersonTitle title="Worker" name={detail.name}/>
             <PersonLayout
                 data={detail.details}
                 columns={['Date', 'Salary', 'State']}
                 sectionTitle="Staff"
-            />
-        </div>
+           />
+        </>
     )
 }
 

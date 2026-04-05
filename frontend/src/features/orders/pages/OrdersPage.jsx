@@ -28,8 +28,8 @@ function OrdersPage() {
 
     return (
         <>
-            <PageTitle title="Your Orders" subtitle="In this section you can view your orders record." />
-            <TableLayout data={orders} columns={ordersColumns} />
+            <PageTitle title="Your Orders" subtitle="In this section you can view your orders record."/>
+            <TableLayout data={orders} columns={ordersColumns}/>
         </>
     )
 }

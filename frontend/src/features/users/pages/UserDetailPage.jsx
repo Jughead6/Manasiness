@@ -25,8 +25,8 @@ function UserDetailPage() {
 
     return (
         <>
-            <EntityTitle entity="User" idx={id} />
-            <EntityLayout detail={detail} />
+            <EntityTitle entity="User" idx={id}/>
+            <EntityLayout detail={detail}/>
         </>
     )
 }

@@ -26,8 +26,8 @@ function StaffPage() {
 
     return (
         <>
-            <PageTitle title="Your Staff" subtitle="In this section you can view your staff record." />
-            <TableLayout data={staff} columns={staffColumns} />
+            <PageTitle title="Your Staff" subtitle="In this section you can view your staff record."/>
+            <TableLayout data={staff} columns={staffColumns}/>
         </>
     )
 }
