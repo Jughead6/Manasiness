@@ -1,4 +1,4 @@
-import pool2 from '../config/db2.js'
+import pool2 from "../config/db2.js"
 
 export async function getCategories(req, res) {
     try {
@@ -75,6 +75,32 @@ export async function editCategory(req, res) {
 
         res.status(200).json({
             message: 'Edit successfully',
+            category: response.rows[0]
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: error.message })
+    }
+}
+
+export async function deactivateCategory(req, res) {
+    const { id } = req.params
+
+    try {
+        const response = await pool2.query(`
+            UPDATE categories
+            SET is_active = $1,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = $2
+            RETURNING *
+        `, ['false', id])
+
+        if (response.rows.length === 0) {
+            return res.status(404).json({ error: 'Category not found' })
+        }
+
+        res.status(200).json({
+            message: 'Category deactivated successfully',
             category: response.rows[0]
         })
     } catch (error) {

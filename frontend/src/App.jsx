@@ -1,41 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import DashboardLayout from './app/layouts/DashboardLayout.jsx'
+import DashboardLayout from "./app/layouts/DashboardLayout.jsx"
 
+import HomePage from "./features/home/pages/HomePage.jsx"
 
-import HomePage from './features/home/pages/HomePage.jsx'
+import CategoriesPage from "./features/categories/pages/CategoriesPage.jsx"
+import CategoryDetailPage from "./features/categories/pages/CategoryDetailPage.jsx"
+import CategoryEditPage from "./features/categories/pages/CategoryEditPage.jsx"
 
-import CategoriesPage from './features/categories/pages/CategoriesPage.jsx'
-import CategoryDetailPage from './features/categories/pages/CategoryDetailPage.jsx'
-import CategoryEditPage from './features/categories/pages/CategoryEditPage.jsx'
+import ProductsPage from "./features/products/pages/ProductsPage.jsx"
+import ProductDetailPage from "./features/products/pages/ProductDetailPage.jsx"
+import ProductEditPage from "./features/products/pages/ProductEditPage.jsx"
 
+import UsersPage from "./features/users/pages/UsersPage.jsx"
+import UserDetailPage from "./features/users/pages/UserDetailPage.jsx"
+import UserEditPage from "./features/users/pages/UserEditPage.jsx"
 
-import ProductsPage from './features/products/pages/ProductsPage.jsx'
-import ProductDetailPage from './features/products/pages/ProductDetailPage.jsx'
-import ProductEditPage from './features/products/pages/ProductEditPage.jsx'
+import SalesPage from "./features/sales/pages/SalesPage.jsx"
 
+import OrdersPage from "./features/orders/pages/OrdersPage.jsx"
 
-import UsersPage from './features/users/pages/UsersPage.jsx'
-import UserDetailPage from './features/users/pages/UserDetailPage.jsx'
-import UserEditPage from './features/users/pages/UserEditPage.jsx'
+import StaffPage from "./features/staff/pages/StaffPage.jsx"
 
-import SalesPage from './features/sales/pages/SalesPage.jsx'
+import WorkersPage from "./features/workers/pages/WorkersPage.jsx"
+import WorkerDetailPage from "./features/workers/pages/WorkerDetailPage.jsx"
 
-import OrdersPage from './features/orders/pages/OrdersPage.jsx'
+import SuppliersPage from "./features/suppliers/pages/SuppliersPage.jsx"
+import SupplierDetailPage from "./features/suppliers/pages/SupplierDetailPage.jsx"
 
-import StaffPage from './features/staff/pages/StaffPage.jsx'
-
-
-import WorkersPage from './features/workers/pages/WorkersPage.jsx'
-import WorkerDetailPage from './features/workers/pages/WorkerDetailPage.jsx'
-
-
-import SuppliersPage from './features/suppliers/pages/SuppliersPage.jsx'
-import SupplierDetailPage from './features/suppliers/pages/SupplierDetailPage.jsx'
-
-
-import CustomersPage from './features/customers/pages/CustomersPage.jsx'
-import CustomerDetailPage from './features/customers/pages/CustomerDetailPage.jsx'
+import CustomersPage from "./features/customers/pages/CustomersPage.jsx"
+import CustomerDetailPage from "./features/customers/pages/CustomerDetailPage.jsx"
 
 
 
@@ -44,7 +38,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProductEditPage/>}/>
-
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route index element={<HomePage/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>
@@ -65,7 +58,6 @@ function App() {
           <Route path="workers/:id" element={<WorkerDetailPage route="workers"/>}/>
           <Route path="suppliers" element={<SuppliersPage/>}/>
           <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>}/>
-          <Route path="playground" element={<ProductEditPage/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

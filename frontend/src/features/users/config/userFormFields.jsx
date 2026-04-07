@@ -1,7 +1,7 @@
 export const userFormFields = [
     {
         label: 'Name',
-        placeholder: 'Write product name',
+        placeholder: 'Write user name',
         id: 'user-name',
         name: 'name',
         type: 'text'
@@ -22,10 +22,13 @@ export const userFormFields = [
     },
     {
         label: 'Role',
-        placeholder: 'Write role',
         id: 'user-role',
         name: 'role',
-        type: 'text'
+        options: [
+            { value: 'supplier', label: 'Supplier' },
+            { value: 'worker', label: 'Worker' },
+            { value: 'customer', label: 'Customer' }
+        ]
     }
 ]   
 
@@ -53,9 +56,12 @@ export const userEditFields = [
     },
     {
         label: 'Role',
-        placeholder: 'Write role',
         id: 'user-role',
         name: 'role',
-        type: 'text'
+        options: [
+            { value: 'supplier', label: 'Supplier' },
+            { value: 'worker', label: 'Worker' },
+            { value: 'customer', label: 'Customer' }
+        ]
     }
 ]

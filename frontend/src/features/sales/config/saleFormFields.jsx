@@ -1,14 +1,14 @@
 export const saleFormFields = [
     {
         label: 'Product',
-        placeholder: 'Write product name',
+        placeholder: 'Write the product id',
         id: 'sale-product',
         name: 'product_id',
         type: 'text'
     },
     {
         label: 'Customer',
-        placeholder: 'Write the customer',
+        placeholder: 'Write the user id',
         id: 'sale-customer',
         name: 'user_id',
         type: 'text'
@@ -18,7 +18,7 @@ export const saleFormFields = [
         placeholder: 'Write the quantity',
         id: 'sale-quantity',
         name: 'quantity',
-        type: 'textarea'
+        type: 'text'
     },                          
     {
         label: 'State',

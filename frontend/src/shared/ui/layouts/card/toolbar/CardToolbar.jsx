@@ -1,7 +1,7 @@
-import './CardToolbar.css'
+import "./CardToolbar.css"
 
-import CardSearchInput from './searchbar/CardSearchInput.jsx'
-import CardButtonCreate from './buttons/CardButtonCreate.jsx'
+import CardButtonCreate from "./buttons/CardButtonCreate.jsx"
+import CardSearchInput from "./search/CardSearchInput.jsx"
 
 function CardToolbar({ action, onCreateClick }) {
     return (

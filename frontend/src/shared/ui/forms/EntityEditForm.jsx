@@ -1,6 +1,6 @@
-import './EntityEditForm.css'
+import "./EntityEditForm.css"
 
-function EntityEditForm({ fields, sectionLabel, title, values, onSubmit }) {
+function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit }) {
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
@@ -18,12 +18,34 @@ function EntityEditForm({ fields, sectionLabel, title, values, onSubmit }) {
                 {fields.map((field) => (
                     <div className="shared-entity-edit-form-group" key={field.id}>
                         <label htmlFor={field.id}>{field.label}</label>
-                        <input id={field.id} name={field.name} placeholder={field.placeholder} type={field.type} defaultValue={values?.[field.name] || ''} />
+
+                        {field.options ? (
+                            <select id={field.id} name={field.name} defaultValue={values?.[field.name]}>
+                                {field.options.map((option) => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                            </select>
+                        ) : field.type === 'textarea' ? (
+                            <textarea
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                defaultValue={values?.[field.name] }
+                            />
+                        ) : (
+                            <input
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                type={field.type}
+                                defaultValue={values?.[field.name]}
+                            />
+                        )}
                     </div>
                 ))}
                 <div className="shared-entity-edit-form-actions">
                     <button type="submit">Save</button>
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={onCancel}>Cancel</button>
                 </div>
             </div>
         </form>

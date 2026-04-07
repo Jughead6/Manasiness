@@ -1,7 +1,7 @@
 export const staffFormFields = [
     {
         label: 'Worker',
-        placeholder: 'Write the worker',
+        placeholder: 'Write the user id',
         id: 'staff-worker',
         name: 'user_id',
         type: 'text'

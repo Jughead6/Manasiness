@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from '../../../shared/api/client';
+import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
 export async function getCategories() {
     return apiGet(`/categories`)
@@ -14,4 +14,8 @@ export async function createCategory(data) {
 
 export async function editCategory(id, data) {
     return apiPost(`/categories/${id}/edit`, data)
+}
+
+export async function deactivateCategory(id) {
+    return apiPatch(`/categories/${id}/deactivate`, {})
 }

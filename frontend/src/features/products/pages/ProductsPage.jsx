@@ -1,12 +1,9 @@
-import { useState, useEffect } from 'react'
-
-import PageTitle from '../../../shared/ui/titles/page/PageTitle.jsx'
-import CardLayout from '../../../shared/ui/layouts/card/CardLayout.jsx'
-
-import { getProducts, createProduct } from '../api/products.api.js'
-import { mapProductsToCards } from '../mappers/products.mapper.js'
-
-import ProductCreateModal from '../components/ProductCreateModal.jsx'
+import { useState, useEffect } from "react"
+import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
+import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
+import { getProducts, createProduct } from "../api/products.api.js"
+import { mapProductsToCards } from "../mappers/products.mapper.js"
+import ProductCreateModal from "../components/ProductCreateModal.jsx"
 
 function ProductsPage() {
     const [products, setProducts] = useState([])
@@ -21,7 +18,6 @@ function ProductsPage() {
                 console.log(error)
             }
         }
-
         fetchProducts()
     }, [])
 
@@ -40,9 +36,20 @@ function ProductsPage() {
 
     return (
         <>
-            <PageTitle title="Welcome to Products" subtitle="In this section you can create, edit and view the products you have"/>
-            <CardLayout data={products} action="Products" route="products" onCreateClick={() => setIsCreateModalOpen(true)} />
-            {isCreateModalOpen && <ProductCreateModal onClose={() => setIsCreateModalOpen(false)} onCreate={handleCreateProduct}/>}
+            <PageTitle 
+                title="Welcome to Products" 
+                subtitle="In this section you can create, edit and view the products you have"
+            />
+            <CardLayout 
+                data={products} 
+                action="Products" 
+                route="products" 
+                onCreateClick={() => setIsCreateModalOpen(true)}
+            />
+            {isCreateModalOpen && <ProductCreateModal 
+                onClose={() => setIsCreateModalOpen(false)} 
+                onCreate={handleCreateProduct}
+            />}
         </>
     )
 }

@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
-
-import PageTitle from '../../../shared/ui/titles/page/PageTitle.jsx'
-import TableLayout from '../../../shared/ui/layouts/table/TableLayout.jsx'
-
-import { getStaff, postStaff } from '../api/staff.api.js'
-import { mapStaffToTables } from '../mappers/staff.mapper.js'
-
-import StaffRegisterModal from '../components/StaffRegisterModal.jsx'
+import { useEffect, useState } from "react"
+import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
+import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
+import { getStaff, registerStaff } from "../api/staff.api.js"
+import { mapStaffToTables } from "../mappers/staff.mapper.js"
+import StaffRegisterModal from "../components/StaffRegisterModal.jsx"
 
 function StaffPage() {
     const [staff, setStaff] = useState([])
@@ -33,7 +30,7 @@ function StaffPage() {
 
     async function handleSubmit(formData) {
         try {
-            const result = await postStaff(formData)
+            const result = await registerStaff(formData)
             console.log(result)
             const response = await getStaff()
             setStaff(mapStaffToTables(response))
@@ -45,9 +42,19 @@ function StaffPage() {
 
     return (
         <>
-            <PageTitle title="Your Staff" subtitle="In this section you can view your staff record."/>
-            <TableLayout data={staff} columns={staffColumns} onCreateClick={() => setIsRegisterModalOpen(true)}/>
-            {isRegisterModalOpen && <StaffRegisterModal onClose={() => setIsRegisterModalOpen(false)} onCreate={handleSubmit}/>}
+            <PageTitle 
+                title="Your Staff" 
+                subtitle="In this section you can view your staff record."
+            />
+            <TableLayout 
+                data={staff} 
+                columns={staffColumns} 
+                onCreateClick={() => setIsRegisterModalOpen(true)}
+            />
+            {isRegisterModalOpen && <StaffRegisterModal 
+                onClose={() => setIsRegisterModalOpen(false)} 
+                onCreate={handleSubmit}
+                />}
         </>
     )
 }

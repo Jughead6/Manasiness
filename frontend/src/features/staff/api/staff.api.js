@@ -1,10 +1,10 @@
-import { apiGet, apiPost } from '../../../shared/api/client'
+import { apiGet, apiPost } from "../../../shared/api/client.js"
 
 export async function getStaff() {
     return apiGet(`/staff`)
 }
 
-export async function postStaff(data) {
+export async function registerStaff(data) {
     return apiPost(`/staff/register`, data)
 }
 

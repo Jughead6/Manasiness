@@ -1,4 +1,4 @@
-.shared-desactivation-panel {
+.shared-deactivation-panel {
     border: 1px solid black;
     background-color: white;
     height: 280px;
@@ -7,20 +7,27 @@
     flex-direction: column;
 }
 
-.shared-desactivation-hero {
+.shared-deactivation-hero {
     border-bottom: 1px solid black;
     padding: 15px;
     background-color: #bdb8ad;
 }
 
-.shared-desactivation-warning {
+.shared-deactivation-hero > p,
+.shared-deactivation-hero > h2,
+.shared-deactivation-warning > h3,
+.shared-deactivation-warning > p {
+    margin: 0;
+}
+
+.shared-deactivation-warning {
     height: 100%;
     padding: 15px;
     line-height: 30px;
     background-color: #ebe7e0;
 }
 
-.shared-desactivation-panel-actions {
+.shared-deactivation-actions {
     display: flex;
     margin-top: auto;
     border-top: 1px solid black;
@@ -30,6 +37,6 @@
     background-color: #bdb8ad;
 }
 
-.shared-desactivation-panel-actions > button {
+.shared-deactivation-actions > button {
     padding: 8px;
 }

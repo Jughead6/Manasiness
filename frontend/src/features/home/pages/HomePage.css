@@ -1,4 +1,4 @@
-#home {
+.home-page {
     background-color: white;
     width: 100%;
     display: grid;
@@ -7,59 +7,65 @@
     box-sizing: border-box;
 }
 
-.home-section {
+.home-page-section {
     background-color: rgba(198, 212, 225, 0.8);
     width: 100%;
-    border-radius: 15px;
     border: 2.4px solid black;
+    border-radius: 15px;
     display: flex;
     padding: 20px 80px;
+    box-sizing: border-box;
 }
 
-.home-subsection {
-    padding: 20px;
-    display: flex;
-    gap: 20px;
-}
-
-.home-section > div {
-    width: 100%;
-}
-
-.home-section h1 {
+.home-page-title {
     color: #bdb8ad;
     margin: 0;
     text-align: center;
     width: 100%;
 }
 
-.home-sectiontitle {
+.home-page-section > div {
+    width: 100%;
+}
+
+.home-page-section-title {
     width: 100%;
     background-color: #bdb8ad;
     text-align: center;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     padding: 8px;
+    box-sizing: border-box;
 }
 
-#home-sectionpurpose {
+.home-page-subsection {
+    padding: 20px;
     display: flex;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.home-page-section-purpose {
     gap: 70px;
 }
 
-#home-purpose {
+.home-page-purpose {
     flex: 1;
     border: 2px solid black;
     border-radius: 15px;
-}       
+}
 
-#home-instructions {
+.home-page-instructions {
     flex: 2;
     border: 2px solid black;
     border-radius: 15px;
 }
 
-.home-instruction {
+.home-page-subsection-text {
+    padding: 20px;
+}
+
+.home-page-instruction-card {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -67,21 +73,19 @@
     min-height: 150px;
 }
 
-.home-tutorial {
-    flex: 1;
-}                          
-
-#home-tutorial {
+.home-page-section-tutorial {
     border: 2.5px solid black;
     border-radius: 15px;
 }
 
+.home-page-tutorial-card {
+    flex: 1;
+}
 
-#home-tutorial h3 {
+.home-page-section-tutorial h3 {
     text-align: center;
 }
 
-#home-tutorial ul {
-    
+.home-page-section-tutorial ul {
     list-style: none;
 }

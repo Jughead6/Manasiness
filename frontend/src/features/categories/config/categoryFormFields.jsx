@@ -1,7 +1,7 @@
 export const categoryFormFields = [
     {
         label: 'Name',
-        placeholder: 'Write product name',
+        placeholder: 'Write category name',
         id: 'category-name',
         name: 'name',
         type: 'text'
@@ -18,7 +18,7 @@ export const categoryFormFields = [
 export const categoryEditFields = [
     {
         label: 'Name',
-        placeholder: 'Write product name',
+        placeholder: 'Write category name',
         id: 'category-name',
         name: 'name',
         type: 'text'

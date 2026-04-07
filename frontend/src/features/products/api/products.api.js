@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from '../../../shared/api/client';
+import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
 export async function getProducts() {
     return apiGet(`/products`)
@@ -16,3 +16,6 @@ export async function createProduct(data) {
     return apiPost(`/products/create`, data)
 }
 
+export async function deactivateProduct(id) {
+    return apiPatch(`/products/${id}/deactivate`, {})
+}

@@ -1,4 +1,4 @@
-import pool2 from '../config/db2.js'
+import pool2 from "../config/db2.js"
 
 export async function getCustomers(req, res) {
     try {

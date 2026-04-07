@@ -1,6 +1,6 @@
-import { Router } from 'express'
+import { Router } from "express"
 
-import { insertPlayground } from '../controllers/playground.controller.js'
+import { insertPlayground } from "../controllers/playground.controller.js"
 
 const router = Router()
 

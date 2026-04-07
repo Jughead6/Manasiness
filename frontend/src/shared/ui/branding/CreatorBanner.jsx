@@ -1,14 +1,15 @@
-import './CreatorBanner.css'
+import "./CreatorBanner.css"
 
 function CreatorBanner() {
     return (
         <div className="shared-creator-banner">
             <div className="shared-creator-banner-info">
-                <h4>Contributors ---</h4>
-                <h3>This project was created by Sebastián Torres. You can view this project publicly by clicking on the image.</h3>
-                <h5>Or you can also click here</h5>
+                <p className="shared-creator-banner-label">Contributors ---</p>
+                <h3>Created by Sebastian Torres</h3>
+                <p>This project was created by Sebastian Torres. You can view this project by clicking on the image.</p>
+                <p>Or you can also click here.</p>
             </div>
-            <img src="https://avatars.githubusercontent.com/u/97627021?v=4" alt="Sebastián Torres" />
+            <img src="https://avatars.githubusercontent.com/u/97627021?v=4" alt="Sebastian Torres profile" />
         </div>
     )
 }

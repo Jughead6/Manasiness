@@ -1,4 +1,4 @@
-import './TableActions.css'
+import "./TableActions.css"
 
 function TableActions({ onClick }) {
     return (

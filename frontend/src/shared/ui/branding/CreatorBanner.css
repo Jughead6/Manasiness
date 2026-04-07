@@ -19,5 +19,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    line-height: 40px;
+    gap: 10px;
+}
+
+.shared-creator-banner-label,
+.shared-creator-banner-info > h3,
+.shared-creator-banner-info > p {
+    margin: 0;
 }

@@ -1,9 +1,0 @@
-.shared-card-searchbar {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.shared-card-search-input {
-    padding: 6px 10px;
-}

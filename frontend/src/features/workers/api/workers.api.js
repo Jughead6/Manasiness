@@ -1,4 +1,4 @@
-import { apiGet } from "../../../shared/api/client";
+import { apiGet } from "../../../shared/api/client.js"
 
 export async function getWorkers() {
     return apiGet(`/workers`)

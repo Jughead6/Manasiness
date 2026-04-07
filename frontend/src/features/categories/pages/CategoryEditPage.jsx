@@ -1,13 +1,14 @@
-import EntityEditForm from "../../../shared/ui/forms/EntityEditForm"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { editCategory, getCategoryById } from "../api/categories.api.js"
 import { mapCategoryToEdit } from "../mappers/categories.mapper.js"
 import { categoryEditFields } from "../config/categoryFormFields.jsx"
+import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
 
 function CategoryEditPage() {
     const [editValues, setEditValues] = useState(null)
     const { id } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchEditValues() {
@@ -18,17 +19,22 @@ function CategoryEditPage() {
                 console.log(error)
             }
         }
-
         fetchEditValues()
     }, [id])
 
-    async function handleEditCategory(formData) {
+
+    async function handleSubmit(data) {
         try {
-            await editCategory(id, formData)
+            await editCategory(id, data)
             console.log('edited successfully')
+            navigate(`/dashboard/categories/${id}`)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function handleCancel() {
+        navigate(`/dashboard/categories/${id}`)
     }
 
     if (!editValues) return null
@@ -39,7 +45,8 @@ function CategoryEditPage() {
             values={editValues}
             sectionLabel="Categories"
             title="Edit Category"
-            onSubmit={handleEditCategory}
+            onSubmit={handleSubmit}
+            onCancel={handleCancel}
         />
     )
 }

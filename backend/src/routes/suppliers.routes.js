@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import { getSuppliers, getSuppliersById } from '../controllers/suppliers.controller.js'
+import { Router } from "express"
+import { getSuppliers, getSuppliersById } from "../controllers/suppliers.controller.js"
 
 const router = Router()
 

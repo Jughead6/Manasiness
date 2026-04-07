@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react'
-
-import PageTitle from '../../../shared/ui/titles/page/PageTitle.jsx'
-import CardLayout from '../../../shared/ui/layouts/card/CardLayout.jsx'
-
-import { createCategory, getCategories } from '../api/categories.api.js'
-import { mapCategoriesToCards } from '../mappers/categories.mapper.js'
-
-import CategoryCreateModal from '../components/CategoryCreateModal.jsx'
+import { useEffect, useState } from "react"
+import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
+import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
+import { createCategory, getCategories } from "../api/categories.api.js"
+import { mapCategoriesToCards } from "../mappers/categories.mapper.js"
+import CategoryCreateModal from "../components/CategoryCreateModal.jsx"
 
 function CategoriesPage() {
     const [categories, setCategories] = useState([])
@@ -21,7 +18,6 @@ function CategoriesPage() {
                 console.log(error)
             }
         }
-
         fetchCategories()
     }, [])
 
@@ -38,9 +34,20 @@ function CategoriesPage() {
 
     return (
         <>
-            <PageTitle  title="Welcome to Categories" subtitle="In this section you can create, edit and view the categories you have"/>
-            <CardLayout data={categories} action="Categories" route="categories" onCreateClick={() => setIsCreateModalOpen(true)}/>
-            {isCreateModalOpen && <CategoryCreateModal onClose={() => setIsCreateModalOpen(false)} onCreate={handleCreateCategory}/>}
+            <PageTitle  
+                title="Welcome to Categories" 
+                subtitle="In this section you can create, edit and view the categories you have"
+            />
+            <CardLayout 
+                data={categories} 
+                action="Categories" 
+                route="categories" 
+                onCreateClick={() => setIsCreateModalOpen(true)}
+            />
+            {isCreateModalOpen && <CategoryCreateModal 
+                onClose={() => setIsCreateModalOpen(false)} 
+                onCreate={handleCreateCategory}
+            />}
         </>
     )
 }

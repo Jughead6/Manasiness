@@ -25,3 +25,19 @@ export async function apiPost(path, data) {
 
     return result
 }
+
+export async function apiPatch(path, data) {
+    const response = await fetch(`${API_URL}${path}`, {
+        method: 'PATCH',
+        headers: { 'Content-type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+
+    const result = await response.json()
+
+    if(!response.ok) {
+        throw new Error('Request failed')
+    }
+
+    return result
+}

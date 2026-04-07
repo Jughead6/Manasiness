@@ -1,4 +1,4 @@
-import './ModalOverlay.css'
+import "./ModalOverlay.css"
 
 function ModalOverlay({ children, onClose }) {
     return (

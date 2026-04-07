@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import { getStaff, registerStaff } from '../controllers/staff.controller.js'
+import { Router } from "express"
+import { getStaff, registerStaff } from "../controllers/staff.controller.js"
 
 const router = Router()
 

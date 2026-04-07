@@ -1,42 +1,42 @@
 export const productFormFields = [
     {
         label: 'Name',
-        placeholder: 'Write product name',
+        placeholder: 'Write the name product',
         id: 'product-name',
         name: 'name',
         type: 'text'
     },
     {
         label: 'Category',
-        placeholder: 'Write category id',
+        placeholder: 'Write the category id',
         id: 'product-category',
         name: 'category_id',
         type: 'text'
     },
     {
         label: 'Image',
-        placeholder: 'Write image URL',
+        placeholder: 'Write the image URL',
         name: 'image',
         id: 'product-image',
         type: 'text'
     },
     {
         label: 'Cost Price',
-        placeholder: 'Write cost price',
+        placeholder: 'Write the cost price',
         name: 'cost_price',
         id: 'product-cost-price',
         type: 'number'
     },
     {
         label: 'Sale Price',
-        placeholder: 'Write sale price',
+        placeholder: 'Write the sale price',
         name: 'sale_price',
         id: 'product-sale-price',
         type: 'number'
     },
     {
         label: 'Stock Product',
-        placeholder: 'Write stock amount',
+        placeholder: 'Write the stock amount',
         name: 'stock',
         id: 'product-stock',
         type: 'number'
@@ -60,7 +60,7 @@ export const productEditFields = [
     },
     {
         label: 'Image',
-        placeholder: 'Write the image',
+        placeholder: 'Write the image URL',
         id: 'product-image',
         name: 'image',
         type: 'text'
@@ -81,7 +81,7 @@ export const productEditFields = [
     },
     {
         label: 'Stock',
-        placeholder: 'Write the stock',
+        placeholder: 'Write the stock amount',
         id: 'product-stock',
         name: 'stock',
         type: 'number'

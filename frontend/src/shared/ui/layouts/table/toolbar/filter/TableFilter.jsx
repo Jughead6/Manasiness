@@ -1,24 +1,34 @@
-import './TableFilter.css'
+import "./TableFilter.css"
 
 function TableFilter() {
     return (
-        <div className="shared-table-filter">
-            <h2>Filter By</h2>
-            <ul>
+        <fieldset className="shared-table-filter">
+            <legend>Filter By</legend>
+            <ul className="shared-table-filter-options">
                 <li>
-                    <label className="shared-table-filter-option">
-                        <span>More recently</span>
-                        <input type="radio" name="filter" className="shared-table-filter-morerecently"></input>
+                    <label className="shared-table-filter-option" htmlFor="shared-table-filter-recent">
+                        <span>Most Recent</span>
+                        <input
+                            id="shared-table-filter-recent"
+                            type="radio"
+                            name="table-sort-order"
+                            value="recent"
+                        />
                     </label>
                 </li>
                 <li>
-                    <label className="shared-table-filter-option">
+                    <label className="shared-table-filter-option" htmlFor="shared-table-filter-oldest">
                         <span>Oldest</span>
-                        <input type="radio" name="filter" className="shared-table-filter-oldest"></input>
+                        <input
+                            id="shared-table-filter-oldest"
+                            type="radio"
+                            name="table-sort-order"
+                            value="oldest"
+                        />
                     </label>
                 </li>
-            </ul>                               
-        </div>
+            </ul>
+        </fieldset>
     )
 }
 

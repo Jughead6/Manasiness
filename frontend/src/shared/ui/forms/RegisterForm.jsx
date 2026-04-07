@@ -1,4 +1,4 @@
-import './RegisterForm.css'
+import "./RegisterForm.css"
 
 function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
     function handleSubmit(e) {
@@ -16,7 +16,27 @@ function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
                 <div key={field.id}>
                     <div className="shared-register-form-field">
                         <label htmlFor={field.id}>{field.label}</label>
-                        <input id={field.id} name={field.name} type={field.type} placeholder={field.placeholder}></input>
+
+                        {field.options ? (
+                            <select id={field.id} name={field.name} defaultValue="">
+                                {field.options.map((option) => (
+                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                ))}
+                            </select>
+                        ) : field.type === 'textarea' ? (
+                            <textarea
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                            />
+                        ) : (
+                            <input
+                                id={field.id}
+                                name={field.name}
+                                type={field.type}
+                                placeholder={field.placeholder}
+                            />
+                        )}
                     </div>
                 </div>
             ))}

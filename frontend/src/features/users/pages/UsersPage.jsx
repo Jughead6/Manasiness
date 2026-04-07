@@ -1,12 +1,9 @@
-import { useState, useEffect } from 'react'
-
-import PageTitle from '../../../shared/ui/titles/page/PageTitle.jsx'
-import CardLayout from '../../../shared/ui/layouts/card/CardLayout.jsx'
-
-import { getUsers, createUser } from '../api/users.api.js'
-import { mapUsersToCards } from '../mappers/users.mapper.js'
-
-import UserCreateModal from '../components/UserCreateModal.jsx'
+import { useState, useEffect } from "react"
+import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
+import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
+import { getUsers, createUser } from "../api/users.api.js"
+import { mapUsersToCards } from "../mappers/users.mapper.js"
+import UserCreateModal from "../components/UserCreateModal.jsx"
 
 function UsersPage() {
     const [ users, setUsers ] = useState([])
@@ -21,7 +18,6 @@ function UsersPage() {
                 console.log(error)
             }
         }
-
         fetchUsers()
     }, [])
 
@@ -40,8 +36,15 @@ function UsersPage() {
 
     return (
         <>
-            <PageTitle  title="Welcome to Users" subtitle="In this section you can create, edit and view the Users you have"/>
-            <CardLayout data={users} action="Users" route="users" onCreateClick={() => setIsCreateModalOpen(true)}/>
+            <PageTitle  
+                title="Welcome to Users" 
+                subtitle="In this section you can create, edit and view the users you have"/>
+            <CardLayout 
+                data={users} 
+                action="Users" 
+                route="users" 
+                onCreateClick={() => setIsCreateModalOpen(true)}
+            />
             {isCreateModalOpen && <UserCreateModal onClose={() => setIsCreateModalOpen(false)} onCreate={handleCreateUser}/>}
         </>
     )

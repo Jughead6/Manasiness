@@ -1,19 +1,19 @@
-#dashboardlayout {
+.dashboard-layout {
     display: flex;
     height: 100vh;
 }
 
-#dashboardlayout-sidebar {
+.dashboard-layout-sidebar {
     flex-shrink: 0;
 }
 
-#dashboardlayout-content {
+.dashboard-layout-content {
     flex: 1;
-    overflow-y: auto;
     display: flex;
+    overflow-y: auto;
 }
 
-.dashboardlayout-page {
+.dashboard-layout-page {
     flex: 1;
     width: 100%;
     padding: 30px 80px;
