@@ -1,4 +1,4 @@
-import './PersonHistory.css'
+import "./PersonHistory.css"
 
 function PersonHistory({ data, columns, sectionTitle }) {
     return (

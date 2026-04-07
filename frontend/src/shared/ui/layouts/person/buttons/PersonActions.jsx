@@ -1,6 +1,6 @@
-import './PersonActions.css'
+import "./PersonActions.css"
 
-import { StepForward, StepBack, } from 'lucide-react'
+import { StepForward, StepBack, } from "lucide-react"
 
 function PersonActions() {
     return (

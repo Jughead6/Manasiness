@@ -1,4 +1,4 @@
-import './DrawerPanel.css'
+import "./DrawerPanel.css"
 
 function DrawerPanel({ children, onClose }) {
     return (

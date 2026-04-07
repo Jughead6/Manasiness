@@ -4,21 +4,19 @@
     background-color: #ebe7e0;
 }
 
-.shared-table-filter > h2 {
-    text-align: center;
+.shared-table-filter > legend {
+    padding: 0 4px;
+    margin: 0 auto;
 }
 
-.shared-table-filter > ul {
+.shared-table-filter-options {
     display: flex;
     gap: 20px;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.shared-table-filter > ul > li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
 .shared-table-filter-option {
     display: flex;
     align-items: center;

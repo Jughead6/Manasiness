@@ -1,20 +1,20 @@
-import ModalOverlay from '../../../shared/ui/modal/ModalOverlay.jsx'
-import EntityForm from '../../../shared/ui/forms/EntityForm.jsx'
-import CreatorBanner from '../../../shared/ui/branding/CreatorBanner.jsx'
+import ModalOverlay from "../../../shared/ui/modal/ModalOverlay.jsx"
+import EntityForm from "../../../shared/ui/forms/EntityForm.jsx"
+import CreatorBanner from "../../../shared/ui/branding/CreatorBanner.jsx"
+import { userFormFields } from "../config/userFormFields.jsx"
 
-import { userFormFields } from '../config/userFormFields.jsx'
-
-function UserCreateModal({ onClose }) {
+function UserCreateModal({ onClose, onCreate }) {
     return (
-        <ModalOverlay  onClose={onClose}>
+        <ModalOverlay onClose={onClose}>
             <>
                 <EntityForm
-                    sectionLabel="Users ----"
+                    sectionLabel="Users"
                     title="Create Your User"
                     fields={userFormFields}
                     onCancel={onClose}
+                    onSubmit={onCreate}
                 />
-                <CreatorBanner/>
+                <CreatorBanner />
             </>
         </ModalOverlay>
     )

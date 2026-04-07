@@ -3,7 +3,7 @@ export function mapOrdersToTables(data) {
         id: item.id,
         date: item.date,
         product: item.product,
-        customer: item.customer,
+        supplier: item.supplier,
         price: item.price,
         quantity: item.quantity,
         state: item.state

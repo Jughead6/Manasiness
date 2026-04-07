@@ -1,109 +1,100 @@
-import './DashboardSidebar.css'
+import "./DashboardSidebar.css"
 
-import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, Pickaxe, ChartColumnDecreasing, PillBottle, LockKeyhole, BriefcaseBusiness  } from "lucide-react"
-import { NavLink, Link } from 'react-router-dom'
+import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, ChartColumnDecreasing, PillBottle, BriefcaseBusiness } from "lucide-react"
+import { NavLink, Link } from "react-router-dom"
 
 function DashboardSidebar() {
     return (
-        <div className='dashboard'>
-            <div>
-                <div>
-                    <Link to="/dashboard" className="dashboard-manasiness">
-                        <h2>Manasiness</h2>
-                    </Link>
-                </div>
+        <div className="dashboard-sidebar">
+            <div className="dashboard-sidebar-brand-wrapper">
+                <Link to="/dashboard" className="dashboard-sidebar-brand">
+                    <h2>Manasiness</h2>
+                </Link>
             </div>
-            <div className="dashboard-list">
+
+            <div className="dashboard-sidebar-list">
                 <ul>
-                    <li className='dashboard-sublists'>
-                        <h3 className='dashboard-category'>ACTIONS</h3>
+                    <li className="dashboard-sidebar-group">
+                        <h3 className="dashboard-sidebar-group-title">ACTIONS</h3>
+
                         <ul>
                             <li>
-                                <NavLink to="/dashboard/categories" className='dashboard-subcategory'>
-                                    <TableOfContents className='dashboard-icon'/>
+                                <NavLink to="/dashboard/categories" className="dashboard-sidebar-link">
+                                    <TableOfContents className="dashboard-sidebar-icon" />
                                     Categories
                                 </NavLink>
                             </li>
+
                             <li>
-                                <NavLink to="/dashboard/products" className='dashboard-subcategory'>
-                                    <PackageSearch className='dashboard-icon'/>
+                                <NavLink to="/dashboard/products" className="dashboard-sidebar-link">
+                                    <PackageSearch className="dashboard-sidebar-icon" />
                                     Products
                                 </NavLink>
                             </li>
+
                             <li>
-                                <NavLink to="/dashboard/users" className='dashboard-subcategory'>
-                                    <Contact className='dashboard-icon'/>
+                                <NavLink to="/dashboard/users" className="dashboard-sidebar-link">
+                                    <Contact className="dashboard-sidebar-icon" />
                                     Users
                                 </NavLink>
                             </li>
-                        </ul> 
-                    </li>                       
+                        </ul>
+                    </li>
 
-                    
-                    <li className='dashboard-sublists'>
-                        <h3 className='dashboard-category'>YOUR SPACE</h3>
+                    <li className="dashboard-sidebar-group">
+                        <h3 className="dashboard-sidebar-group-title">YOUR SPACE</h3>
+
                         <ul>
                             <li>
-                                <NavLink to="/dashboard/sales" className='dashboard-subcategory'>
-                                    <BadgeDollarSign className='dashboard-icon'/>
+                                <NavLink to="/dashboard/sales" className="dashboard-sidebar-link">
+                                    <BadgeDollarSign className="dashboard-sidebar-icon" />
                                     Sales
                                 </NavLink>
                             </li>
+
                             <li>
-                                <NavLink to="/dashboard/orders" className='dashboard-subcategory'>
-                                    <ChartColumnDecreasing className='dashboard-icon'/>
+                                <NavLink to="/dashboard/orders" className="dashboard-sidebar-link">
+                                    <ChartColumnDecreasing className="dashboard-sidebar-icon" />
                                     Orders
                                 </NavLink>
                             </li>
+
                             <li>
-                                <NavLink to="/dashboard/staff" className='dashboard-subcategory'>
-                                    <BriefcaseBusiness className='dashboard-icon'/>
+                                <NavLink to="/dashboard/staff" className="dashboard-sidebar-link">
+                                    <BriefcaseBusiness className="dashboard-sidebar-icon" />
                                     Staff
                                 </NavLink>
                             </li>
                         </ul>
                     </li>
 
-                    <li className='dashboard-sublists'>
-                        <h3 className='dashboard-category'>USERS</h3>
+                    <li className="dashboard-sidebar-group">
+                        <h3 className="dashboard-sidebar-group-title">USERS</h3>
+
                         <ul>
                             <li>
-                                <NavLink to="/dashboard/customers" className='dashboard-subcategory'>
-                                    <FileUser className='dashboard-icon'/>
+                                <NavLink to="/dashboard/customers" className="dashboard-sidebar-link">
+                                    <FileUser className="dashboard-sidebar-icon" />
                                     Customers
                                 </NavLink>
                             </li>
+
                             <li>
-                                <NavLink to="/dashboard/suppliers" className='dashboard-subcategory'>
-                                    <PillBottle className='dashboard-icon'/>
+                                <NavLink to="/dashboard/suppliers" className="dashboard-sidebar-link">
+                                    <PillBottle className="dashboard-sidebar-icon" />
                                     Suppliers
                                 </NavLink>
                             </li>
-                                                        <li>
-                                <NavLink to="/dashboard/workers" className='dashboard-subcategory'>
-                                    <FileUser className='dashboard-icon'/>
+
+                            <li>
+                                <NavLink to="/dashboard/workers" className="dashboard-sidebar-link">
+                                    <FileUser className="dashboard-sidebar-icon" />
                                     Workers
                                 </NavLink>
                             </li>
                         </ul>
-                    </li>   
-
-                    
-                    {/* <li className='dashboard-sublists'> 
-                        <h3 className='dashboard-category'>ADMIN</h3>
-                        <ul>
-
-
-
-                            <li>
-                                <NavLink to="/dashboard/password" className='dashboard-subcategory'>
-                                    <LockKeyhole className='dashboard-icon'/>
-                                    Password
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </li> */}
-                </ul>   
+                    </li>
+                </ul>
             </div>
         </div>
     )

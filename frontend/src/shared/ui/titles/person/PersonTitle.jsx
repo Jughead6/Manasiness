@@ -1,4 +1,4 @@
-import './PersonTitle.css'
+import "./PersonTitle.css"
 
 function PersonTitle({ name, title }) {
     return (

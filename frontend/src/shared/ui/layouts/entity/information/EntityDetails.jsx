@@ -1,4 +1,4 @@
-import './EntityDetails.css'
+import "./EntityDetails.css"
 
 function EntityDetails({ detail }) {
     return (

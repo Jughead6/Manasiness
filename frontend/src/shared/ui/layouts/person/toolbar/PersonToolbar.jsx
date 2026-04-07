@@ -1,6 +1,6 @@
-import './PersonToolbar.css'
+import "./PersonToolbar.css"
 
-import PersonHistoryFilter from './filter/PersonHistoryFilter.jsx'
+import PersonHistoryFilter from "./filter/PersonHistoryFilter.jsx"
 
 function PersonToolbar() {
     return (
