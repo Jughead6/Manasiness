@@ -4,7 +4,7 @@ import CreatorBanner from '../../../shared/ui/branding/CreatorBanner.jsx'
 
 import { userFormFields } from '../config/userFormFields.jsx'
 
-function UserCreateModal({ onClose }) {
+function UserCreateModal({ onClose, onCreate }) {
     return (
         <ModalOverlay  onClose={onClose}>
             <>
@@ -13,6 +13,7 @@ function UserCreateModal({ onClose }) {
                     title="Create Your User"
                     fields={userFormFields}
                     onCancel={onClose}
+                    onSubmit={onCreate}
                 />
                 <CreatorBanner/>
             </>

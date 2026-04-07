@@ -4,7 +4,7 @@ import CreatorBanner from '../../../shared/ui/branding/CreatorBanner.jsx'
 
 import { productFormFields } from '../config/productFormFields.jsx'
 
-function ProductCreateModal({ onClose }) {
+function ProductCreateModal({ onClose, onCreate }) {
     return (
         <ModalOverlay onClose={onClose}>
             <>
@@ -13,6 +13,7 @@ function ProductCreateModal({ onClose }) {
                     title="Create Your Product"
                     fields={productFormFields}
                     onCancel={onClose}
+                    onSubmit={onCreate}
                 />
                 <CreatorBanner />
             </>

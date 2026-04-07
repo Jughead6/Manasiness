@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from 'react'
 
 import PageTitle from '../../../shared/ui/titles/page/PageTitle.jsx'
 import TableLayout from '../../../shared/ui/layouts/table/TableLayout.jsx'
 
-import { getSales } from '../api/sales.api'
+import { getSales, postSales } from '../api/sales.api'
 import { mapSalesToTables } from '../mappers/sales.mapper.js'
 
 import SaleRegisterModal from '../components/SaleRegisterModal.jsx'
@@ -16,23 +15,41 @@ function SalesPage() {
     const salesColumns = [
         { key: 'date', label: 'Date' },
         { key: 'product', label: 'Product' },
-        { key: 'worker', label: 'Worker' },
+        { key: 'customer', label: 'Customer' },
         { key: 'price', label: 'Price' },
         { key: 'quantity', label: 'Quantity' },
         { key: 'state', label: 'State' }
     ]
 
     useEffect(() => {
-        getSales().then((data) => {
-            setSales(mapSalesToTables(data))
-        })
+        async function fetchSales() {
+            try {
+                const response = await getSales()
+                setSales(mapSalesToTables(response))
+            } catch (error) {
+                console.log(error)
+            } 
+        } 
+        fetchSales()
     }, [])
+
+    async function handleSubmit(formData) {
+        try {
+            const result = await postSales(formData)
+            console.log(result)
+            const response = await getSales()
+            setSales(mapSalesToTables(response))
+            setIsRegisterModalOpen(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
             <PageTitle title="Your Sales" subtitle="In this section you can view your sales record."/>
             <TableLayout data={sales} columns={salesColumns} onCreateClick={() => setIsRegisterModalOpen(true)}/>
-            {isRegisterModalOpen && <SaleRegisterModal onClose={() => setIsRegisterModalOpen(false)} />}
+            {isRegisterModalOpen && <SaleRegisterModal onClose={() => setIsRegisterModalOpen(false)} onCreate={handleSubmit}/>}
 
                 
         </>

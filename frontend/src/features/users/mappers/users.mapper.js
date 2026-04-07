@@ -5,7 +5,8 @@ export function mapUsersToCards(data) {
         image: item.image,
         details: [
             `Phone: ${item.phone}`,
-            `Role: ${item.role}`
+            `Role: ${item.role}`,
+            `Active: ${item.is_active ? 'Yes' : 'No'}`
         ]
     }))
 }
@@ -17,7 +18,20 @@ export function mapUserToDetail(item) {
         image: item.image,
         details: [
             `Phone: ${item.phone}`,
-            `Role: ${item.role}`
+            `Role: ${item.role}`,
+            `Created At: ${item.created_at}`,
+            `Updated At: ${item.updated_at || 'No updates yet'}`,
+            `Active: ${item.is_active ? 'Yes' : 'No'}`
         ]
+    }
+}
+
+export function mapUserToEdit(item) {
+    return {
+        id: item.id,
+        name: item.name,
+        image: item.image,
+        phone: item.phone,
+        role: item.role
     }
 }

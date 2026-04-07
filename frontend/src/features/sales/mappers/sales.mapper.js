@@ -3,10 +3,9 @@ export function mapSalesToTables(data) {
         id: item.id,
         date: item.date,
         product: item.product,
-        worker: item.worker,
+        customer: item.customer,
         price: item.price,
         quantity: item.quantity,
         state: item.state
     }))
 }
-

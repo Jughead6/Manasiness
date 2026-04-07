@@ -4,10 +4,15 @@ import RegisterForm from '../../../shared/ui/forms/RegisterForm.jsx'
 
 import { staffFormFields } from '../config/staffFormFields.jsx'
 
-function StaffRegisterModal({onClose}) {
+function StaffRegisterModal({onClose, onCreate }) {
     return (
         <DrawerPanel onClose={onClose}>
-            <RegisterForm fields={staffFormFields} sectionLabel="Staffs" title="Register you Staff" onCancel={onClose}/>
+            <RegisterForm fields={staffFormFields} 
+            sectionLabel="Staffs" 
+            title="Register you Staff" 
+            onCancel={onClose} 
+            onSubmit={onCreate }
+        />
             <div className="shared-drawer-banner-slot">
                 <CreatorBanner className="bannner"/>
             </div>

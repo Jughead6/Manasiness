@@ -3,7 +3,10 @@ export function mapCategoriesToCards(data) {
         id: item.id,
         name: item.name,
         image: item.image,
-        details: []
+        details: [
+            `Created At: ${item.created_at}`,
+            `Active: ${item.is_active ? 'Yes' : 'No'}`
+        ]
     }))
 }
 
@@ -13,7 +16,17 @@ export function mapCategoryToDetail(item) {
         name: item.name,
         image: item.image,
         details: [
-            `Created At: ${item.date}`
+            `Created At: ${item.created_at}`,
+            `Updated At: ${item.updated_at || 'No updates yet'}`,
+            `Active: ${item.is_active ? 'Yes' : 'No'}`
         ]
+    }
+}
+
+export function mapCategoryToEdit(item) {
+    return {
+        id: item.id,
+        name: item.name,
+        image: item.image,
     }
 }

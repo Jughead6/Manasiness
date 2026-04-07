@@ -4,15 +4,16 @@ import CreatorBanner from '../../../shared/ui/branding/CreatorBanner.jsx'
 
 import { categoryFormFields } from '../config/categoryFormFields.jsx'
 
-function CategoryCreateModal({ onClose }) {
+function CategoryCreateModal({ onClose, onCreate }) {
     return (
         <ModalOverlay onClose={onClose}>
             <>
-                <EntityForm
-                    sectionLabel="Category ----"
-                    title="Create Your Category"
-                    fields={categoryFormFields}
-                    onCancel={onClose}
+                <EntityForm 
+                    sectionLabel="Category ----" 
+                    title="Create Your Category" 
+                    fields={categoryFormFields} 
+                    onCancel={onClose} 
+                    onSubmit={onCreate}
                 />
                 <CreatorBanner/>
             </>
