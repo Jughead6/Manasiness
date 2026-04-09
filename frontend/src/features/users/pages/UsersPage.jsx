@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { toast } from "react-toastify"
 import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
 import { getUsers, createUser } from "../api/users.api.js"
@@ -29,8 +30,10 @@ function UsersPage() {
             const data = await getUsers()
             setUsers(mapUsersToCards(data))
             setIsCreateModalOpen(false)
+            toast.success("User created successfully")  
         } catch (error) {
             console.log(error)
+            toast.error("Could not create user")
         }
     }
 

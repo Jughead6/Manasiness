@@ -4,6 +4,6 @@ export async function getCustomers() {
     return apiGet(`/customers`)
 }
 
-export async function getCustomerById(id) {
-    return apiGet(`/customers/${id}`)
+export async function getCustomerById(id, sortOrder = "recent", page = 1) {
+    return apiGet(`/customers/${id}?sort=${sortOrder}&page=${page}`)
 }

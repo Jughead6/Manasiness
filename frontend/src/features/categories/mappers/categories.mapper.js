@@ -15,6 +15,7 @@ export function mapCategoryToDetail(item) {
         id: item.id,
         name: item.name,
         image: item.image,
+        isActive: item.is_active,
         details: [
             `Created At: ${item.created_at}`,
             `Updated At: ${item.updated_at || 'No updates yet'}`,
@@ -29,4 +30,11 @@ export function mapCategoryToEdit(item) {
         name: item.name,
         image: item.image,
     }
+}
+
+export function mapCategoryOptions(data) {
+    return data.map((item) => ({
+        value: String(item.id),
+        label: item.name
+    }))
 }

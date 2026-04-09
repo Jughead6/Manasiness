@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
 import { createCategory, getCategories } from "../api/categories.api.js"
@@ -27,8 +28,10 @@ function CategoriesPage() {
             const data = await getCategories()
             setCategories(mapCategoriesToCards(data))
             setIsCreateModalOpen(false)
+            toast.success("Category created successfully")
         } catch (error) {
             console.log(error)
+            toast.error("Could not create category")
         }
     }
 

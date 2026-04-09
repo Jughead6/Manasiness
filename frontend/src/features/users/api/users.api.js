@@ -20,3 +20,7 @@ export async function deactivateUser(id) {
     return apiPatch(`/users/${id}/deactivate`, {})
 }
 
+export async function activateUser(id) {
+    return apiPatch(`/users/${id}/activate`, {})
+}
+

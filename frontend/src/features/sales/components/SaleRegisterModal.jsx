@@ -1,14 +1,35 @@
+import { useState, useEffect } from "react"
 import DrawerPanel from "../../../shared/ui/modal/DrawerPanel.jsx"
 import CreatorBanner from "../../../shared/ui/branding/CreatorBanner.jsx"
 import RegisterForm from "../../../shared/ui/forms/RegisterForm.jsx"
-
-import { saleFormFields } from "../config/saleFormFields.jsx"
+import { getSaleFormFields } from "../config/saleFormFields.jsx"
+import { getCustomerOptions } from "../api/sales.api.js"
+import { mapCustomerOptions } from "../mappers/sales.mapper.js"
+import { getProductOptions } from "../../products/api/products.api.js"
+import { mapProductOptions } from "../../products/mappers/products.mapper.js"
 
 function SaleRegisterModal({onClose, onCreate}) {
+    const [customerOptions, setCustomerOptions] = useState([])
+    const [productOptions, setProductOptions] = useState([])
+
+    useEffect(() => {
+        async function fetchWorkerOptions() {
+            try {
+                const response = await getCustomerOptions()
+                setCustomerOptions(mapCustomerOptions(response))
+                const products = await getProductOptions()
+                setProductOptions(mapProductOptions(products))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchWorkerOptions()
+    }, [])
+
     return (
         <DrawerPanel onClose={onClose}>
             <RegisterForm 
-                fields={saleFormFields} 
+                fields={getSaleFormFields(customerOptions, productOptions)} 
                 sectionLabel="Sales" 
                 title="Register your new sale!" 
                 onCancel={onClose}

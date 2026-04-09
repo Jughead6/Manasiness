@@ -1,30 +1,45 @@
-export const orderFormFields = [
+export function getOrderFormFields(supplierOptions = [], productOptions = []) {
+    return [
     {
         label: 'Product',
-        placeholder: 'Write the product id',
         id: 'order-product',
         name: 'product_id',
-        type: 'text'
+        options: [
+            { value: '', label: 'Select a product', disabled: true },
+            ...productOptions
+        ],
+        required: true,
+        defaultValue: ''
     },
     {
         label: 'Supplier',
         placeholder: 'Write the supplier id',
         id: 'order-supplier',
         name: 'user_id',
-        type: 'text'
+        options: [
+            { value: '', label: 'Selection a supplier', disabled: true },
+            ...supplierOptions
+        ],
+        required: true
     },
     {
         label: 'Quantity',
         placeholder: 'Write the quantity',
         id: 'order-quantity',
         name: 'quantity',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'State',
         placeholder: 'Write the state',
         id: 'order-state',
         name: 'state',
-        type: 'text'
+        options: [
+            { value: 'pending', label: 'Pending'},
+            { value: 'paid', label: 'Paid'}
+        ],
+        required: true
     }
-]
+]}
+

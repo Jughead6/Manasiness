@@ -9,7 +9,9 @@
     flex-direction: column;
 }
 
-.shared-register-form-field > input {
+.shared-register-form-field > input,
+.shared-register-form-field > select,
+.shared-register-form-field > textarea {
     padding: 12px;
 }
 

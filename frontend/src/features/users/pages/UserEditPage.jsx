@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import { editUser, getUserById } from "../api/users.api.js"
 import { mapUserToEdit } from "../mappers/users.mapper.js"
 import { userEditFields } from "../config/userFormFields.jsx"
@@ -27,8 +28,10 @@ function UserEditPage() {
             await editUser(id, formData)
             console.log('edited successfully')
             navigate(`/dashboard/users/${id}`)
+            toast.success("User edited successfully")
         } catch (error) {
             console.log(error)
+            toast.error("The user could not be edited")
         }
     }
 

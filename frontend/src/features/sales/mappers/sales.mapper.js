@@ -9,3 +9,10 @@ export function mapSalesToTables(data) {
         state: item.state
     }))
 }
+
+export function mapCustomerOptions(data) {
+    return data.map((item) => ({
+        value: String(item.id),
+        label: item.name
+    }))
+}

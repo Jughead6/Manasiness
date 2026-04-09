@@ -7,3 +7,10 @@ export function mapStaffToTables(data) {
         state: item.state
     }))
 }
+
+export function mapWorkerOptions(data) {
+    return data.map((item) => ({
+        value: String(item.id),
+        label: item.name
+    }))
+}

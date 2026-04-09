@@ -1,6 +1,6 @@
 import "./TableFilter.css"
 
-function TableFilter() {
+function TableFilter({ value, onChange }) {
     return (
         <fieldset className="shared-table-filter">
             <legend>Filter By</legend>
@@ -13,6 +13,8 @@ function TableFilter() {
                             type="radio"
                             name="table-sort-order"
                             value="recent"
+                            checked={value === 'recent'}
+                            onChange={onChange}
                         />
                     </label>
                 </li>
@@ -24,6 +26,8 @@ function TableFilter() {
                             type="radio"
                             name="table-sort-order"
                             value="oldest"
+                            checked={value === 'oldest'}
+                            onChange={onChange}
                         />
                     </label>
                 </li>

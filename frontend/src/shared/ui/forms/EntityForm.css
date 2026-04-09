@@ -25,7 +25,8 @@
 }
 
 .shared-entity-form-group > input,
-.shared-entity-form-group > textarea {
+.shared-entity-form-group > textarea,
+.shared-entity-form-group > select {
     padding: 9px;
     border: 1px solid black;
     border-radius: 8px;

@@ -19,9 +19,19 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
                         <label htmlFor={field.id}>{field.label}</label>
 
                         {field.options ? (
-                            <select id={field.id} name={field.name} defaultValue={field.defaultValue}>
+                            <select
+                                id={field.id}
+                                name={field.name}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
+                            >
                                 {field.options.map((option) => (
-                                    <option key={option.value} value={option.value}>
+                                    <option
+                                        key={option.value}
+                                        value={option.value}
+                                        disabled={option.disabled}
+                                    >
                                         {option.label}
                                     </option>
                                 ))}
@@ -31,7 +41,9 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
                                 id={field.id}
                                 name={field.name}
                                 placeholder={field.placeholder}
-                                defaultValue={field.defaultValue}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         ) : (
                             <input
@@ -39,7 +51,9 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
                                 name={field.name}
                                 type={field.type}
                                 placeholder={field.placeholder}
-                                defaultValue={field.defaultValue}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         )}
                     </div>

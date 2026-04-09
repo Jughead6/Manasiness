@@ -1,13 +1,11 @@
 import "./PersonHistoryFilter.css"
 
-function PersonHistoryFilter() {
+function PersonHistoryFilter({ value, onChange }) {
     return (
-            <select className="shared-person-history-filter">
-                <option value="week">1 week</option>
-                <option value="month">1 month</option>
-                <option value="year">1 year</option>
-            </select>
-
+        <select className="shared-person-history-filter" value={value} onChange={onChange}>
+            <option value="recent">Most Recent</option>
+            <option value="oldest">Oldest</option>
+        </select>
     )
 }
 
