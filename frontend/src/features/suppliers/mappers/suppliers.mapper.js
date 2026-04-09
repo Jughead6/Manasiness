@@ -8,8 +8,8 @@ export function mapSuppliersToCards(data) {
 
 export function mapSupplierToDetail(data) {
     return {
-        name: data.length > 0 ? data[0].name : '',
-        details: data.map((item) => ([
+        name: data.name || '',
+        details: (data.rows || []).map((item) => ([
             item.date,
             item.product,
             item.price,
@@ -17,4 +17,8 @@ export function mapSupplierToDetail(data) {
             item.state
         ]))
     }
+}
+
+export function mapTotalPage(data) {
+    return Math.ceil((data.total_rows || 0) / 20)
 }

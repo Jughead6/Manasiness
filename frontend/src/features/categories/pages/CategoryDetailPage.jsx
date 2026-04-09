@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 import EntityTitle from "../../../shared/ui/titles/entity/EntityTitle.jsx"
 import EntityLayout from "../../../shared/ui/layouts/entity/EntityLayout.jsx"
-import { deactivateCategory, getCategoryById } from "../api/categories.api.js"
+import { activateCategory, deactivateCategory, getCategoryById } from "../api/categories.api.js"
 import { mapCategoryToDetail } from "../mappers/categories.mapper.js"
 import CategoryDeactivationModal from "../components/CategoryDeactivationModal.jsx"
 
@@ -29,8 +30,22 @@ function CategoryDetailPage() {
             const data = await getCategoryById(id)
             setDetail(mapCategoryToDetail(data))
             setIsDeactivationOpen(false)
+            toast.success("Category successfully deactivated")
         } catch (error) {
             console.log(error)
+            toast.error("The category could not be deactivated")
+        }
+    }
+
+    async function handleActivate() {
+        try {
+            await activateCategory(id)
+            const data = await getCategoryById(id)
+            setDetail(mapCategoryToDetail(data))
+            toast.success("Category successfully activated")
+        } catch (error) {
+            console.log(error)
+            toast.error("The category could not be activated")
         }
     }
 
@@ -47,6 +62,7 @@ function CategoryDetailPage() {
             <EntityLayout 
                 detail={detail} 
                 onDeactivateClick={() => setIsDeactivationOpen(true)}
+                onActivateClick={handleActivate}
             />
             {isDeactivationOpen && <CategoryDeactivationModal
                 onClose={() => setIsDeactivationOpen(false)}

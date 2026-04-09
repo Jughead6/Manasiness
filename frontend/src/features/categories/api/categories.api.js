@@ -19,3 +19,11 @@ export async function editCategory(id, data) {
 export async function deactivateCategory(id) {
     return apiPatch(`/categories/${id}/deactivate`, {})
 }
+
+export async function activateCategory(id) {
+    return apiPatch(`/categories/${id}/activate`, {})
+}
+
+export async function getCategoryOptions() {
+    return apiGet('/categories/options')
+}

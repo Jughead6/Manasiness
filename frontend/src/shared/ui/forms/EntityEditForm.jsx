@@ -20,9 +20,21 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                         <label htmlFor={field.id}>{field.label}</label>
 
                         {field.options ? (
-                            <select id={field.id} name={field.name} defaultValue={values?.[field.name]}>
+                            <select
+                                id={field.id}
+                                name={field.name}
+                                defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
+                            >
                                 {field.options.map((option) => (
-                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                    <option
+                                        key={option.value}
+                                        value={option.value}
+                                        disabled={option.disabled}
+                                    >
+                                        {option.label}
+                                    </option>
                                 ))}
                             </select>
                         ) : field.type === 'textarea' ? (
@@ -30,7 +42,9 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 id={field.id}
                                 name={field.name}
                                 placeholder={field.placeholder}
-                                defaultValue={values?.[field.name] }
+                                defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         ) : (
                             <input
@@ -38,7 +52,9 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 name={field.name}
                                 placeholder={field.placeholder}
                                 type={field.type}
-                                defaultValue={values?.[field.name]}
+                                defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         )}
                     </div>

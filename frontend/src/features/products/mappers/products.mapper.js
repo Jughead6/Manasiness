@@ -18,6 +18,7 @@ export function mapProductToDetail(item) {
         id: item.id,
         name: item.name,
         image: item.image,
+        isActive: item.is_active,
         details: [
             `Category: ${item.category}`,
             `Cost Price: ${item.cost_price}`,
@@ -40,4 +41,11 @@ export function mapProductToEdit(item) {
         sale_price: item.sale_price,
         stock: item.stock,
     }
+}
+
+export function mapProductOptions(data) {
+    return data.map((item) => ({
+        value: String(item.id),
+        label: item.name
+    }))
 }

@@ -4,7 +4,8 @@ export const userFormFields = [
         placeholder: 'Write user name',
         id: 'user-name',
         name: 'name',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Image',
@@ -18,7 +19,8 @@ export const userFormFields = [
         placeholder: 'Write phone',
         id: 'user-phone',
         name: 'phone',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Role',
@@ -28,7 +30,8 @@ export const userFormFields = [
             { value: 'supplier', label: 'Supplier' },
             { value: 'worker', label: 'Worker' },
             { value: 'customer', label: 'Customer' }
-        ]
+        ],
+        required: true
     }
 ]   
 
@@ -38,7 +41,8 @@ export const userEditFields = [
         placeholder: 'Write user name',
         id: 'user-name',
         name: 'name',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Image',
@@ -52,7 +56,8 @@ export const userEditFields = [
         placeholder: 'Write phone',
         id: 'user-phone',
         name: 'phone',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Role',
@@ -62,6 +67,7 @@ export const userEditFields = [
             { value: 'supplier', label: 'Supplier' },
             { value: 'worker', label: 'Worker' },
             { value: 'customer', label: 'Customer' }
-        ]
+        ],
+        required: true
     }
 ]

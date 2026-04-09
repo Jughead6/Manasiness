@@ -1,12 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
 import { editProduct, getProductById } from "../api/products.api.js"
 import { mapProductToEdit } from "../mappers/products.mapper.js"
-import { productEditFields } from "../config/productFormFields.jsx"
-import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
+import { getProductFormFields } from "../config/productFormFields.jsx"
+import { mapCategoryOptions } from "../../categories/mappers/categories.mapper.js"
+import { getCategoryOptions } from "../../categories/api/categories.api.js"
 
 function ProductEditPage() {
     const [editValues, setEditValues] = useState(null)
+    const [categoryOptions, setCategoryOptions] = useState([])
     const { id } = useParams()
     const navigate = useNavigate()
     
@@ -15,6 +19,8 @@ function ProductEditPage() {
             try {
                 const response = await getProductById(id)
                 setEditValues(mapProductToEdit(response))
+                const editOptions = await getCategoryOptions()
+                setCategoryOptions(mapCategoryOptions(editOptions))
             } catch (error) {
                 console.log(error)
             }
@@ -27,8 +33,10 @@ function ProductEditPage() {
             await editProduct(id, data)
             console.log('edited successfully')
             navigate(`/dashboard/products/${id}`)
+            toast.success("Product edited successfully")
         } catch (error) {
             console.log(error)
+            toast.error("The product could not be edited")
         }
     }
 
@@ -40,7 +48,7 @@ function ProductEditPage() {
     
     return (
         <EntityEditForm 
-        fields={productEditFields} 
+        fields={getProductFormFields(categoryOptions)} 
         values={editValues} 
         sectionLabel="Products" 
         title="Edit Product"

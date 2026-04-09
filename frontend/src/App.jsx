@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { ToastContainer, Bounce } from "react-toastify"
 
 import DashboardLayout from "./app/layouts/DashboardLayout.jsx"
 
@@ -31,15 +32,16 @@ import SupplierDetailPage from "./features/suppliers/pages/SupplierDetailPage.js
 import CustomersPage from "./features/customers/pages/CustomersPage.jsx"
 import CustomerDetailPage from "./features/customers/pages/CustomerDetailPage.jsx"
 
-
+import PlaygroundPage from "../../playground/src/features/playground/playground.jsx"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProductEditPage/>}/>
+        <Route path="/" element={<PlaygroundPage/>}/>
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route index element={<HomePage/>}/>
+          <Route path="playground" element={<PlaygroundPage/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>
           <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>}/>
           <Route path="categories/:id/edit" element={<CategoryEditPage/>}/>
@@ -60,7 +62,21 @@ function App() {
           <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>}/>
         </Route>
       </Routes>
-    </BrowserRouter>
+      
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
+    </BrowserRouter> 
   )
     
   

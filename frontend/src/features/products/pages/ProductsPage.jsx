@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { toast } from "react-toastify"
 import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
 import { getProducts, createProduct } from "../api/products.api.js"
@@ -29,8 +30,10 @@ function ProductsPage() {
             const data = await getProducts()
             setProducts(mapProductsToCards(data))
             setIsCreateModalOpen(false)
+            toast.success("Successfully created product") 
         } catch (error) {
             console.log(error)
+            toast.error("Product could not be created")
         }
     }
 

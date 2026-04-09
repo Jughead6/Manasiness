@@ -4,7 +4,8 @@ export const categoryFormFields = [
         placeholder: 'Write category name',
         id: 'category-name',
         name: 'name',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Image',
@@ -21,7 +22,8 @@ export const categoryEditFields = [
         placeholder: 'Write category name',
         id: 'category-name',
         name: 'name',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
         label: 'Image',

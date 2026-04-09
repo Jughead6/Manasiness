@@ -19,3 +19,11 @@ export async function createProduct(data) {
 export async function deactivateProduct(id) {
     return apiPatch(`/products/${id}/deactivate`, {})
 }
+
+export async function activateProduct(id) {
+    return apiPatch(`/products/${id}/activate`, {})
+}
+
+export async function getProductOptions() {
+    return apiGet('/products/options')
+}

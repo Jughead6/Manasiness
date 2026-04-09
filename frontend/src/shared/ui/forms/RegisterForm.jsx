@@ -18,9 +18,21 @@ function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
                         <label htmlFor={field.id}>{field.label}</label>
 
                         {field.options ? (
-                            <select id={field.id} name={field.name} defaultValue="">
+                            <select
+                                id={field.id}
+                                name={field.name}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
+                            >
                                 {field.options.map((option) => (
-                                    <option key={option.value} value={option.value}>{option.label}</option>
+                                    <option
+                                        key={option.value}
+                                        value={option.value}
+                                        disabled={option.disabled}
+                                    >
+                                        {option.label}
+                                    </option>
                                 ))}
                             </select>
                         ) : field.type === 'textarea' ? (
@@ -28,6 +40,9 @@ function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
                                 id={field.id}
                                 name={field.name}
                                 placeholder={field.placeholder}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         ) : (
                             <input
@@ -35,6 +50,9 @@ function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
                                 name={field.name}
                                 type={field.type}
                                 placeholder={field.placeholder}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
                             />
                         )}
                     </div>

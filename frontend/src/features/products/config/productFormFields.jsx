@@ -1,17 +1,23 @@
-export const productFormFields = [
+export function getProductFormFields(categoryOptions = []) {
+    return [
     {
         label: 'Name',
         placeholder: 'Write the name product',
         id: 'product-name',
         name: 'name',
-        type: 'text'
+        type: 'text',
+        required: true
     },
     {
-        label: 'Category',
+        label: 'Category ',
         placeholder: 'Write the category id',
         id: 'product-category',
         name: 'category_id',
-        type: 'text'
+        options: [
+            { value: '', label: 'Select a category', disabled: true},
+            ...categoryOptions
+        ],
+        required: true
     },
     {
         label: 'Image',
@@ -25,25 +31,29 @@ export const productFormFields = [
         placeholder: 'Write the cost price',
         name: 'cost_price',
         id: 'product-cost-price',
-        type: 'number'
+        type: 'number',
+        required: true
     },
     {
         label: 'Sale Price',
         placeholder: 'Write the sale price',
         name: 'sale_price',
         id: 'product-sale-price',
-        type: 'number'
+        type: 'number',
+        required: true
     },
     {
         label: 'Stock Product',
         placeholder: 'Write the stock amount',
         name: 'stock',
         id: 'product-stock',
-        type: 'number'
+        type: 'number',
+        required: true
     }
-]
+]}
 
-export const productEditFields = [
+export function getProductEditFields(categoryOptions = []) {
+    return [
     {
         label: 'Name',
         placeholder: 'Write the name product',
@@ -53,10 +63,12 @@ export const productEditFields = [
     },
     {
         label: 'Category Id',
-        placeholder: 'Write the category id',
         id: 'product-category',
         name: 'category_id',
-        type: 'text'
+        options: [
+            { value: '', label: 'Select a category', disabled: true},
+            ...categoryOptions
+        ]
     },
     {
         label: 'Image',
@@ -86,4 +98,4 @@ export const productEditFields = [
         name: 'stock',
         type: 'number'
     }
-]
+]}

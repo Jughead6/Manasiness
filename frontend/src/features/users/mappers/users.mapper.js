@@ -16,6 +16,7 @@ export function mapUserToDetail(item) {
         id: item.id,
         name: item.name,
         image: item.image,
+        isActive: item.is_active,
         details: [
             `Phone: ${item.phone}`,
             `Role: ${item.role}`,
