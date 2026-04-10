@@ -1,0 +1,17 @@
+#register-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#register-form > button {
+    padding: 10;
+}
+
+#register-inputs > input {
+    width: 50%;
+}
+
+#register-inputs {
+    margin-bottom: 15px;
+}

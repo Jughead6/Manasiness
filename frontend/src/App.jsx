@@ -32,16 +32,16 @@ import SupplierDetailPage from "./features/suppliers/pages/SupplierDetailPage.js
 import CustomersPage from "./features/customers/pages/CustomersPage.jsx"
 import CustomerDetailPage from "./features/customers/pages/CustomerDetailPage.jsx"
 
-import PlaygroundPage from "../../playground/src/features/playground/playground.jsx"
+import LoginPage from "../../playground/src/features/playground/LoginPage.jsx"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PlaygroundPage/>}/>
+        <Route path="/" element={<LoginPage/>}/>
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path="playground" element={<PlaygroundPage/>}/>
+          <Route path="playground" element={<LoginPage/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>
           <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>}/>
           <Route path="categories/:id/edit" element={<CategoryEditPage/>}/>

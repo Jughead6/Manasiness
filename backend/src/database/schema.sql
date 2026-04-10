@@ -64,3 +64,12 @@ CREATE TABLE staff (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE stores (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    phone TEXT UNIQUE CHECK (phone ~ '^[0-9]{9}$'),
+    image TEXT DEFAULT 'https://i.postimg.cc/DzKtGYCx/nouserphoto.png'
+);

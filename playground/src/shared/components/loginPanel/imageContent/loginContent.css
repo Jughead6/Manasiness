@@ -1,0 +1,17 @@
+#login-content {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c6d4e1;
+    border-left: 2px solid black;
+    padding: 26px;
+    flex-direction: column;
+    line-height: 40px;
+    font-size: 17px;
+    gap: 25px;
+}
+
+#login-content h2 {
+    margin-bottom: 30px;
+}
