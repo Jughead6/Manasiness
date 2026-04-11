@@ -1,67 +1,32 @@
-import "./RegisterForm.css"
+import './RegisterForm.css'
 
-function RegisterForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
+function RegisterForm({ onRegister }) {
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
-        onSubmit(data)
+        onRegister(data)
     }
 
     return (
-        <form className="shared-register-form" onSubmit={handleSubmit}>
-            <h4>{sectionLabel}----</h4>
-            <h1>{title}</h1>
-            {fields.map((field) => (
-                <div key={field.id}>
-                    <div className="shared-register-form-field">
-                        <label htmlFor={field.id}>{field.label}</label>
+        <form id="shared-register-form" onSubmit={handleSubmit}>
+            <h2>Register here!</h2>
 
-                        {field.options ? (
-                            <select
-                                id={field.id}
-                                name={field.name}
-                                defaultValue={field.defaultValue ?? ''}
-                                required={field.required}
-                                disabled={field.disabled}
-                            >
-                                {field.options.map((option) => (
-                                    <option
-                                        key={option.value}
-                                        value={option.value}
-                                        disabled={option.disabled}
-                                    >
-                                        {option.label}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : field.type === 'textarea' ? (
-                            <textarea
-                                id={field.id}
-                                name={field.name}
-                                placeholder={field.placeholder}
-                                defaultValue={field.defaultValue ?? ''}
-                                required={field.required}
-                                disabled={field.disabled}
-                            />
-                        ) : (
-                            <input
-                                id={field.id}
-                                name={field.name}
-                                type={field.type}
-                                placeholder={field.placeholder}
-                                defaultValue={field.defaultValue ?? ''}
-                                required={field.required}
-                                disabled={field.disabled}
-                            />
-                        )}
-                    </div>
-                </div>
-            ))}
-            <div className="shared-register-form-actions">
-                <button type="submit">Register</button>
-                <button type="button" onClick={onCancel}>Cancel</button>
+            <div id="shared-register-form-fields">
+                <input name="name" placeholder='*Name of the store/company' required />
+                <input name="email" type="email" placeholder='*@email' required />
+                <input name="phone" placeholder='Phone number' />
+                <input name="image" placeholder='Profile Image' />
+                <input name="password" type="password" placeholder='*Password' required />
+                <input name="repassword" type="password" placeholder='*Repeat Password' required />
             </div>
+
+            <label htmlFor='tyc'>
+                <input id="tyc" type='checkbox' required />
+                *I agree to the Terms and Conditions and Privacy policy
+            </label>
+
+            <button type='submit'>SignUp ⮕</button>
         </form>
     )
 }

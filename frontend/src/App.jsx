@@ -32,14 +32,19 @@ import SupplierDetailPage from "./features/suppliers/pages/SupplierDetailPage.js
 import CustomersPage from "./features/customers/pages/CustomersPage.jsx"
 import CustomerDetailPage from "./features/customers/pages/CustomerDetailPage.jsx"
 
-import LoginPage from "../../playground/src/features/playground/LoginPage.jsx"
+import ProtectedRoute from "./shared/routes/ProtectedRoute.jsx"
+
+import LoginPage from "./features/auth/pages/LoginPage.jsx"
+import RegisterPage from "./features/auth/pages/RegisterPage.jsx"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage/>}/>
-        <Route path="/dashboard" element={<DashboardLayout/>}>
+        <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout/></ProtectedRoute>}>
           <Route index element={<HomePage/>}/>
           <Route path="playground" element={<LoginPage/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>

@@ -70,6 +70,6 @@ CREATE TABLE stores (
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    phone TEXT UNIQUE CHECK (phone ~ '^[0-9]{9}$'),
+    phone TEXT UNIQUE CHECK (phone IS NULL OR phone ~ '^[0-9]{9}$'),
     image TEXT DEFAULT 'https://i.postimg.cc/DzKtGYCx/nouserphoto.png'
 );

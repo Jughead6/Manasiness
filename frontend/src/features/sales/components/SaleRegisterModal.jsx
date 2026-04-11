@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import DrawerPanel from "../../../shared/ui/modal/DrawerPanel.jsx"
 import CreatorBanner from "../../../shared/ui/branding/CreatorBanner.jsx"
-import RegisterForm from "../../../shared/ui/forms/RegisterForm.jsx"
+import RegisterSpaceForm from "../../../shared/ui/forms/RegisterSpaceForm.jsx"
 import { getSaleFormFields } from "../config/saleFormFields.jsx"
 import { getCustomerOptions } from "../api/sales.api.js"
 import { mapCustomerOptions } from "../mappers/sales.mapper.js"
@@ -28,7 +28,7 @@ function SaleRegisterModal({onClose, onCreate}) {
 
     return (
         <DrawerPanel onClose={onClose}>
-            <RegisterForm 
+            <RegisterSpaceForm 
                 fields={getSaleFormFields(customerOptions, productOptions)} 
                 sectionLabel="Sales" 
                 title="Register your new sale!" 

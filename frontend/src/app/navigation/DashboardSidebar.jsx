@@ -1,10 +1,17 @@
 import "./DashboardSidebar.css"
-
 import { TableOfContents, PackageSearch, Contact, BadgeDollarSign, FileUser, ChartColumnDecreasing, PillBottle, BriefcaseBusiness } from "lucide-react"
-import { NavLink, Link } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 
 function DashboardSidebar() {
+    const navigate = useNavigate()
+    function handleLogout() {
+        localStorage.removeItem("token")
+        localStorage.removeItem("store")
+        navigate("/", { replace: true })
+    }
+    
     return (
+        
         <div className="dashboard-sidebar">
             <div className="dashboard-sidebar-brand-wrapper">
                 <Link to="/dashboard" className="dashboard-sidebar-brand">
@@ -93,6 +100,7 @@ function DashboardSidebar() {
                                 </NavLink>
                             </li>
                         </ul>
+                        <button onClick={handleLogout}>Log Out</button>
                     </li>
                 </ul>
             </div>

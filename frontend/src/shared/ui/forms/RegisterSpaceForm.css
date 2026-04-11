@@ -1,0 +1,26 @@
+.shared-register-space-form {
+    padding: 25px;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+.shared-register-space-form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.shared-register-space-form-field > input,
+.shared-register-space-form-field > select,
+.shared-register-space-form-field > textarea {
+    padding: 12px;
+}
+
+.shared-register-space-form-actions {
+    display: flex;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.shared-register-space-form-actions > button {
+    padding: 8px;
+}

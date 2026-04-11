@@ -1,9 +1,0 @@
-#login-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-#login-form > button {
-    margin-bottom: 15px;
-}

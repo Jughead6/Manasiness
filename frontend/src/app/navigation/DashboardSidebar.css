@@ -27,8 +27,16 @@
 }
 
 .dashboard-sidebar-list {
-    margin-top: 70px;
+    margin-top: 40px;
 }
+
+.dashboard-sidebar-group > button  {
+    margin-top: 40px;
+    padding: 10px;
+    min-width: 180px;
+    min-height: 36;
+}
+
 
 .dashboard-sidebar-group {
     margin-top: 40px;
