@@ -1,0 +1,11 @@
+#shared-auth-overlay {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background-image: URL(https://i.ytimg.com/vi/QESJFiXS87c/maxresdefault.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

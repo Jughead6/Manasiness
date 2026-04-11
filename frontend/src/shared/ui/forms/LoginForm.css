@@ -1,0 +1,18 @@
+#shared-login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#shared-login-form > button {
+    margin-bottom: 15px;
+}
+
+#shared-login-form span {
+    color: rgb(44, 139, 247);
+}
+
+#shared-login-form span:hover {
+    cursor: pointer;
+    color: white
+}
