@@ -1,5 +1,5 @@
-import { findStoreByEmail, insertStore } from "./auth.repository.js"
 import bcrypt from "bcrypt"
+import { findStoreByEmail, insertStore } from "./auth.repository.js"
 import { generateToken } from "./auth.utils.js"
 
 export async function loginStore(email, password) {

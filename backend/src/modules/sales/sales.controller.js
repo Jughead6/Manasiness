@@ -5,7 +5,8 @@ export async function getSales(req, res, next) {
     const orderDirection = sort === "oldest" ? "ASC" : "DESC"
 
     try {
-        const sales = await getAllSales(orderDirection)
+        const storeId = req.store.storeId
+        const sales = await getAllSales({orderDirection, storeId})
 
         res.json(sales)
     } catch (error) {
@@ -17,7 +18,8 @@ export async function registerSale(req, res, next) {
     const { product_id, user_id, quantity, state } = req.body
 
     try {
-        const sale = await createNewSale({ product_id, user_id, quantity, state })
+        const storeId = req.store.storeId
+        const sale = await createNewSale({product_id, user_id, quantity, state, storeId})
 
         if (!sale) {
             return res.status(404).json({ error: "Product not found" })

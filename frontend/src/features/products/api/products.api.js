@@ -1,7 +1,15 @@
 import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
-export async function getProducts() {
-    return apiGet(`/products`)
+export async function getProducts(search = "") {
+    const params = new URLSearchParams()
+
+    if (search.trim()) {
+        params.set("search", search.trim())
+    }
+
+    const query = params.toString()
+
+    return apiGet(query ? `/products?${query}` : `/products`)
 }
 
 export async function getProductById(id) {

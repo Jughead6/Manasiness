@@ -4,9 +4,23 @@ import { toast } from "react-toastify"
 import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
 import { editProduct, getProductById } from "../api/products.api.js"
 import { mapProductToEdit } from "../mappers/products.mapper.js"
-import { getProductFormFields } from "../config/productFormFields.jsx"
+import { getProductEditFields } from "../config/productFormFields.jsx"
 import { mapCategoryOptions } from "../../categories/mappers/categories.mapper.js"
 import { getCategoryOptions } from "../../categories/api/categories.api.js"
+
+function getSafeCategoryOptions(product, categoryOptions) {
+    const currentCategoryId = String(product.category_id ?? '')
+    const hasCurrentCategory = categoryOptions.some((option) => option.value === currentCategoryId)
+
+    if (hasCurrentCategory || !currentCategoryId) {
+        return categoryOptions
+    }
+
+    return [
+        { value: currentCategoryId, label: product.category || 'Current category' },
+        ...categoryOptions
+    ]
+}
 
 function ProductEditPage() {
     const [editValues, setEditValues] = useState(null)
@@ -17,21 +31,28 @@ function ProductEditPage() {
     useEffect(() => {
         async function fetchEditValues() {
             try {
-                const response = await getProductById(id)
-                setEditValues(mapProductToEdit(response))
-                const editOptions = await getCategoryOptions()
-                setCategoryOptions(mapCategoryOptions(editOptions))
+                const [productResponse, categoryResponse] = await Promise.all([
+                    getProductById(id),
+                    getCategoryOptions()
+                ])
+
+                const mappedProduct = mapProductToEdit(productResponse)
+                const mappedOptions = mapCategoryOptions(categoryResponse)
+                const safeOptions = getSafeCategoryOptions(productResponse, mappedOptions)
+
+                setEditValues(mappedProduct)
+                setCategoryOptions(safeOptions)
             } catch (error) {
                 console.log(error)
             }
         }
+
         fetchEditValues()
     }, [id])
 
     async function handleSubmit(data) {
         try {
             await editProduct(id, data)
-            console.log('edited successfully')
             navigate(`/dashboard/products/${id}`)
             toast.success("Product edited successfully")
         } catch (error) {
@@ -47,13 +68,13 @@ function ProductEditPage() {
     if (!editValues) return null
     
     return (
-        <EntityEditForm 
-        fields={getProductFormFields(categoryOptions)} 
-        values={editValues} 
-        sectionLabel="Products" 
-        title="Edit Product"
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
+        <EntityEditForm
+            fields={getProductEditFields(categoryOptions)}
+            values={editValues}
+            sectionLabel="Products"
+            title="Edit Product"
+            onSubmit={handleSubmit}
+            onCancel={handleCancel}
         />
     )
 }

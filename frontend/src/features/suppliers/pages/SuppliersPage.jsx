@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { toast } from "react-toastify"
 import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
 import { getSuppliers } from "../api/suppliers.api.js"
@@ -6,18 +7,23 @@ import { mapSuppliersToCards } from "../mappers/suppliers.mapper.js"
 
 function SuppliersPage() {
     const [suppliers, setSuppliers] = useState([])
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         async function fetchSuppliers() {
             try {
-                const response = await getSuppliers()
+                const response = await getSuppliers(searchTerm)
                 setSuppliers(mapSuppliersToCards(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                toast.error("Could not load suppliers")
             }
         }
         fetchSuppliers()
-    }, [])
+    }, [searchTerm])
+
+    function handleSearchChange(e) {
+        setSearchTerm(e.target.value)
+    }
 
     return (
         <>
@@ -29,6 +35,8 @@ function SuppliersPage() {
                 data={suppliers} 
                 action="Suppliers" 
                 route="suppliers"
+                searchValue={searchTerm}
+                onSearchChange={handleSearchChange}
             />
         </>
     )

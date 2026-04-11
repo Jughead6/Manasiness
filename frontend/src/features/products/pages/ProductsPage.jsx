@@ -9,25 +9,26 @@ import ProductCreateModal from "../components/ProductCreateModal.jsx"
 function ProductsPage() {
     const [products, setProducts] = useState([])
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const data = await getProducts()
+                const data = await getProducts(searchTerm)
                 setProducts(mapProductsToCards(data))
-            } catch(error) {
-                console.log(error)
+            } catch {
+                toast.error("Could not load products")
             }
         }
         fetchProducts()
-    }, [])
+    }, [searchTerm])
 
     async function handleCreateProduct(formData) {
         try {
             const result = await createProduct(formData)
             console.log(result)
 
-            const data = await getProducts()
+            const data = await getProducts(searchTerm)
             setProducts(mapProductsToCards(data))
             setIsCreateModalOpen(false)
             toast.success("Successfully created product") 
@@ -37,17 +38,23 @@ function ProductsPage() {
         }
     }
 
+    function handleSearchChange(e) {
+        setSearchTerm(e.target.value)
+    }
+
     return (
         <>
             <PageTitle 
                 title="Welcome to Products" 
                 subtitle="In this section you can create, edit and view the products you have"
             />
-            <CardLayout 
-                data={products} 
-                action="Products" 
-                route="products" 
+            <CardLayout
+                data={products}
+                action="Products"
+                route="products"
                 onCreateClick={() => setIsCreateModalOpen(true)}
+                searchValue={searchTerm}
+                onSearchChange={handleSearchChange}
             />
             {isCreateModalOpen && <ProductCreateModal 
                 onClose={() => setIsCreateModalOpen(false)} 

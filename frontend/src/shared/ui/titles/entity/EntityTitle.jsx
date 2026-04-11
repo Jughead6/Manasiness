@@ -1,9 +1,11 @@
 import "./EntityTitle.css"
 
-function EntityTitle({ entity, idx }) {
+function EntityTitle({ entity, id, idx }) {
+    const entityId = id ?? idx
+
     return (
         <div className="shared-entity-title">
-            <h1>Id {entity}: {idx}</h1>
+            <h1>Id {entity}: {entityId}</h1>
         </div>
     )
 }

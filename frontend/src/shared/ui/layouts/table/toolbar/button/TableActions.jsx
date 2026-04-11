@@ -3,7 +3,7 @@ import "./TableActions.css"
 function TableActions({ onClick }) {
     return (
         <div className="shared-table-actions">
-            <button onClick={onClick}>Register</button>
+            <button type="button" onClick={onClick}>Register</button>
         </div>
     )
 }

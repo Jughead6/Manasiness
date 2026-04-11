@@ -37,11 +37,14 @@ import ProtectedRoute from "./shared/routes/ProtectedRoute.jsx"
 import LoginPage from "./features/auth/pages/LoginPage.jsx"
 import RegisterPage from "./features/auth/pages/RegisterPage.jsx"
 
+import NotFoundPage from "./features/not-found/pages/NotFoundPage.jsx"
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout/></ProtectedRoute>}>

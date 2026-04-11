@@ -8,11 +8,15 @@
     margin-bottom: 15px;
 }
 
-#shared-login-form span {
+.shared-login-form-link {
+    border: none;
+    background: transparent;
+    padding: 0;
     color: rgb(44, 139, 247);
+    font: inherit;
+    cursor: pointer;
 }
 
-#shared-login-form span:hover {
-    cursor: pointer;
-    color: white
+.shared-login-form-link:hover {
+    color: white;
 }

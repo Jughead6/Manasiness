@@ -2,7 +2,9 @@ import { getActiveSuppliersOptions, getAllSuppliers, getSupplierDetail } from ".
 
 export async function getSuppliers(req, res, next) {
     try {
-        const suppliers = await getAllSuppliers()
+        const storeId = req.store.storeId
+        const { search = "" } = req.query
+        const suppliers = await getAllSuppliers({storeId, search})
 
         res.json(suppliers)
     } catch (error) {
@@ -20,7 +22,8 @@ export async function getSupplierById(req, res, next) {
 
 
     try {
-        const supplier = await getSupplierDetail(id, orderDirection, limit, offset)
+        const storeId = req.store.storeId
+        const supplier = await getSupplierDetail({id, orderDirection, limit, offset, storeId})
 
         if (!supplier) {
             return res.status(404).json({ error: 'Supplier not found' })
@@ -34,7 +37,8 @@ export async function getSupplierById(req, res, next) {
 
 export async function getSupplierOptions(req, res, next) {
     try {
-        const suppliers = await getActiveSuppliersOptions()
+        const storeId = req.store.storeId
+        const suppliers = await getActiveSuppliersOptions({storeId})
 
         res.json(suppliers)
     } catch (error) {

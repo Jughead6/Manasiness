@@ -1,24 +1,18 @@
-import {
-    findActiveCustomersOptions,
-    findAllCustomers,
-    findCustomerBaseById,
-    findCustomerRowsById,
-    getCustomerTotalRows
-} from "./customers.repository.js"
+import { findActiveCustomersOptions, findAllCustomers, findCustomerBaseById, findCustomerRowsById, getCustomerTotalRows } from "./customers.repository.js"
 
-export async function getAllCustomers() {
-    return findAllCustomers()
+export async function getAllCustomers(data) {
+    return findAllCustomers(data)
 }
 
-export async function getCustomerDetail(id, orderDirection, limit, offset) {
-    const customer = await findCustomerBaseById(id)
+export async function getCustomerDetail(data) {
+    const customer = await findCustomerBaseById(data)
 
     if (!customer) {
         return null
     }
 
-    const rows = await findCustomerRowsById(id, orderDirection, limit, offset)
-    const totalRows = await getCustomerTotalRows(id)
+    const rows = await findCustomerRowsById(data)
+    const totalRows = await getCustomerTotalRows(data)
 
     return {
         ...customer,
@@ -27,6 +21,6 @@ export async function getCustomerDetail(id, orderDirection, limit, offset) {
     }
 }
 
-export async function getActiveCustomersOptions() {
-    return findActiveCustomersOptions()
+export async function getActiveCustomersOptions(data) {
+    return findActiveCustomersOptions(data)
 }

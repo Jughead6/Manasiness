@@ -1,7 +1,15 @@
 import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
-export async function getUsers() {
-    return apiGet(`/users`)
+export async function getUsers(search = "") {
+    const params = new URLSearchParams()
+
+    if (search.trim()) {
+        params.set("search", search.trim())
+    }
+
+    const query = params.toString()
+
+    return apiGet(query ? `/users?${query}` : `/users`)
 }
 
 export async function getUserById(id) {

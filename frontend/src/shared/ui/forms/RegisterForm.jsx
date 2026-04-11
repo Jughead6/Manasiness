@@ -1,11 +1,13 @@
 import './RegisterForm.css'
 
-function RegisterForm({ onRegister }) {
+function RegisterForm({ onSubmit, onRegister }) {
+    const handleRegister = onSubmit || onRegister
+
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
-        onRegister(data)
+        handleRegister(data)
     }
 
     return (
@@ -22,11 +24,11 @@ function RegisterForm({ onRegister }) {
             </div>
 
             <label htmlFor='tyc'>
-                <input id="tyc" type='checkbox' required />
+                <input id="tyc" name="terms" type='checkbox' value="accepted" required />
                 *I agree to the Terms and Conditions and Privacy policy
             </label>
 
-            <button type='submit'>SignUp ⮕</button>
+            <button type='submit'>Sign Up ⮕</button>
         </form>
     )
 }

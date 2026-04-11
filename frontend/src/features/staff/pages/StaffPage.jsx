@@ -41,10 +41,10 @@ function StaffPage() {
             const response = await getStaff(sortOrder)
             setStaff(mapStaffToTables(response))
             setIsRegisterModalOpen(false)
-            toast.success("The staff record could not be created")  
+            toast.success("The staff record was created successfully.")  
         } catch (error) {
             console.log(error)
-            toast.error("Product could not be created")
+            toast.error("The staff record could not be created")
         }
     }
 

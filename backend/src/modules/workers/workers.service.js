@@ -1,24 +1,18 @@
-import {
-    findActiveWorkersOptions,
-    findAllWorkers,
-    findWorkerBaseById,
-    findWorkerRowsById,
-    getWorkerTotalRows
-} from "./workers.repository.js"
+import { findActiveWorkersOptions, findAllWorkers, findWorkerBaseById, findWorkerRowsById, getWorkerTotalRows } from "./workers.repository.js"
 
-export async function getAllWorkers() {
-    return findAllWorkers()
+export async function getAllWorkers(data) {
+    return findAllWorkers(data)
 }
 
-export async function getWorkerDetail(id, orderDirection, limit, offset) {
-    const worker = await findWorkerBaseById(id)
+export async function getWorkerDetail(data) {
+    const worker = await findWorkerBaseById(data)
 
     if (!worker) {
         return null
     }
 
-    const rows = await findWorkerRowsById(id, orderDirection, limit, offset)
-    const totalRows = await getWorkerTotalRows(id)
+    const rows = await findWorkerRowsById(data)
+    const totalRows = await getWorkerTotalRows(data)
 
     return {
         ...worker,
@@ -27,6 +21,6 @@ export async function getWorkerDetail(id, orderDirection, limit, offset) {
     }
 }
 
-export async function getActiveWorkersOptions() {
-    return findActiveWorkersOptions()
+export async function getActiveWorkersOptions(data) {
+    return findActiveWorkersOptions(data)
 }

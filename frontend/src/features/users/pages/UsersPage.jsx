@@ -7,48 +7,53 @@ import { mapUsersToCards } from "../mappers/users.mapper.js"
 import UserCreateModal from "../components/UserCreateModal.jsx"
 
 function UsersPage() {
-    const [ users, setUsers ] = useState([])
-    const [ isCreateModalOpen, setIsCreateModalOpen ] = useState(false)
+    const [users, setUsers] = useState([])
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
 
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const data = await getUsers()
+                const data = await getUsers(searchTerm)
                 setUsers(mapUsersToCards(data))
-            } catch(error) {
-                console.log(error)
+            } catch {
+                toast.error("Could not load users")
             }
         }
         fetchUsers()
-    }, [])
+    }, [searchTerm])
 
     async function handleCreateUser(formData) {
         try {
-            const result = await createUser(formData)
-            console.log(result)
-            
-            const data = await getUsers()
+            await createUser(formData)
+            const data = await getUsers(searchTerm)
             setUsers(mapUsersToCards(data))
             setIsCreateModalOpen(false)
-            toast.success("User created successfully")  
-        } catch (error) {
-            console.log(error)
+            toast.success("User created successfully")
+        } catch {
             toast.error("Could not create user")
         }
+    }
+
+    function handleSearchChange(e) {
+        setSearchTerm(e.target.value)
     }
 
     return (
         <>
             <PageTitle  
                 title="Welcome to Users" 
-                subtitle="In this section you can create, edit and view the users you have"/>
+                subtitle="In this section you can create, edit and view the users you have"
+            />
             <CardLayout 
                 data={users} 
                 action="Users" 
                 route="users" 
                 onCreateClick={() => setIsCreateModalOpen(true)}
+                searchValue={searchTerm}
+                onSearchChange={handleSearchChange}
             />
-            {isCreateModalOpen && <UserCreateModal onClose={() => setIsCreateModalOpen(false)} onCreate={handleCreateUser}/>}
+            {isCreateModalOpen && <UserCreateModal onClose={() => setIsCreateModalOpen(false)} onCreate={handleCreateUser} />}
         </>
     )
 }

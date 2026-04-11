@@ -30,10 +30,10 @@ function UserDetailPage() {
             const data = await getUserById(id)
             setDetail(mapUserToDetail(data))
             setIsDeactivationOpen(false)
-            toast.success("User successfully activated")
+            toast.success("User successfully deactivated")
         } catch (error) {
             console.log(error)
-            toast.error("The user could not be activated")
+            toast.error("The user could not be deactivated")
         }
     }
 
@@ -42,10 +42,10 @@ function UserDetailPage() {
             await activateUser(id)
             const data = await getUserById(id)
             setDetail(mapUserToDetail(data))
-            toast.success("User successfully deactivated")
+            toast.success("User successfully activated")
         } catch (error) {
             console.log(error)
-            toast.error("The user could not be deactivated")
+            toast.error("The user could not be activated")
         }
     }
 

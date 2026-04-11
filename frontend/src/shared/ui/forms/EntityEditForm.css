@@ -1,8 +1,3 @@
-.playground {
-    flex: 1;
-    display: flex;
-}
-
 .shared-entity-edit-form {
     flex: 1;
     border: 1px solid black;

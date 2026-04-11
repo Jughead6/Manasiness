@@ -1,24 +1,18 @@
-import {
-    findActiveSuppliersOptions,
-    findAllSuppliers,
-    findSupplierBaseById,
-    findSupplierRowsById,
-    getSupplierTotalRows
-} from "./suppliers.repository.js"
+import { findActiveSuppliersOptions, findAllSuppliers, findSupplierBaseById, findSupplierRowsById, getSupplierTotalRows } from "./suppliers.repository.js"
 
-export async function getAllSuppliers() {
-    return findAllSuppliers()
+export async function getAllSuppliers(data) {
+    return findAllSuppliers(data)
 }
 
-export async function getSupplierDetail(id, orderDirection, limit, offset) {
-    const supplier = await findSupplierBaseById(id)
+export async function getSupplierDetail(data) {
+    const supplier = await findSupplierBaseById(data)
 
     if (!supplier) {
         return null
     }
 
-    const rows = await findSupplierRowsById(id, orderDirection, limit, offset)
-    const totalRows = await getSupplierTotalRows(id)
+    const rows = await findSupplierRowsById(data)
+    const totalRows = await getSupplierTotalRows(data)
 
     return {
         ...supplier,
@@ -27,6 +21,6 @@ export async function getSupplierDetail(id, orderDirection, limit, offset) {
     }
 }
 
-export async function getActiveSuppliersOptions() {
-    return findActiveSuppliersOptions()
+export async function getActiveSuppliersOptions(data) {
+    return findActiveSuppliersOptions(data)
 }

@@ -1,7 +1,7 @@
-import pool2 from "../../config/db2.js"
+import pool from "../../config/db.js"
 
 export async function findStoreByEmail(email) {
-    const result = await pool2.query(`
+    const result = await pool.query(`
         SELECT id, name, email, password_hash, phone, image
         FROM stores
         WHERE email = $1
@@ -12,7 +12,7 @@ export async function findStoreByEmail(email) {
 
 export async function insertStore({name, email, password_hash, phone, image}) {
 
-    const result = await pool2.query(`
+    const result = await pool.query(`
         INSERT INTO stores (name, email, password_hash, phone, image)
         VALUES($1, $2, $3, $4, $5)
         RETURNING id, name, email, phone, image

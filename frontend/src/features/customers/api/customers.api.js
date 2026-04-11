@@ -1,7 +1,15 @@
 import { apiGet } from "../../../shared/api/client.js"
 
-export async function getCustomers() {
-    return apiGet(`/customers`)
+export async function getCustomers(search = "") {
+    const params = new URLSearchParams()
+
+    if (search.trim()) {
+        params.set("search", search.trim())
+    }
+
+    const query = params.toString()
+
+    return apiGet(query ? `/customers?${query}` : `/customers`)
 }
 
 export async function getCustomerById(id, sortOrder = "recent", page = 1) {

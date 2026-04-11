@@ -2,7 +2,9 @@ import { getActiveCustomersOptions, getAllCustomers, getCustomerDetail } from ".
 
 export async function getCustomers(req, res, next) {
     try {
-        const customers = await getAllCustomers()
+        const storeId = req.store.storeId
+        const { search = "" } = req.query
+        const customers = await getAllCustomers({ storeId, search })
         res.json(customers)
     } catch (error) {
         next(error)
@@ -18,7 +20,8 @@ export async function getCustomerById(req, res, next) {
     const offset = (currentPage - 1) * limit
 
     try {
-        const customer = await getCustomerDetail(id, orderDirection, limit, offset)
+        const storeId = req.store.storeId
+        const customer = await getCustomerDetail({id, orderDirection, limit, offset, storeId})
 
         if (!customer) {
             return res.status(404).json({ error: "Customer not found" })
@@ -32,7 +35,8 @@ export async function getCustomerById(req, res, next) {
 
 export async function getCustomerOptions(req, res, next) {
     try {
-        const customers = await getActiveCustomersOptions()
+        const storeId = req.store.storeId
+        const customers = await getActiveCustomersOptions({storeId})
         res.json(customers)
     } catch (error) {
         next(error)

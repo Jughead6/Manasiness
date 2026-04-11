@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 export function generateToken(store) {
     return jwt.sign(
         {
-            id: store.id,
+            storeId: store.id,
             email: store.email,
         },
         process.env.JWT_SECRET,
