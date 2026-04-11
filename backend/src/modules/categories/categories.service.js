@@ -1,29 +1,29 @@
 import { findActiveCategoryOptions, findAllCategories, findCategoryById, insertCategory, updateCategoryById, updateCategoryStatus } from "./categories.repository.js"
 
-export async function getAllCategories() {
-    return findAllCategories()
+export async function getAllCategories(data) {
+    return findAllCategories(data)
 }
 
-export async function getCategoryDetail(id) {
-    return findCategoryById(id)
+export async function getCategoryDetail(data) {
+    return findCategoryById(data)
 }
 
 export async function createNewCategory(data) {
     return insertCategory(data)
 }
 
-export async function updateCategory(id, data) {
-    return updateCategoryById(id, data)
+export async function updateCategory(data) {
+    return updateCategoryById(data)
 }
 
-export async function disableCategory(id) {
-    return updateCategoryStatus(id, false)
+export async function disableCategory(data) {
+    return updateCategoryStatus(data)
 }
 
-export async function enableCategory(id) {
-    return updateCategoryStatus(id, true)
+export async function enableCategory(data) {
+    return updateCategoryStatus(data)
 }
 
-export async function getActiveCategoryOptions() {
-    return findActiveCategoryOptions()
+export async function getActiveCategoryOptions(data) {
+    return findActiveCategoryOptions(data)
 }

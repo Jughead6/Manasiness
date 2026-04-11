@@ -1,15 +1,12 @@
-import {
-    getAllUsers,
-    getUserDetail,
-    createNewUser,
-    updateUser,
-    disableUser,
-    enableUser
-} from "./users.service.js"
+import { getAllUsers, getUserDetail, createNewUser, updateUser, disableUser, enableUser } from "./users.service.js"
+
+const DEFAULT_USER_IMAGE = "https://i.postimg.cc/DzKtGYCx/nouserphoto.png"
 
 export async function getUsers(req, res, next) {
     try {
-        const users = await getAllUsers()
+        const storeId = req.store.storeId
+        const { search = "" } = req.query
+        const users = await getAllUsers({storeId, search})
 
         res.json(users)
     } catch (error) {
@@ -21,7 +18,8 @@ export async function getUserById(req, res, next) {
     const { id } = req.params
 
     try {
-        const user = await getUserDetail(id)
+        const storeId = req.store.storeId
+        const user = await getUserDetail({id, storeId})
 
         if (!user) {
             return res.status(404).json({ error: "User not found" })
@@ -34,13 +32,16 @@ export async function getUserById(req, res, next) {
 }
 
 export async function createUser(req, res, next) {
-    const { name, phone, role } = req.body
+    const { name, image, phone, role } = req.body
 
     try {
-        const user = await createNewUser({ name, phone, role })
+        const storeId = req.store.storeId
+        const cleanPhone = phone?.trim() || null
+        const cleanImage = image?.trim() || DEFAULT_USER_IMAGE
+        const user = await createNewUser({name, image: cleanImage, phone: cleanPhone, role, storeId})
 
         if (!user) {
-            return res.status(500).json({ error: "Uncreated user" })
+            return res.status(500).json({ error: "User failed" })
         }
 
         res.status(201).json({
@@ -57,7 +58,10 @@ export async function editUser(req, res, next) {
     const { name, image, phone, role } = req.body
 
     try {
-        const user = await updateUser(id, { name, image, phone, role })
+        const storeId = req.store.storeId
+        const cleanPhone = phone?.trim() || null
+        const cleanImage = image?.trim() || DEFAULT_USER_IMAGE
+        const user = await updateUser({id, name, image: cleanImage, phone: cleanPhone, role, storeId})
 
         if (!user) {
             return res.status(404).json({ error: "User not found" })
@@ -74,9 +78,11 @@ export async function editUser(req, res, next) {
 
 export async function deactivateUser(req, res, next) {
     const { id } = req.params
+    const isActive = false
 
     try {
-        const user = await disableUser(id)
+        const storeId = req.store.storeId
+        const user = await disableUser({id, storeId, isActive})
 
         if (!user) {
             return res.status(404).json({ error: "User not found" })
@@ -93,9 +99,11 @@ export async function deactivateUser(req, res, next) {
 
 export async function activateUser(req, res, next) {
     const { id } = req.params
+    const isActive = true
 
     try {
-        const user = await enableUser(id)
+        const storeId = req.store.storeId
+        const user = await enableUser({id, storeId, isActive})
 
         if (!user) {
             return res.status(404).json({ error: "User not found" })

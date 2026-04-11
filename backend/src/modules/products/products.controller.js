@@ -1,8 +1,13 @@
 import { getAllProducts, getProductDetail, createNewProduct, updateProduct, disableProduct, enableProduct, getActiveProductOptions } from "./products.service.js"
 
+const DEFAULT_PRODUCT_IMAGE = "https://i.postimg.cc/KYydTs9w/noimage.png"
+
 export async function getProducts(req, res, next) {
     try {
-        const products = await getAllProducts()
+        const storeId = req.store.storeId
+        const { search = "" } = req.query
+        const products = await getAllProducts({storeId, search})
+        
         res.json(products)
     } catch (error) {
         next(error)
@@ -13,7 +18,8 @@ export async function getProductById(req, res, next) {
     const { id } = req.params
 
     try {
-        const product = await getProductDetail(id)
+        const storeId = req.store.storeId
+        const product = await getProductDetail({id, storeId})
 
         if (!product) {
             return res.status(404).json({ error: "Product not found" })
@@ -26,13 +32,15 @@ export async function getProductById(req, res, next) {
 }
 
 export async function createProduct(req, res, next) {
-    const { category_id, name, cost_price, sale_price, stock } = req.body
+    const { category_id, name, image, cost_price, sale_price, stock } = req.body
 
     try {
-        const product = await createNewProduct({ category_id, name, cost_price, sale_price, stock })
+        const storeId = req.store.storeId
+        const cleanImage = image?.trim() || DEFAULT_PRODUCT_IMAGE
+        const product = await createNewProduct({category_id, name, image: cleanImage, cost_price, sale_price, stock, storeId})
 
         if (!product) {
-            return res.status(500).json({ error: "Uncreated product" })
+            return res.status(500).json({ error: "Product failed" })
         }
 
         res.status(201).json({
@@ -49,7 +57,9 @@ export async function editProduct(req, res, next) {
     const { category_id, name, image, cost_price, sale_price, stock } = req.body
 
     try {
-        const product = await updateProduct(id, { category_id, name, image, cost_price, sale_price, stock })
+        const storeId = req.store.storeId
+        const cleanImage = image?.trim() || DEFAULT_PRODUCT_IMAGE
+        const product = await updateProduct({id, category_id, name, image: cleanImage, cost_price, sale_price, stock, storeId})
 
         if (!product) {
             return res.status(404).json({ error: "Product not found" })
@@ -66,9 +76,11 @@ export async function editProduct(req, res, next) {
 
 export async function deactivateProduct(req, res, next) {
     const { id } = req.params
+    const isActive = false
 
     try {
-        const product = await disableProduct(id)
+        const storeId = req.store.storeId
+        const product = await disableProduct({id, storeId, isActive})
 
         if (!product) {
             return res.status(404).json({ error: "Product not found" })
@@ -85,9 +97,11 @@ export async function deactivateProduct(req, res, next) {
 
 export async function activateProduct(req, res, next) {
     const { id } = req.params
+    const isActive = true
 
     try {
-        const product = await enableProduct(id)
+        const storeId = req.store.storeId
+        const product = await enableProduct({id, storeId, isActive})
 
         if (!product) {
             return res.status(404).json({ error: "Product not found" })
@@ -104,7 +118,8 @@ export async function activateProduct(req, res, next) {
 
 export async function getProductOptions(req, res, next) {
     try {
-        const products = await getActiveProductOptions()
+        const storeId = req.store.storeId
+        const products = await getActiveProductOptions({storeId})
         res.json(products)
     } catch (error) {
         next(error)

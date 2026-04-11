@@ -1,36 +1,29 @@
-import {
-    findAllProducts,
-    findProductById,
-    insertProduct,
-    updateProductById,
-    updateProductStatus,
-    findActiveProductOptions
-} from "./products.repository.js"
+import { findAllProducts, findProductById, insertProduct, updateProductById, updateProductStatus, findActiveProductOptions } from "./products.repository.js"
 
-export async function getAllProducts() {
-    return findAllProducts()
+export async function getAllProducts(data) {
+    return findAllProducts(data)
 }
 
-export async function getProductDetail(id) {
-    return findProductById(id)
+export async function getProductDetail(data) {
+    return findProductById(data)
 }
 
 export async function createNewProduct(data) {
     return insertProduct(data)
 }
 
-export async function updateProduct(id, data) {
-    return updateProductById(id, data)
+export async function updateProduct(data) {
+    return updateProductById(data)
 }
 
-export async function disableProduct(id) {
-    return updateProductStatus(id, false)
+export async function disableProduct(data) {
+    return updateProductStatus(data)
 }
 
-export async function enableProduct(id) {
-    return updateProductStatus(id, true)
+export async function enableProduct(data) {
+    return updateProductStatus(data)
 }
 
-export async function getActiveProductOptions() {
-    return findActiveProductOptions()
+export async function getActiveProductOptions(data) {
+    return findActiveProductOptions(data)
 }

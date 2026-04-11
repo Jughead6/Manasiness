@@ -7,7 +7,7 @@ function TableToolbar({ onCreateClick, filterValue, onFilterChange }) {
     return (
         <div className="shared-table-toolbar">
             <TableFilter value={filterValue} onChange={onFilterChange} />
-            <TableActions onClick={onCreateClick} />
+            {onCreateClick && <TableActions onClick={onCreateClick} />}
         </div>
     )
 }

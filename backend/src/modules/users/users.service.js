@@ -1,31 +1,25 @@
-import {
-    findAllUsers,
-    findUserById,
-    insertUser,
-    updateUserById,
-    updateUserStatus
-} from "./users.repository.js"
+import { findAllUsers, findUserById, insertUser, updateUserById, updateUserStatus } from "./users.repository.js"
 
-export async function getAllUsers() {
-    return findAllUsers()
+export async function getAllUsers(data) {
+    return findAllUsers(data)
 }
 
-export async function getUserDetail(id) {
-    return findUserById(id)
+export async function getUserDetail(data) {
+    return findUserById(data)
 }
 
 export async function createNewUser(data) {
     return insertUser(data)
 }
 
-export async function updateUser(id, data) {
-    return updateUserById(id, data)
+export async function updateUser(data) {
+    return updateUserById(data)
 }
 
-export async function disableUser(id) {
-    return updateUserStatus(id, false)
+export async function disableUser(data) {
+    return updateUserStatus(data)
 }
 
-export async function enableUser(id) {
-    return updateUserStatus(id, true)
+export async function enableUser(data) {
+    return updateUserStatus(data)
 }

@@ -1,7 +1,15 @@
 import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
-export async function getCategories() {
-    return apiGet(`/categories`)
+export async function getCategories(search = "") {
+    const params = new URLSearchParams()
+
+    if (search.trim()) {
+        params.set("search", search.trim())
+    }
+
+    const query = params.toString()
+
+    return apiGet(query ? `/categories?${query}` : `/categories`)
 }
 
 export async function getCategoryById(id) {

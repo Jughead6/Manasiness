@@ -9,7 +9,7 @@
     background-color: #ebe7e0;
 }
 
-.shared-creator-banner > img {
+.shared-creator-banner > a > img {
     width: 100px;
     object-fit: cover;
     border-radius: 12px;
@@ -20,6 +20,10 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
+}
+
+.shared-creator-banner-link {
+    color: inherit;
 }
 
 .shared-creator-banner-label,

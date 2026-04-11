@@ -2,7 +2,9 @@ import { getActiveWorkersOptions, getAllWorkers, getWorkerDetail } from "./worke
 
 export async function getWorkers(req, res, next) {
     try {
-        const workers = await getAllWorkers()
+        const storeId = req.store.storeId
+        const { search = "" } = req.query
+        const workers = await getAllWorkers({storeId, search})
 
         res.json(workers)
     } catch (error) {
@@ -19,7 +21,8 @@ export async function getWorkerById(req, res, next) {
     const offset = (currentPage - 1) * limit
 
     try {
-        const worker = await getWorkerDetail(id, orderDirection, limit, offset)
+        const storeId = req.store.storeId
+        const worker = await getWorkerDetail({id, orderDirection, limit, offset, storeId})
 
         if (!worker) {
             return res.status(404).json({ error: 'Worker not found' })
@@ -33,7 +36,8 @@ export async function getWorkerById(req, res, next) {
 
 export async function getWorkerOptions(req, res, next) {
     try {
-        const workers = await getActiveWorkersOptions()
+        const storeId = req.store.storeId
+        const workers = await getActiveWorkersOptions({storeId})
 
         res.json(workers)
     } catch (error) {

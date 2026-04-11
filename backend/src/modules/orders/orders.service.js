@@ -1,7 +1,7 @@
 import { findAllOrders, insertOrder } from "./orders.repository.js"
 
-export async function getAllOrders(orderDirection) {
-    return findAllOrders(orderDirection)
+export async function getAllOrders(data) {
+    return findAllOrders(data)
 }
 
 export async function createNewOrder(data) {

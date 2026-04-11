@@ -36,7 +36,7 @@ export function mapProductToEdit(item) {
         id: item.id,
         name: item.name,
         image: item.image,
-        category_id: item.category_id,
+        category_id: String(item.category_id ?? ''),
         cost_price: item.cost_price,
         sale_price: item.sale_price,
         stock: item.stock,
