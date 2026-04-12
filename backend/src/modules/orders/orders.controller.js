@@ -1,12 +1,15 @@
 import { getAllOrders, createNewOrder } from "./orders.service.js"
 
 export async function getOrders(req, res, next) {
-    const { sort = "recent" } = req.query
+    const { sort = "recent", page = 1 } = req.query
     const orderDirection = sort === "oldest" ? "ASC" : "DESC"
+    const currentPage = Number(page)
+    const limit = 20
+    const offset = (currentPage - 1) * limit
 
     try {
         const storeId = req.store.storeId
-        const orders = await getAllOrders({orderDirection, storeId})
+        const orders = await getAllOrders({ orderDirection, limit, offset, storeId })
 
         res.json(orders)
     } catch (error) {
@@ -19,7 +22,7 @@ export async function registerOrder(req, res, next) {
 
     try {
         const storeId = req.store.storeId
-        const order = await createNewOrder({product_id, user_id, quantity, state, storeId})
+        const order = await createNewOrder({ product_id, user_id, quantity, state, storeId })
 
         if (!order) {
             return res.status(404).json({ error: "Product not found" })

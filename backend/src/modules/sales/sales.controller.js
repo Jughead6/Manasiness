@@ -1,12 +1,15 @@
 import { getAllSales, createNewSale } from "./sales.service.js"
 
 export async function getSales(req, res, next) {
-    const { sort = "recent" } = req.query
+    const { sort = "recent", page = 1 } = req.query
     const orderDirection = sort === "oldest" ? "ASC" : "DESC"
+    const currentPage = Number(page)
+    const limit = 20
+    const offset = (currentPage - 1) * limit
 
     try {
         const storeId = req.store.storeId
-        const sales = await getAllSales({orderDirection, storeId})
+        const sales = await getAllSales({ orderDirection, limit, offset, storeId })
 
         res.json(sales)
     } catch (error) {
@@ -19,7 +22,7 @@ export async function registerSale(req, res, next) {
 
     try {
         const storeId = req.store.storeId
-        const sale = await createNewSale({product_id, user_id, quantity, state, storeId})
+        const sale = await createNewSale({ product_id, user_id, quantity, state, storeId })
 
         if (!sale) {
             return res.status(404).json({ error: "Product not found" })

@@ -1,7 +1,7 @@
 import pool from "../../config/db.js"
 
 export async function findAllOrders(data) {
-    const { orderDirection, storeId } = data
+    const { orderDirection, limit, offset, storeId } = data
 
     const result = await pool.query(`
         SELECT
@@ -17,9 +17,22 @@ export async function findAllOrders(data) {
         JOIN users ON orders.user_id = users.id
         WHERE orders.store_id = $1
         ORDER BY orders.ordered_at ${orderDirection}
-    `, [storeId])
+        LIMIT $2 OFFSET $3
+    `, [storeId, limit, offset])
 
     return result.rows
+}
+
+export async function getOrdersTotalRows(data) {
+    const { storeId } = data
+
+    const result = await pool.query(`
+        SELECT COUNT(*) AS total_rows
+        FROM orders
+        WHERE store_id = $1
+    `, [storeId])
+
+    return result.rows[0]
 }
 
 export async function insertOrder(data) {
