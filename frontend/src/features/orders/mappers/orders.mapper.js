@@ -1,5 +1,5 @@
 export function mapOrdersToTables(data) {
-    return data.map((item) => ({
+    return (data.rows || []).map((item) => ({
         id: item.id,
         date: item.date,
         product: item.product,
@@ -8,6 +8,10 @@ export function mapOrdersToTables(data) {
         quantity: item.quantity,
         state: item.state
     }))
+}
+
+export function mapOrdersTotalPage(data) {
+    return Math.ceil((data.total_rows || 0) / 20)
 }
 
 export function mapSupplierOptions(data) {

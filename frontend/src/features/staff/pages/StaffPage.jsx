@@ -3,45 +3,58 @@ import { toast } from "react-toastify"
 import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
 import { getStaff, registerStaff } from "../api/staff.api.js"
-import { mapStaffToTables } from "../mappers/staff.mapper.js"
+import { mapStaffToTables, mapStaffTotalPage } from "../mappers/staff.mapper.js"
 import StaffRegisterModal from "../components/StaffRegisterModal.jsx"
 
 function StaffPage() {
     const [staff, setStaff] = useState([])
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
-    const [sortOrder, setSortOrder] = useState('recent')
+    const [sortOrder, setSortOrder] = useState("recent")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(0)
 
     const staffColumns = [
-        { key: 'date', label: 'Date' },
-        { key: 'worker', label: 'Worker' },
-        { key: 'salary', label: 'Salary' },
-        { key: 'state', label: 'State' }
+        { key: "date", label: "Date" },
+        { key: "worker", label: "Worker" },
+        { key: "salary", label: "Salary" },
+        { key: "state", label: "State" }
     ]
     
     useEffect(() => {
         async function fetchStaff() {
             try {
-                const response = await getStaff(sortOrder)
+                const response = await getStaff(sortOrder, currentPage)
                 setStaff(mapStaffToTables(response))
+                setTotalPage(mapStaffTotalPage(response))
             } catch (error) {
                 console.log(error)
-            } 
-        } 
+            }
+        }
+
         fetchStaff()
-    }, [sortOrder])
+    }, [sortOrder, currentPage])
 
     function handleFilterChange(e) {
         setSortOrder(e.target.value)
+        setCurrentPage(1)
+    }
+
+    function handleNextPage() {
+        setCurrentPage((prev) => prev + 1)
+    }
+
+    function handlePrevPage() {
+        setCurrentPage((prev) => prev - 1)
     }
 
     async function handleSubmit(formData) {
         try {
-            const result = await registerStaff(formData)
-            console.log(result)
-            const response = await getStaff(sortOrder)
+            await registerStaff(formData)
+            const response = await getStaff(sortOrder, currentPage)
             setStaff(mapStaffToTables(response))
+            setTotalPage(mapStaffTotalPage(response))
             setIsRegisterModalOpen(false)
-            toast.success("The staff record was created successfully.")  
+            toast.success("The staff record was created successfully.")
         } catch (error) {
             console.log(error)
             toast.error("The staff record could not be created")
@@ -60,6 +73,10 @@ function StaffPage() {
                 onCreateClick={() => setIsRegisterModalOpen(true)}
                 filterValue={sortOrder}
                 onFilterChange={handleFilterChange}
+                currentPage={currentPage}
+                totalPage={totalPage}
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
             />
             {isRegisterModalOpen && <StaffRegisterModal 
                 onClose={() => setIsRegisterModalOpen(false)} 

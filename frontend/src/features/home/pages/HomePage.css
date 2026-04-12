@@ -1,90 +1,103 @@
-.home-page {
+.home {
+    background-color: #ebe7e0;
+    height: 100%;
     width: 100%;
-    display: grid;
-    gap: 60px;
-    padding: 40px 70px;
-    box-sizing: border-box;
-}
-
-.home-page-section {
-    background-color: rgba(198, 212, 225, 0.8);
-    width: 100%;
-    border: 2.4px solid black;
-    border-radius: 15px;
     display: flex;
-    padding: 20px 80px;
-    box-sizing: border-box;
-}
-
-.home-page-title {
-    color: #bdb8ad;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-}
-
-.home-page-section > div {
-    width: 100%;
-}
-
-.home-page-section-title {
-    width: 100%;
-    background-color: #bdb8ad;
-    text-align: center;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.home-page-subsection {
-    padding: 20px;
-    display: flex;
+    flex-direction: column;
+    padding: 40px;
     gap: 20px;
-    box-sizing: border-box;
+    border: 1px solid black
 }
 
-.home-page-section-purpose {
-    gap: 70px;
+.home-welcome {
+    display: flex;
+    flex: 0.6;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
 
-.home-page-purpose {
+.home-welcome-left {
     flex: 1;
-    border: 2px solid black;
-    border-radius: 15px;
 }
 
-.home-page-instructions {
-    flex: 2;
-    border: 2px solid black;
-    border-radius: 15px;
+.home-welcome-left > h2 {
+    color: #44749d;
+    font-family: 'Oswald';
 }
 
-.home-page-subsection-text {
-    padding: 20px;
+.home-welcome-right {
+    flex: 0.6;
+    font-family: 'Oswald';
 }
 
-.home-page-instruction-card {
+.home-welcome-title {
+    font-size: 45px;
+    font-family: 'Sekuya';
+    color: #44749d;
+    font-weight: bold;
+}
+
+.home-welcome-description {
+    font-size: 20px;
+}
+
+.home-stats-section-information {
+    display: flex;
+    height: 100%;
+}
+
+.home-stats {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    gap: 10px;
+}
+
+.home-stats-section {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    border: 1px solid black;
+}
+
+.home-stats-section-title {
+    border: 1px solid black;
+    padding: 12px;
+    background-color: #F0EDE8 ;
+    color: #44749d;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 'Oswald';
+}
+
+.home-stats-section-date {
+    color: #44749d;
+    border: 1px solid black;
+    padding: 15px;
+    height: 100%;
+    flex: 1;
+    background-color: #F0EDE8;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 150px;
+    align-items: center;
 }
 
-.home-page-section-tutorial {
-    border: 2.5px solid black;
-    border-radius: 15px;
+.home-stats-section-time {
+    font-family: "EB Garamond";
+    font-weight: bold;
+    font-size: 30px;
 }
 
-.home-page-tutorial-card {
-    flex: 1;
+.home-stats-section-amount {
+    font-size: 30px;
+    font-family: 'Sekuya';
 }
 
-.home-page-section-tutorial h3 {
-    text-align: center;
-}
-
-.home-page-section-tutorial ul {
-    list-style: none;
+.home-stats-section-qunatity {
+    font-family: "EB Garamond";
+    font-size: 20px;
+    font-weight: 600;
 }

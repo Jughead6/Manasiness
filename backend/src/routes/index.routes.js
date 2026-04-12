@@ -11,6 +11,7 @@ import customersRoutes from "../modules/customers/customers.routes.js"
 import workersRoutes from "../modules/workers/workers.routes.js"
 import suppliersRoutes from "../modules/suppliers/suppliers.routes.js"
 import authRoutes from "../modules/auth/auth.routes.js"
+import statsRoutes from "../modules/stats/stats.routes.js"
 
 const router = Router()
 
@@ -26,5 +27,6 @@ router.use("/staff", staffRoutes)
 router.use("/customers", customersRoutes)
 router.use("/workers", workersRoutes)
 router.use("/suppliers", suppliersRoutes)
+router.use("/stats", statsRoutes)
 
 export default router

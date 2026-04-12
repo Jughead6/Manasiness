@@ -1,102 +1,152 @@
 import "./HomePage.css"
+import { useState, useEffect } from "react"
+import { getSalesStats, getOrdersStats, getStaffStats } from "../api/home.api.js"
 
 function HomePage() {
+    const [salesStats, setSalesStats] = useState({
+        dayTotal: 0,
+        dayCount: 0,
+        weekTotal: 0,
+        weekCount: 0,
+        monthTotal: 0,
+        monthCount: 0
+    })
+
+    const [ordersStats, setOrdersStats] = useState({
+        dayTotal: 0,
+        dayCount: 0,
+        weekTotal: 0,
+        weekCount: 0,
+        monthTotal: 0,
+        monthCount: 0
+    })
+
+    const [staffStats, setStaffStats] = useState({
+        dayTotal: 0,
+        dayCount: 0,
+        weekTotal: 0,
+        weekCount: 0,
+        monthTotal: 0,
+        monthCount: 0
+    })
+
+    const [storeProfile] = useState(() => {
+        try {
+            const store = localStorage.getItem("store")
+            if (!store) return { name: "" }
+
+            const parsedStore = JSON.parse(store)
+
+            return {
+                name: parsedStore.name || ""
+            }
+        } catch (error) {
+            console.log(error)
+            return { image: "", name: "" }
+        }
+    })
+
+    useEffect(() => {
+        async function loadStats() {
+            try {
+                const [salesResponse, ordersResponse, staffResponse] = await Promise.all([
+                    getSalesStats(),
+                    getOrdersStats(),
+                    getStaffStats()
+                ])
+
+                
+        
+
+                setSalesStats(salesResponse)
+                setOrdersStats(ordersResponse)
+                setStaffStats(staffResponse)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        loadStats()
+    }, [])
+
     return (
-        <div className="home-page">
-            <div className="home-page-section">
-                <h1 className="home-page-title">Welcome to Manasiness</h1>
+        <div className="home">
+            <div className="home-welcome">
+                <div className="home-welcome-left">
+                    <h2>Welcome to dashboard!</h2>
+                    <h1 className="home-welcome-title">Hi, {storeProfile.name}</h1>
+                </div>
+                <div className="home-welcome-right">
+                    <p className="home-welcome-description">Manasiness is a web platform that helps you manage your store. This platform offers you better organized information about your business.</p>
+                </div>
             </div>
 
-            <div className="home-page-section home-page-section-purpose">
-                <div className="home-page-purpose">
-                    <h2 className="home-page-section-title">Purpose</h2>
-                    <h3 className="home-page-subsection-text">Manasiness simplifies business management by organizing and summarizing your data, helping you save time and stay in control.</h3>
-                </div>
-
-                <div className="home-page-instructions">
-                    <h2 className="home-page-section-title">Instructions</h2>
-
-                    <div className="home-page-subsection">
-                        <div className="home-page-instruction-card">
-                            <h3>First you must create a category in order to create the products.</h3>
-                            <button>Create Categories</button>
+            <div className="home-stats">
+                <div className="home-stats-section">
+                    <div className="home-stats-section-title">
+                        <p>Sales</p>
+                    </div>
+                    <div className="home-stats-section-information">
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Today</p>
+                            <p className="home-stats-section-amount">S/ {salesStats.dayTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.dayCount}</p>
                         </div>
-
-                        <div className="home-page-instruction-card">
-                            <h3>Second, you need to create products in order to start your statistics.</h3>
-                            <button>Create Products</button>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Weekly</p>
+                            <p className="home-stats-section-amount">S/ {salesStats.weekTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.weekCount}</p>
                         </div>
-
-                        <div className="home-page-instruction-card">
-                            <h3>And optionally, you can create users according to your needs: Suppliers, Worker or Customers.</h3>
-                            <button>Create Users</button>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Monthly</p>
+                            <p className="home-stats-section-amount">S/ {salesStats.monthTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.monthCount}</p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="home-page-section home-page-section-tutorial">
-                <div className="home-page-tutorial-wrapper">
-                    <h2 className="home-page-section-title">Tutorial</h2>
-
-                    <div className="home-page-subsection">
-                        <div className="home-page-tutorial-card">
-                            <h3>Actions</h3>
-
-                            <ul>
-                                <li>
-                                    Categories
-                                    <h4>Here you can manage your categories.</h4>
-                                </li>
-
-                                <li>
-                                    Products
-                                    <h4>Here you can manage your products.</h4>
-                                </li>
-
-                                <li>
-                                    Users
-                                    <h4>Here you can manage your users.</h4>
-                                </li>
-                            </ul>
+                <div className="home-stats-section">
+                    <div className="home-stats-section-title">
+                        <p>Orders</p>
+                    </div>
+                    <div className="home-stats-section-information">
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Today</p>
+                            <p className="home-stats-section-amount">S/ {ordersStats.dayTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.dayCount}</p>
                         </div>
-
-                        <div className="home-page-tutorial-card">
-                            <h3>Your Space</h3>
-
-                            <ul>
-                                <li>
-                                    Sales
-                                    <h4>Here you can register sales and view your complete sales history.</h4>
-                                </li>
-
-                                <li>
-                                    Customers
-                                    <h4>Here you can manage customer information and track payment status.</h4>
-                                </li>
-                            </ul>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Weekly</p>
+                            <p className="home-stats-section-amount">S/ {ordersStats.weekTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.weekCount}</p>
                         </div>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Monthly</p>
+                            <p className="home-stats-section-amount">S/ {ordersStats.monthTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.monthCount}</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <div className="home-page-tutorial-card">
-                            <h3>Admin</h3>
-
-                            <ul>
-                                <li>
-                                    Workers
-                                    <h4>Here you can view and manage your workforce information.</h4>
-                                </li>
-
-                                <li>
-                                    Statistics
-                                    <h4>Here you can view complete business statistics.</h4>
-                                </li>
-
-                                <li>
-                                    Suppliers
-                                    <h4>Here you can manage orders, payment status, and supplier information.</h4>
-                                </li>
-
-                            </ul>
+                <div className="home-stats-section">
+                    <div className="home-stats-section-title">
+                        <p>Staff</p>
+                    </div>
+                    <div className="home-stats-section-information">
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Today</p>
+                            <p className="home-stats-section-amount">S/ {staffStats.dayTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.dayCount}</p>
+                        </div>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Weekly</p>
+                            <p className="home-stats-section-amount">S/ {staffStats.weekTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.weekCount}</p>
+                        </div>
+                        <div className="home-stats-section-date">
+                            <p className="home-stats-section-time">Monthly</p>
+                            <p className="home-stats-section-amount">S/ {staffStats.monthTotal}</p>
+                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.monthCount}</p>
                         </div>
                     </div>
                 </div>
