@@ -24,10 +24,6 @@ export async function getWorkerById(req, res, next) {
         const storeId = req.store.storeId
         const worker = await getWorkerDetail({id, orderDirection, limit, offset, storeId})
 
-        if (!worker) {
-            return res.status(404).json({ error: 'Worker not found' })
-        }
-
         res.json(worker)
     } catch (error) {
         next(error)

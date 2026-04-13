@@ -16,8 +16,8 @@ function CategoryEditPage() {
             try {
                 const response = await getCategoryById(id)
                 setEditValues(mapCategoryToEdit(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
             }
         }
         fetchEditValues()
@@ -30,8 +30,7 @@ function CategoryEditPage() {
             console.log('edited successfully')
             navigate(`/dashboard/categories/${id}`)
             toast.success("Category edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The category could not be edited")
         }
     }

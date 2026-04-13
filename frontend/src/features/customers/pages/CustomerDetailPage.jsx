@@ -18,8 +18,9 @@ function CustomerDetailPage() {
                 const response = await getCustomerById(id, sortOrder, currentPage)
                 setDetail(mapCustomerToDetail(response))
                 setTotalPage(mapTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
+                setTotalPage(null)
             }
         }
 

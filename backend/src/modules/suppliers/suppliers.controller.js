@@ -25,10 +25,6 @@ export async function getSupplierById(req, res, next) {
         const storeId = req.store.storeId
         const supplier = await getSupplierDetail({id, orderDirection, limit, offset, storeId})
 
-        if (!supplier) {
-            return res.status(404).json({ error: 'Supplier not found' })
-        }
-
         res.json(supplier)
     } catch (error) {
         next(error)

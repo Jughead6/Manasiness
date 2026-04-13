@@ -19,8 +19,9 @@ function OrderRegisterModal({onClose, onCreate}) {
                 setSupplierOptions(mapSupplierOptions(response))
                 const products = await getProductOptions()
                 setProductOptions(mapProductOptions(products))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setSupplierOptions(null)
+                setProductOptions(null)
             }
         }
         fetchWorkerOptions()

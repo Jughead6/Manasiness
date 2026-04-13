@@ -17,7 +17,7 @@ function ProductsPage() {
                 const data = await getProducts(searchTerm)
                 setProducts(mapProductsToCards(data))
             } catch {
-                toast.error("Could not load products")
+                setProducts(null)
             }
         }
         fetchProducts()
@@ -25,15 +25,13 @@ function ProductsPage() {
 
     async function handleCreateProduct(formData) {
         try {
-            const result = await createProduct(formData)
-            console.log(result)
+            await createProduct(formData)
 
             const data = await getProducts(searchTerm)
             setProducts(mapProductsToCards(data))
             setIsCreateModalOpen(false)
             toast.success("Successfully created product") 
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("Product could not be created")
         }
     }

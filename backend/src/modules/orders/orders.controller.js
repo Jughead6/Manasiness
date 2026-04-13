@@ -24,10 +24,6 @@ export async function registerOrder(req, res, next) {
         const storeId = req.store.storeId
         const order = await createNewOrder({ product_id, user_id, quantity, state, storeId })
 
-        if (!order) {
-            return res.status(404).json({ error: "Product not found" })
-        }
-
         res.status(201).json({
             message: "Register successfully",
             order

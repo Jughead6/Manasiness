@@ -42,8 +42,9 @@ function ProductEditPage() {
 
                 setEditValues(mappedProduct)
                 setCategoryOptions(safeOptions)
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
+                setCategoryOptions(null)
             }
         }
 
@@ -55,8 +56,7 @@ function ProductEditPage() {
             await editProduct(id, data)
             navigate(`/dashboard/products/${id}`)
             toast.success("Product edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The product could not be edited")
         }
     }

@@ -17,8 +17,8 @@ function CategoryDetailPage() {
             try {
                 const data = await getCategoryById(id)
                 setDetail(mapCategoryToDetail(data))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
             }
         }
         fetchCategoryDetail()
@@ -31,8 +31,7 @@ function CategoryDetailPage() {
             setDetail(mapCategoryToDetail(data))
             setIsDeactivationOpen(false)
             toast.success("Category successfully deactivated")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The category could not be deactivated")
         }
     }
@@ -43,8 +42,7 @@ function CategoryDetailPage() {
             const data = await getCategoryById(id)
             setDetail(mapCategoryToDetail(data))
             toast.success("Category successfully activated")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The category could not be activated")
         }
     }

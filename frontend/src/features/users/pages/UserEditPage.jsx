@@ -16,8 +16,8 @@ function UserEditPage() {
             try {
                 const response = await getUserById(id)
                 setEditValues(mapUserToEdit(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
             }
         }
         fetchEditValues()
@@ -29,8 +29,7 @@ function UserEditPage() {
             console.log('edited successfully')
             navigate(`/dashboard/users/${id}`)
             toast.success("User edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The user could not be edited")
         }
     }

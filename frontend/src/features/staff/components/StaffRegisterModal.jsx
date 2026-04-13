@@ -14,8 +14,8 @@ function StaffRegisterModal({onClose, onCreate }) {
             try {
                 const response = await getWorkerOptions()
                 setWorkerOptions(mapWorkerOptions(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setWorkerOptions(null)
             }
         }
         fetchWorkerOptions()

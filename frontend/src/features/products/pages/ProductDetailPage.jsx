@@ -17,8 +17,8 @@ function ProductDetailPage() {
             try {
                 const data = await getProductById(id)
                 setDetail(mapProductToDetail(data))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
             }
         }
         fetchProductDetail()
@@ -31,8 +31,7 @@ function ProductDetailPage() {
             setDetail(mapProductToDetail(data))
             setIsDeactivationOpen(false)
             toast.success("Product successfully deactivated")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The product could not be deactivated")
         }
     }
@@ -43,8 +42,7 @@ function ProductDetailPage() {
             const data = await getProductById(id)
             setDetail(mapProductToDetail(data))
             toast.success("Product successfully activated")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The product could not be activated")
         }
     }

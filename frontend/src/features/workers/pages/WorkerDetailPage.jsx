@@ -18,8 +18,9 @@ function WorkerDetailPage() {
                 const response = await getWorkerById(id, sortOrder, currentPage)
                 setDetail(mapWorkerToDetail(response))
                 setTotalPage(mapTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
+                setTotalPage(null)
             }
         }
         fetchWorkerDetail()

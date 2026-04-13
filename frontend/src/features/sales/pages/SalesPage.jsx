@@ -28,8 +28,9 @@ function SalesPage() {
                 const response = await getSales(sortOrder, currentPage)
                 setSales(mapSalesToTables(response))
                 setTotalPage(mapSalesTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setSales(null)
+                setTotalPage(null)
             }
         }
 
@@ -57,8 +58,7 @@ function SalesPage() {
             setTotalPage(mapSalesTotalPage(response))
             setIsRegisterModalOpen(false)
             toast.success("Sale created successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The sale could not be created")
         }
     }

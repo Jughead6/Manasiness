@@ -45,7 +45,7 @@ export async function findCustomerRowsById(data) {
             sales.quantity,
             sales.state
         FROM sales
-        JOIN products ON sales.product_id = products.id
+        JOIN products ON sales.product_id = products.id AND sales.store_id = products.store_id
         WHERE sales.user_id = $1 AND sales.store_id = $2
         ORDER BY sales.sold_at ${orderDirection}
         LIMIT $3 OFFSET $4

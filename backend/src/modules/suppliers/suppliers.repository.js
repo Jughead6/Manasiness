@@ -45,7 +45,7 @@ export async function findSupplierRowsById(data) {
             orders.quantity,
             orders.state
         FROM orders
-        JOIN products ON orders.product_id = products.id
+        JOIN products ON orders.product_id = products.id AND orders.store_id = products.store_id
         WHERE orders.user_id = $1 AND orders.store_id = $4
         ORDER BY orders.ordered_at ${orderDirection}
         LIMIT $2 OFFSET $3

@@ -18,8 +18,9 @@ function SupplierDetailPage() {
                 const response = await getSupplierById(id, sortOrder, currentPage)
                 setDetail(mapSupplierToDetail(response))
                 setTotalPage(mapTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
+                setTotalPage(null)
             }
         }
 

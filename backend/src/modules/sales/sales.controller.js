@@ -24,10 +24,6 @@ export async function registerSale(req, res, next) {
         const storeId = req.store.storeId
         const sale = await createNewSale({ product_id, user_id, quantity, state, storeId })
 
-        if (!sale) {
-            return res.status(404).json({ error: "Product not found" })
-        }
-
         res.status(201).json({
             message: "Register successfully",
             sale

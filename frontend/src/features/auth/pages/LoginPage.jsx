@@ -1,30 +1,34 @@
-import AuthOverlay from '../../../shared/ui/modal/AuthOverlay'
-import AuthLayout from '../../../shared/ui/layouts/auth/AuthLayout'
+import AuthOverlay from "../../../shared/ui/modal/AuthOverlay.jsx"
+import AuthLayout from "../../../shared/ui/layouts/auth/AuthLayout.jsx"
 import { useNavigate, Navigate } from "react-router-dom"
-import { login } from '../api/auth.api'
+import { login } from "../api/auth.api"
+import { useAuth } from "../context/AuthContext.jsx"
 import { toast } from "react-toastify"
-import LoginForm from '../../../shared/ui/forms/LoginForm'
+import LoginForm from "../../../shared/ui/forms/LoginForm"
 
 function LoginPage() {
     const navigate = useNavigate()
-    const token = localStorage.getItem("token")
+    const { store, isLoading, loginSession } = useAuth()
 
-    if (token) {
-        return <Navigate to="/dashboard" replace></Navigate>
+    if (isLoading) {
+        return null
     }
+
+    if (store) {
+        return <Navigate to="/dashboard" replace />
+    }
+
     async function handleSubmit(data) {
         try {
-            const store = await login(data)
-
-            localStorage.setItem("token", store.token)
-            localStorage.setItem("store", JSON.stringify(store.store))
-
+            await login(data)
+            await loginSession()
             navigate("/dashboard")
-            toast.success("Login successfull!")
+            toast.success("Login successful!")
         } catch {
-            toast.error("Invalid Credentials")
+            toast.error("Invalid credentials")
         }
     }
+
     return (
         <AuthOverlay>
             <AuthLayout>

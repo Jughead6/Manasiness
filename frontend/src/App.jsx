@@ -39,8 +39,6 @@ import RegisterPage from "./features/auth/pages/RegisterPage.jsx"
 
 import NotFoundPage from "./features/not-found/pages/NotFoundPage.jsx"
 
-import Playground from "../../playground/src/feautures/Playground.jsx"
-
 function App() {
   return (
     <BrowserRouter>
@@ -51,7 +49,6 @@ function App() {
         <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout/></ProtectedRoute>}>
           <Route index element={<HomePage/>}/>
-          <Route path="playground" element={<Playground/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>
           <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>}/>
           <Route path="categories/:id/edit" element={<CategoryEditPage/>}/>

@@ -1,56 +1,39 @@
-const API_URL = "http://localhost:3000"
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
 
-function getHeaders() {
-    const token = localStorage.getItem("token")
+async function request(path, options = {}) {
+    const response = await fetch(`${API_URL}${path}`, {
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        ...options
+    })
 
-    return {
-        "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : ""
+    const result = await response.json().catch(() => null)
+
+    if (!response.ok) {
+        throw new Error(result?.error || "Request failed")
     }
+
+    return result
 }
 
 export async function apiGet(path) {
-    const response = await fetch(`${API_URL}${path}`, {
-        headers: getHeaders()
+    return request(path, {
+        method: "GET"
     })
-
-    const result = await response.json().catch(() => null)
-
-    if (!response.ok) {
-        throw new Error(result?.error || "Request failed")
-    }
-
-    return result
 }
 
 export async function apiPost(path, data) {
-    const response = await fetch(`${API_URL}${path}`, {
+    return request(path, {
         method: "POST",
-        headers: getHeaders(),
         body: JSON.stringify(data)
     })
-
-    const result = await response.json().catch(() => null)
-
-    if (!response.ok) {
-        throw new Error(result?.error || "Request failed")
-    }
-
-    return result
 }
 
 export async function apiPatch(path, data) {
-    const response = await fetch(`${API_URL}${path}`, {
+    return request(path, {
         method: "PATCH",
-        headers: getHeaders(),
         body: JSON.stringify(data)
     })
-
-    const result = await response.json().catch(() => null)
-
-    if (!response.ok) {
-        throw new Error(result?.error || "Request failed")
-    }
-
-    return result
 }
