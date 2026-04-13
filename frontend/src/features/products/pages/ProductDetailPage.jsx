@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import EntityTitle from "../../../shared/ui/titles/entity/EntityTitle.jsx"
@@ -9,16 +9,25 @@ import ProductDeactivationModal from "../components/ProductDeactivationModal.jsx
 
 function ProductDetailPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
+
     const [detail, setDetail] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     const [isDeactivationOpen, setIsDeactivationOpen] = useState(false)
 
     useEffect(() => {
         async function fetchProductDetail() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const data = await getProductById(id)
                 setDetail(mapProductToDetail(data))
             } catch {
                 setDetail(null)
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchProductDetail()
@@ -47,8 +56,17 @@ function ProductDetailPage() {
         }
     }
 
-    if (!detail) {
-        return null
+    if (isLoading) {
+        return <div>Loading product...</div>
+    }
+
+    if (hasError || !detail) {
+        return (
+            <div>
+                <h2>Could not load product</h2>
+                <button onClick={() => navigate("/dashboard/products")}>Back</button>
+            </div>
+        )
     }
 
     return (

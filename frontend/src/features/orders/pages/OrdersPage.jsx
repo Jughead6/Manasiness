@@ -29,8 +29,8 @@ function OrdersPage() {
                 setOrders(mapOrdersToTables(response))
                 setTotalPage(mapOrdersTotalPage(response))
             } catch {
-                setOrders(null)
-                setTotalPage(null)
+                setOrders([])
+                setTotalPage(0)
             }
         }
 

@@ -71,12 +71,12 @@ export async function createNewProduct(data) {
 export async function updateProduct(data) {
     const storeId = data.storeId
     const id = requirePositiveInteger(data.id, "product_id")
-    const categoryId = requirePositiveInteger(data.category_id, "category_id")
     const name = requireText(data.name, "name")
     const image = data.image?.trim() || null
     const costPrice = requirePositiveNumber(data.cost_price, "cost_price")
     const salePrice = requirePositiveNumber(data.sale_price, "sale_price")
     const stock = requireStock(data.stock)
+    const categoryId = requirePositiveInteger(data.category_id, "category_id")
 
     const product = await findProductById({ id, storeId })
 
@@ -90,14 +90,16 @@ export async function updateProduct(data) {
         throw notFound("Category not found")
     }
 
-    if (!category.is_active) {
-        throw conflict("Category unavailable")
-    }
-
     const existingProduct = await findProductByName({ name, storeId })
 
     if (existingProduct && existingProduct.id !== id) {
         throw conflict("Product already exists")
+    }
+
+    const isChangingCategory = Number(product.category_id) !== Number(categoryId)
+
+    if (!category.is_active && isChangingCategory) {
+        throw conflict("Category unavailable")
     }
 
     return updateProductById({

@@ -29,8 +29,8 @@ function SalesPage() {
                 setSales(mapSalesToTables(response))
                 setTotalPage(mapSalesTotalPage(response))
             } catch {
-                setSales(null)
-                setTotalPage(null)
+                setSales([])
+                setTotalPage(0)
             }
         }
 

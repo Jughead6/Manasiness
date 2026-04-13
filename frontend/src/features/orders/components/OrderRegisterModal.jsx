@@ -20,8 +20,8 @@ function OrderRegisterModal({onClose, onCreate}) {
                 const products = await getProductOptions()
                 setProductOptions(mapProductOptions(products))
             } catch {
-                setSupplierOptions(null)
-                setProductOptions(null)
+                setSupplierOptions([])
+                setProductOptions([])
             }
         }
         fetchWorkerOptions()

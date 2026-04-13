@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
     async function loadSession() {
         try {
             setIsLoading(true)
-            const response = await getSession()                                                             
+            const response = await getSession()
             setStore(response.store)
         } catch {
             setStore(null)
@@ -27,10 +27,10 @@ export function AuthProvider({ children }) {
         try {
             await logout()
         } catch {
+        } finally {
             setStore(null)
+            setIsLoading(false)
         }
-        setStore(null)
-        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     }, [])
 
     return (
-        <AuthContext.Provider value={{ store, isLoading, loginSession, logoutSession, loadSession }}>
+        <AuthContext.Provider value={{ store, isLoading, loadSession, loginSession, logoutSession }}>
             {children}
         </AuthContext.Provider>
     )

@@ -49,7 +49,6 @@ export async function updateUser(data) {
     const id = requirePositiveInteger(data.id, "user_id")
     const name = requireText(data.name, "name")
     const phone = requireText(data.phone, "phone")
-    const role = requireAllowedValue(data.role, USER_ROLES, "role")
     const image = data.image?.trim() || null
 
     const user = await findUserById({ id, storeId })
@@ -64,11 +63,19 @@ export async function updateUser(data) {
         throw conflict("User already exists")
     }
 
+    if (data.role !== undefined) {
+        const requestedRole = requireAllowedValue(data.role, USER_ROLES, "role")
+
+        if (requestedRole !== user.role) {
+            throw conflict("Role change unavailable")
+        }
+    }
+
     return updateUserById({
         name,
         image,
         phone,
-        role,
+        role: user.role,
         id,
         storeId
     })

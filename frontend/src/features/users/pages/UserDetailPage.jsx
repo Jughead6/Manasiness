@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import EntityTitle from "../../../shared/ui/titles/entity/EntityTitle.jsx"
@@ -9,16 +9,25 @@ import UserDeactivationModal from "../components/UserDeactivationModal.jsx"
 
 function UserDetailPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
+
     const [detail, setDetail] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     const [isDeactivationOpen, setIsDeactivationOpen] = useState(false)
 
     useEffect(() => {
         async function fetchUserDetail() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const data = await getUserById(id)
                 setDetail(mapUserToDetail(data))
             } catch {
                 setDetail(null)
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchUserDetail()
@@ -42,15 +51,24 @@ function UserDetailPage() {
             const data = await getUserById(id)
             setDetail(mapUserToDetail(data))
             toast.success("User successfully activated")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The user could not be activated")
         }
     }
 
-    if (!detail) {
-        return null
+    if (isLoading) {
+        return <div>Loading user...</div>
     }
+
+    if (hasError || !detail) {
+        return (
+            <div>
+                <h2>Could not load user</h2>
+                <button onClick={() => navigate("/dashboard/users")}>Back</button>
+            </div>
+        )
+    }
+
 
     return (
         <>

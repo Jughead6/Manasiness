@@ -1,6 +1,8 @@
 import "./EntityEditForm.css"
 
 function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit }) {
+    const safeFields = Array.isArray(fields) ? fields : []
+
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
@@ -15,7 +17,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                 <h1>{title}</h1>
             </div>
             <div className="shared-entity-edit-form-content">
-                {fields.map((field) => (
+                {safeFields.map((field) => (
                     <div className="shared-entity-edit-form-group" key={field.id}>
                         <label htmlFor={field.id}>{field.label}</label>
 

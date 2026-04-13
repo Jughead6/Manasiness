@@ -1,31 +1,38 @@
 import bcrypt from "bcrypt"
+import { conflict, unauthorized } from "../../errors/http-errors.js"
 import { findStoreByEmail, findStoreById, insertStore } from "./auth.repository.js"
 import { generateToken } from "./auth.utils.js"
 
-export async function loginStore(email, password) {
+function mapStoreSession(store) {
+    return {
+        id: store.id,
+        name: store.name,
+        email: store.email,
+        phone: store.phone,
+        image: store.image
+    }
+}
+
+export async function loginStore(data) {
+    const { email, password } = data
+
     const store = await findStoreByEmail(email)
 
     if (!store) {
-        return null
+        throw unauthorized("Invalid credentials")
     }
 
     const isPasswordValid = await bcrypt.compare(password, store.password_hash)
 
     if (!isPasswordValid) {
-        return null
+        throw unauthorized("Invalid credentials")
     }
 
     const token = generateToken(store)
 
     return {
         token,
-        store: {
-            id: store.id,
-            name: store.name,
-            email: store.email,
-            phone: store.phone,
-            image: store.image
-        }
+        store: mapStoreSession(store)
     }
 }
 
@@ -35,38 +42,28 @@ export async function registerStore(data) {
     const existingStore = await findStoreByEmail(email)
 
     if (existingStore) {
-        return null
+        throw conflict("Store already exists")
     }
 
     const password_hash = await bcrypt.hash(password, 10)
 
-    const store = await insertStore({ name, email, password_hash, phone, image })
+    const store = await insertStore({
+        name,
+        email,
+        password_hash,
+        phone,
+        image
+    })
 
-    if (!store) {
-        return null
-    }
-
-    return {
-        id: store.id,
-        name: store.name,
-        email: store.email,
-        phone: store.phone,
-        image: store.image
-    }
+    return mapStoreSession(store)
 }
 
 export async function getStoreSession(storeId) {
     const store = await findStoreById(storeId)
 
     if (!store) {
-        return null
+        throw unauthorized("Unauthorized")
     }
 
-    return {
-        id: store.id,
-        name: store.name,
-        email: store.email,
-        phone: store.phone,
-        image: store.image
-    }
+    return mapStoreSession(store)
 }

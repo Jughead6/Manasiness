@@ -17,7 +17,7 @@ function UsersPage() {
                 const data = await getUsers(searchTerm)
                 setUsers(mapUsersToCards(data))
             } catch {
-                setUsers(null)
+                setUsers([])
             }
         }
         fetchUsers()

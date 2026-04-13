@@ -3,35 +3,23 @@ import { useState, useEffect } from "react"
 import { getSalesStats, getOrdersStats, getStaffStats } from "../api/home.api.js"
 import { useAuth } from "../../auth/context/AuthContext.jsx"
 
+function createEmptyStats() {
+    return {
+        dayTotal: 0,
+        dayCount: 0,
+        weekTotal: 0,
+        weekCount: 0,
+        monthTotal: 0,
+        monthCount: 0
+    }
+}
+
 function HomePage() {
     const { store } = useAuth()
 
-    const [salesStats, setSalesStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
-
-    const [ordersStats, setOrdersStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
-
-    const [staffStats, setStaffStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
+    const [salesStats, setSalesStats] = useState(createEmptyStats())
+    const [ordersStats, setOrdersStats] = useState(createEmptyStats())
+    const [staffStats, setStaffStats] = useState(createEmptyStats())
 
     useEffect(() => {
         async function loadStats() {
@@ -42,13 +30,13 @@ function HomePage() {
                     getStaffStats()
                 ])
 
-                setSalesStats(salesResponse)
-                setOrdersStats(ordersResponse)
-                setStaffStats(staffResponse)
+                setSalesStats(salesResponse || createEmptyStats())
+                setOrdersStats(ordersResponse || createEmptyStats())
+                setStaffStats(staffResponse || createEmptyStats())
             } catch {
-                setSalesStats(null)
-                setOrdersStats(null)
-                setStaffStats(null)
+                setSalesStats(createEmptyStats())
+                setOrdersStats(createEmptyStats())
+                setStaffStats(createEmptyStats())
             }
         }
 

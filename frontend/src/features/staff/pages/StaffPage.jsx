@@ -27,8 +27,8 @@ function StaffPage() {
                 setStaff(mapStaffToTables(response))
                 setTotalPage(mapStaffTotalPage(response))
             } catch {
-                setStaff(null)
-                setTotalPage(null)
+                setStaff([])
+                setTotalPage(0)
             }
         }
 

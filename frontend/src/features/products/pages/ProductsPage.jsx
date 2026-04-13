@@ -17,7 +17,7 @@ function ProductsPage() {
                 const data = await getProducts(searchTerm)
                 setProducts(mapProductsToCards(data))
             } catch {
-                setProducts(null)
+                setProducts([])
             }
         }
         fetchProducts()
