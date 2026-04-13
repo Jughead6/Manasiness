@@ -4,7 +4,7 @@ export async function findAllCategories(data) {
     const { storeId, search = "" } = data
     const cleanSearch = search.trim()
     const searchValue = `%${cleanSearch}%`
-    
+
     const result = await pool.query(`
         SELECT id, name, image, created_at, updated_at, is_active
         FROM categories
@@ -60,7 +60,7 @@ export async function updateCategoryById(data) {
 
 export async function updateCategoryStatus(data) {
     const { isActive, id, storeId } = data
-    
+
     const result = await pool.query(`
         UPDATE categories
         SET is_active = $1,
@@ -83,4 +83,16 @@ export async function findActiveCategoryOptions(data) {
     `, [storeId])
 
     return result.rows
+}
+
+export async function findCategoryByName(data) {
+    const { name, storeId } = data
+
+    const result = await pool.query(`
+        SELECT id, name
+        FROM categories
+        WHERE name = $1 AND store_id = $2
+    `, [name, storeId])
+
+    return result.rows[0] || null
 }

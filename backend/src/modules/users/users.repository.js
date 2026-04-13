@@ -33,6 +33,18 @@ export async function findUserById(data) {
     return result.rows[0] || null
 }
 
+export async function findUserByPhone(data) {
+    const { phone, storeId } = data
+
+    const result = await pool.query(`
+        SELECT id, phone
+        FROM users
+        WHERE phone = $1 AND store_id = $2
+    `, [phone, storeId])
+
+    return result.rows[0] || null
+}
+
 export async function insertUser(data) {
     const { name, image, phone, role, storeId } = data
 

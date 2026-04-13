@@ -23,14 +23,19 @@ function getSafeCategoryOptions(product, categoryOptions) {
 }
 
 function ProductEditPage() {
-    const [editValues, setEditValues] = useState(null)
-    const [categoryOptions, setCategoryOptions] = useState([])
     const { id } = useParams()
     const navigate = useNavigate()
+    
+    const [editValues, setEditValues] = useState(null)
+    const [categoryOptions, setCategoryOptions] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     
     useEffect(() => {
         async function fetchEditValues() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const [productResponse, categoryResponse] = await Promise.all([
                     getProductById(id),
                     getCategoryOptions()
@@ -42,8 +47,12 @@ function ProductEditPage() {
 
                 setEditValues(mappedProduct)
                 setCategoryOptions(safeOptions)
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
+                setCategoryOptions([])
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -55,8 +64,7 @@ function ProductEditPage() {
             await editProduct(id, data)
             navigate(`/dashboard/products/${id}`)
             toast.success("Product edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The product could not be edited")
         }
     }
@@ -65,7 +73,18 @@ function ProductEditPage() {
         navigate(`/dashboard/products/${id}`)
     }
 
-    if (!editValues) return null
+    if (isLoading) {
+        return <div>Loading product...</div>
+    }
+
+    if (hasError || !editValues) {
+        return (
+            <div>
+                <h2>Could not load product</h2>
+                <button onClick={() => navigate("/dashboard/products")}>Back</button>
+            </div>
+        )
+    }
     
     return (
         <EntityEditForm

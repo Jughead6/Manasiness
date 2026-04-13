@@ -21,10 +21,6 @@ export async function getUserById(req, res, next) {
         const storeId = req.store.storeId
         const user = await getUserDetail({id, storeId})
 
-        if (!user) {
-            return res.status(404).json({ error: "User not found" })
-        }
-
         res.json(user)
     } catch (error) {
         next(error)
@@ -39,10 +35,6 @@ export async function createUser(req, res, next) {
         const cleanPhone = phone?.trim() || null
         const cleanImage = image?.trim() || DEFAULT_USER_IMAGE
         const user = await createNewUser({name, image: cleanImage, phone: cleanPhone, role, storeId})
-
-        if (!user) {
-            return res.status(500).json({ error: "User failed" })
-        }
 
         res.status(201).json({
             message: "Create successfully",
@@ -63,10 +55,6 @@ export async function editUser(req, res, next) {
         const cleanImage = image?.trim() || DEFAULT_USER_IMAGE
         const user = await updateUser({id, name, image: cleanImage, phone: cleanPhone, role, storeId})
 
-        if (!user) {
-            return res.status(404).json({ error: "User not found" })
-        }
-
         res.status(200).json({
             message: "Edit successfully",
             user
@@ -84,10 +72,6 @@ export async function deactivateUser(req, res, next) {
         const storeId = req.store.storeId
         const user = await disableUser({id, storeId, isActive})
 
-        if (!user) {
-            return res.status(404).json({ error: "User not found" })
-        }
-
         res.status(200).json({
             message: "User deactivated successfully",
             user
@@ -104,10 +88,6 @@ export async function activateUser(req, res, next) {
     try {
         const storeId = req.store.storeId
         const user = await enableUser({id, storeId, isActive})
-
-        if (!user) {
-            return res.status(404).json({ error: "User not found" })
-        }
 
         res.status(200).json({
             message: "User activated successfully",

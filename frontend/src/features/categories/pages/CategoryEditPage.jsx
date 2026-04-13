@@ -7,17 +7,25 @@ import { categoryEditFields } from "../config/categoryFormFields.jsx"
 import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
 
 function CategoryEditPage() {
-    const [editValues, setEditValues] = useState(null)
     const { id } = useParams()
     const navigate = useNavigate()
+    
+    const [editValues, setEditValues] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
 
     useEffect(() => {
         async function fetchEditValues() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const response = await getCategoryById(id)
                 setEditValues(mapCategoryToEdit(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchEditValues()
@@ -27,11 +35,9 @@ function CategoryEditPage() {
     async function handleSubmit(data) {
         try {
             await editCategory(id, data)
-            console.log('edited successfully')
             navigate(`/dashboard/categories/${id}`)
             toast.success("Category edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The category could not be edited")
         }
     }
@@ -40,7 +46,18 @@ function CategoryEditPage() {
         navigate(`/dashboard/categories/${id}`)
     }
 
-    if (!editValues) return null
+    if (isLoading) {
+        return <div>Loading category...</div>
+    }
+
+    if (hasError || !editValues) {
+        return (
+            <div>
+                <h2>Could not load category</h2>
+                <button onClick={() => navigate("/dashboard/categories")}>Back</button>
+            </div>
+        )
+    }
 
     return (
         <EntityEditForm

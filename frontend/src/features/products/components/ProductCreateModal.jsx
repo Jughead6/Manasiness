@@ -14,8 +14,8 @@ function ProductCreateModal({ onClose, onCreate }) {
             try {
                 const response = await getCategoryOptions()
                 setCategoryOptions(mapCategoryOptions(response))
-            } catch (error) {
-            console.log(error)
+            } catch {
+                setCategoryOptions([])
             } 
         }
 

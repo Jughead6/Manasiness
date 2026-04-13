@@ -7,17 +7,25 @@ import { userEditFields } from "../config/userFormFields.jsx"
 import EntityEditForm from "../../../shared/ui/forms/EntityEditForm.jsx"
 
 function UserEditPage() {
-    const [editValues, setEditValues] = useState(null)
     const { id } = useParams()
     const navigate = useNavigate()
+    
+    const [editValues, setEditValues] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     
     useEffect(() => {
         async function fetchEditValues() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const response = await getUserById(id)
                 setEditValues(mapUserToEdit(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setEditValues(null)
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchEditValues()
@@ -26,11 +34,9 @@ function UserEditPage() {
     async function handleSubmit(formData) {
         try {
             await editUser(id, formData)
-            console.log('edited successfully')
             navigate(`/dashboard/users/${id}`)
             toast.success("User edited successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The user could not be edited")
         }
     }
@@ -39,7 +45,19 @@ function UserEditPage() {
         navigate(`/dashboard/users/${id}`)
     }
 
-    if (!editValues) return null
+    if (isLoading) {
+        return <div>Loading user...</div>
+    }
+
+    if (hasError || !editValues) {
+        return (
+            <div>
+                <h2>Could not load user</h2>
+                <button onClick={() => navigate("/dashboard/users")}>Back</button>
+            </div>
+        )
+    }
+    
     
     return (
         <EntityEditForm 

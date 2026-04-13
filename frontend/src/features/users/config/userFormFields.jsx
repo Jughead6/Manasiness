@@ -58,16 +58,5 @@ export const userEditFields = [
         name: 'phone',
         type: 'text',
         required: true
-    },
-    {
-        label: 'Role',
-        id: 'user-role',
-        name: 'role',
-        options: [
-            { value: 'supplier', label: 'Supplier' },
-            { value: 'worker', label: 'Worker' },
-            { value: 'customer', label: 'Customer' }
-        ],
-        required: true
     }
 ]

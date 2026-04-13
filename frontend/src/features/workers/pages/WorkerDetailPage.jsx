@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
 import PersonTitle from "../../../shared/ui/titles/person/PersonTitle.jsx"
 import PersonLayout from "../../../shared/ui/layouts/person/PersonLayout.jsx"
@@ -7,7 +7,11 @@ import { mapTotalPage, mapWorkerToDetail } from "../mappers/workers.mapper.js"
 
 function WorkerDetailPage() {
     const { id } = useParams()
+    const navigate = useNavigate()
+
     const [detail, setDetail] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [hasError, setHasError] = useState(false)
     const [sortOrder, setSortOrder] = useState('recent')
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
@@ -15,11 +19,17 @@ function WorkerDetailPage() {
     useEffect(() => {
         async function fetchWorkerDetail() {
             try {
+                setIsLoading(true)
+                setHasError(false)
                 const response = await getWorkerById(id, sortOrder, currentPage)
                 setDetail(mapWorkerToDetail(response))
                 setTotalPage(mapTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setDetail(null)
+                setTotalPage(0)
+                setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchWorkerDetail()
@@ -39,9 +49,19 @@ function WorkerDetailPage() {
     }
 
 
-    if (!detail) {
-        return null
+    if (isLoading) {
+        return <div>Loading worker...</div>
     }
+
+    if (hasError || !detail) {
+        return (
+            <div>
+                <h2>Could not load worker</h2>
+                <button onClick={() => navigate("/dashboard/workers")}>Back</button>
+            </div>
+        )
+    }
+
 
     return (
         <>

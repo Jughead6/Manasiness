@@ -17,7 +17,7 @@ function UsersPage() {
                 const data = await getUsers(searchTerm)
                 setUsers(mapUsersToCards(data))
             } catch {
-                toast.error("Could not load users")
+                setUsers([])
             }
         }
         fetchUsers()

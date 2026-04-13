@@ -28,8 +28,9 @@ function OrdersPage() {
                 const response = await getOrders(sortOrder, currentPage)
                 setOrders(mapOrdersToTables(response))
                 setTotalPage(mapOrdersTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setOrders([])
+                setTotalPage(0)
             }
         }
 
@@ -57,8 +58,7 @@ function OrdersPage() {
             setTotalPage(mapOrdersTotalPage(response))
             setIsRegisterModalOpen(false)
             toast.success("Order created successfully")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The order could not be created")
         }
     }

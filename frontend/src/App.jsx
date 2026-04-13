@@ -39,27 +39,23 @@ import RegisterPage from "./features/auth/pages/RegisterPage.jsx"
 
 import NotFoundPage from "./features/not-found/pages/NotFoundPage.jsx"
 
-import Playground from "../../playground/src/feautures/Playground.jsx"
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage/>}/>
-        <Route path="*" element={<NotFoundPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout/></ProtectedRoute>}>
           <Route index element={<HomePage/>}/>
-          <Route path="playground" element={<Playground/>}/>
           <Route path="categories" element={<CategoriesPage/>}/>
-          <Route path="categories/:id" element={<CategoryDetailPage route="categories"/>}/>
+          <Route path="categories/:id" element={<CategoryDetailPage/>}/>
           <Route path="categories/:id/edit" element={<CategoryEditPage/>}/>
           <Route path="products" element={<ProductsPage/>}/>
-          <Route path="products/:id" element={<ProductDetailPage route="products"/>}/>
+          <Route path="products/:id" element={<ProductDetailPage/>}/>
           <Route path="products/:id/edit" element={<ProductEditPage/>}/>
           <Route path="users" element={<UsersPage/>}/>
-          <Route path="users/:id" element={<UserDetailPage route="users"/>}/>
+          <Route path="users/:id" element={<UserDetailPage/>}/>
           <Route path="users/:id/edit" element={<UserEditPage/>}/>
           <Route path="sales" element={<SalesPage/>}/>
           <Route path="orders" element={<OrdersPage/>}/>
@@ -70,7 +66,9 @@ function App() {
           <Route path="workers/:id" element={<WorkerDetailPage route="workers"/>}/>
           <Route path="suppliers" element={<SuppliersPage/>}/>
           <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>}/>
+          <Route path="*" element={<NotFoundPage/>}/>
         </Route>
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
       
       <ToastContainer

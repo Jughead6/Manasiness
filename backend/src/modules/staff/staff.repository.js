@@ -11,7 +11,7 @@ export async function findAllStaff(data) {
             staff.salary,
             staff.state
         FROM staff
-        JOIN users ON staff.user_id = users.id
+        JOIN users ON staff.user_id = users.id AND staff.store_id = users.store_id
         WHERE staff.store_id = $1
         ORDER BY staff.created_at ${orderDirection}
         LIMIT $2 OFFSET $3

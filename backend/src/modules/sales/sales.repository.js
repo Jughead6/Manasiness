@@ -1,4 +1,5 @@
 import pool from "../../config/db.js"
+import { conflict, notFound } from "../../errors/http-errors.js"
 
 export async function findAllSales(data) {
     const { orderDirection, limit, offset, storeId } = data
@@ -13,8 +14,8 @@ export async function findAllSales(data) {
             sales.quantity,
             sales.state
         FROM sales
-        JOIN products ON sales.product_id = products.id
-        JOIN users ON sales.user_id = users.id
+        JOIN products ON sales.product_id = products.id AND sales.store_id = products.store_id
+        JOIN users ON sales.user_id = users.id AND sales.store_id = users.store_id
         WHERE sales.store_id = $1
         ORDER BY sales.sold_at ${orderDirection}
         LIMIT $2 OFFSET $3
@@ -37,14 +38,53 @@ export async function getSalesTotalRows(data) {
 
 export async function insertSale(data) {
     const { product_id, user_id, quantity, state, storeId } = data
+    const client = await pool.connect()
 
-    const result = await pool.query(`
-        INSERT INTO sales (product_id, user_id, sale_price, quantity, state, store_id)
-        SELECT $1, $2, products.sale_price, $3, $4, $5
-        FROM products
-        WHERE products.id = $1 AND products.store_id = $5
-        RETURNING *
-    `, [product_id, user_id, quantity, state, storeId])
+    try {
+        await client.query("BEGIN")
 
-    return result.rows[0] || null
+        const productResult = await client.query(`
+            SELECT id, sale_price, stock, is_active
+            FROM products
+            WHERE id = $1 AND store_id = $2
+            FOR UPDATE
+        `, [product_id, storeId])
+
+        const product = productResult.rows[0]
+
+        if (!product) {
+            throw notFound("Product not found")
+        }
+
+        if (!product.is_active) {
+            throw conflict("Product unavailable")
+        }
+
+        if (state === "paid" && Number(product.stock) < quantity) {
+            throw conflict("Insufficient stock")
+        }
+
+        const saleResult = await client.query(`
+            INSERT INTO sales (product_id, user_id, sale_price, quantity, state, store_id)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING *
+        `, [product_id, user_id, product.sale_price, quantity, state, storeId])
+
+        if (state === "paid") {
+            await client.query(`
+                UPDATE products
+                SET stock = stock - $1,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = $2 AND store_id = $3
+            `, [quantity, product_id, storeId])
+        }
+
+        await client.query("COMMIT")
+        return saleResult.rows[0]
+    } catch (error) {
+        await client.query("ROLLBACK")
+        throw error
+    } finally {
+        client.release()
+    }
 }

@@ -1,6 +1,8 @@
 import "./RegisterSpaceForm.css"
 
 function RegisterSpaceForm({ fields, sectionLabel, title, onCancel, onSubmit }) {
+    const safeFields = Array.isArray(fields) ? fields : []
+
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
@@ -12,7 +14,7 @@ function RegisterSpaceForm({ fields, sectionLabel, title, onCancel, onSubmit }) 
         <form className="shared-register-space-form" onSubmit={handleSubmit}>
             <h4>{sectionLabel}----</h4>
             <h1>{title}</h1>
-            {fields.map((field) => (
+            {safeFields.map((field) => (
                 <div key={field.id}>
                     <div className="shared-register-space-form-field">
                         <label htmlFor={field.id}>{field.label}</label>

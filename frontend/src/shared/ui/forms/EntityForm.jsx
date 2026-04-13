@@ -1,6 +1,8 @@
 import "./EntityForm.css"
 
 function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
+    const safeFields = Array.isArray(fields) ? fields : []
+
     function handleSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
@@ -14,7 +16,7 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
             <h2>{title}</h2>
 
             <div className="shared-entity-form-rows">
-                {fields.map((field) => (
+                {safeFields.map((field) => (
                     <div className="shared-entity-form-group" key={field.id}>
                         <label htmlFor={field.id}>{field.label}</label>
 

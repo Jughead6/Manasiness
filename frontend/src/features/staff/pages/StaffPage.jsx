@@ -26,8 +26,9 @@ function StaffPage() {
                 const response = await getStaff(sortOrder, currentPage)
                 setStaff(mapStaffToTables(response))
                 setTotalPage(mapStaffTotalPage(response))
-            } catch (error) {
-                console.log(error)
+            } catch {
+                setStaff([])
+                setTotalPage(0)
             }
         }
 
@@ -55,8 +56,7 @@ function StaffPage() {
             setTotalPage(mapStaffTotalPage(response))
             setIsRegisterModalOpen(false)
             toast.success("The staff record was created successfully.")
-        } catch (error) {
-            console.log(error)
+        } catch {
             toast.error("The staff record could not be created")
         }
     }

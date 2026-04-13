@@ -56,6 +56,18 @@ export async function findProductById(data) {
     return result.rows[0] || null
 }
 
+export async function findProductByName(data) {
+    const { name, storeId } = data
+
+    const result = await pool.query(`
+        SELECT id, name
+        FROM products
+        WHERE name = $1 AND store_id = $2
+    `, [name, storeId])
+
+    return result.rows[0] || null
+}
+
 export async function insertProduct(data) {
     const { category_id, name, image, cost_price, sale_price, stock, storeId } = data
 

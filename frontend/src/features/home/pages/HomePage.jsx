@@ -1,50 +1,25 @@
 import "./HomePage.css"
 import { useState, useEffect } from "react"
 import { getSalesStats, getOrdersStats, getStaffStats } from "../api/home.api.js"
+import { useAuth } from "../../auth/context/AuthContext.jsx"
+
+function createEmptyStats() {
+    return {
+        dayTotal: 0,
+        dayCount: 0,
+        weekTotal: 0,
+        weekCount: 0,
+        monthTotal: 0,
+        monthCount: 0
+    }
+}
 
 function HomePage() {
-    const [salesStats, setSalesStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
+    const { store } = useAuth()
 
-    const [ordersStats, setOrdersStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
-
-    const [staffStats, setStaffStats] = useState({
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
-    })
-
-    const [storeProfile] = useState(() => {
-        try {
-            const store = localStorage.getItem("store")
-            if (!store) return { name: "" }
-
-            const parsedStore = JSON.parse(store)
-
-            return {
-                name: parsedStore.name || ""
-            }
-        } catch (error) {
-            console.log(error)
-            return { image: "", name: "" }
-        }
-    })
+    const [salesStats, setSalesStats] = useState(createEmptyStats())
+    const [ordersStats, setOrdersStats] = useState(createEmptyStats())
+    const [staffStats, setStaffStats] = useState(createEmptyStats())
 
     useEffect(() => {
         async function loadStats() {
@@ -55,14 +30,13 @@ function HomePage() {
                     getStaffStats()
                 ])
 
-                
-        
-
-                setSalesStats(salesResponse)
-                setOrdersStats(ordersResponse)
-                setStaffStats(staffResponse)
-            } catch (error) {
-                console.log(error)
+                setSalesStats(salesResponse || createEmptyStats())
+                setOrdersStats(ordersResponse || createEmptyStats())
+                setStaffStats(staffResponse || createEmptyStats())
+            } catch {
+                setSalesStats(createEmptyStats())
+                setOrdersStats(createEmptyStats())
+                setStaffStats(createEmptyStats())
             }
         }
 
@@ -74,7 +48,7 @@ function HomePage() {
             <div className="home-welcome">
                 <div className="home-welcome-left">
                     <h2>Welcome to dashboard!</h2>
-                    <h1 className="home-welcome-title">Hi, {storeProfile.name}</h1>
+                    <h1 className="home-welcome-title">Hi, {store?.name || ""}</h1>
                 </div>
                 <div className="home-welcome-right">
                     <p className="home-welcome-description">Manasiness is a web platform that helps you manage your store. This platform offers you better organized information about your business.</p>
