@@ -1,0 +1,116 @@
+.activity-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 100%;
+}
+
+.activity-content select {
+    padding: 7px;
+}
+
+.activity-content-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.activity-content-card {
+    flex: 1;
+    border: 2px solid black;
+}
+
+.activity-content-card-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: "Sekuya";
+    font-size: 10px;
+    color: #44749d;
+    border-bottom: 2px solid black;
+}
+
+.activity-content-card-content {
+    display: flex;
+    padding: 25px;
+    justify-content: space-between;
+    gap: 20px
+}
+
+.activity-content-card-content > div {
+    text-align: center;
+    width: 100%;
+}
+
+.activity-content-card-content h2 {
+    font-family: "Sekuya";
+    font-size: 22px;
+    color: #44749d;
+}
+
+.activity-content-card-content h3 {
+    font-family: "Oswald";
+    font-size: 22px;
+}
+
+.activity-content-catalog-performance {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    flex: 1;
+}
+
+.catalog-performance-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: "Sekuya";
+    font-size: 13px;
+    color: #44749d;
+    border-bottom: 2px solid black;
+}
+
+
+
+.catalog-performance-content {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+    gap: 20px
+}
+
+.catalog-performance-content-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+.catalog-performance-content-item > h2 {
+    font-family: "Sekuya";
+    font-size: 25px;
+    color: #44749d;
+}
+
+.catalog-performance-content-item > img {
+    width: 140px;
+    height: 140px;
+}
+
+.catalog-performance-content-item > h3 {
+    font-family: "Oswald";
+    font-size: 25px;
+}
+
+.catalog-performance-content-item > h4 {
+    font-family: "EB Garamond";
+    font-size: 25px;
+    color: #44749d;
+    font-weight: bold;
+}

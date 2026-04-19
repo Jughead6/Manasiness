@@ -1,0 +1,20 @@
+.shared-financial-toolbar {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    gap: 30px;
+    align-items: center;
+    background-color: #d1c7b0;
+}
+
+.shared-financial-toolbar > p{
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    font-family: "Sekuya";
+}
+
+.shared-financial-toolbar > button{
+    padding: 5px
+}

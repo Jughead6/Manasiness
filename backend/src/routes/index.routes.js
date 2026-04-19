@@ -12,6 +12,10 @@ import workersRoutes from "../modules/workers/workers.routes.js"
 import suppliersRoutes from "../modules/suppliers/suppliers.routes.js"
 import authRoutes from "../modules/auth/auth.routes.js"
 import statsRoutes from "../modules/stats/stats.routes.js"
+import incomeRoutes from "../modules/income/income.routes.js"
+import expensesRoutes from "../modules/expenses/expenses.routes.js"
+import pendingRoutes from "../modules/pending/pending.routes.js"
+import activityRoutes from "../modules/activity/activity.routes.js"
 
 const router = Router()
 
@@ -28,5 +32,9 @@ router.use("/customers", customersRoutes)
 router.use("/workers", workersRoutes)
 router.use("/suppliers", suppliersRoutes)
 router.use("/stats", statsRoutes)
+router.use("/income", incomeRoutes)
+router.use("/expenses", expensesRoutes)
+router.use("/pending", pendingRoutes)
+router.use("/activity", activityRoutes)
 
 export default router

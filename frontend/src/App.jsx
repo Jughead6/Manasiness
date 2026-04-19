@@ -37,6 +37,11 @@ import ProtectedRoute from "./shared/routes/ProtectedRoute.jsx"
 import LoginPage from "./features/auth/pages/LoginPage.jsx"
 import RegisterPage from "./features/auth/pages/RegisterPage.jsx"
 
+import IncomePage from "./features/income/pages/IncomePage.jsx"
+import ExpensesPage from "./features/expenses/pages/ExpensesPage.jsx"
+import PendingPage from "./features/pending/pages/PendingPage.jsx"
+import ActivityPage from "./features/activity/pages/ActivityPage.jsx"
+
 import NotFoundPage from "./features/not-found/pages/NotFoundPage.jsx"
 
 function App() {
@@ -66,6 +71,10 @@ function App() {
           <Route path="workers/:id" element={<WorkerDetailPage route="workers"/>}/>
           <Route path="suppliers" element={<SuppliersPage/>}/>
           <Route path="suppliers/:id" element={<SupplierDetailPage route="suppliers"/>}/>
+          <Route path="income" element={<IncomePage/>}></Route>
+          <Route path="expenses" element={<ExpensesPage/>}></Route>
+          <Route path="pending" element={<PendingPage/>}></Route>
+          <Route path="activity" element={<ActivityPage/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Route>
         <Route path="*" element={<NotFoundPage/>}/>

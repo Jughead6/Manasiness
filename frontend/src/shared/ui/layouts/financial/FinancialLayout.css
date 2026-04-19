@@ -1,0 +1,33 @@
+.shared-financial-layout {
+    background-color: #ebe7e0;
+    height: 100%;
+    width: 100%;
+    display: flex;                                                          
+    flex-direction: column;
+    padding: 40px;
+    gap: 10px;
+    border: 1px solid black
+}
+
+.shared-financial-layout-title {
+    flex: 2;
+    min-height: 0;
+}
+
+.shared-financial-layout-content {
+    flex: 8;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;                
+}
+
+.shared-financial-content-card {
+    flex-shrink: 0;
+}
+
+.shared-financial-layout-bar {
+    flex: 1;
+    min-height: 320px;
+    min-width: 0;
+}

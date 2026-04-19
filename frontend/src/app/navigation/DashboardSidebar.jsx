@@ -10,7 +10,8 @@ function DashboardSidebar() {
     const [openSections, setOpenSections] = useState({
         actions: false,
         yourspace: false,
-        users: false
+        users: false,
+        stats: false
     })
 
     async function handleLogout() {
@@ -58,6 +59,16 @@ function DashboardSidebar() {
                         <li><NavLink to="/dashboard/customers"><FileUser />Customers</NavLink></li>
                         <li><NavLink to="/dashboard/suppliers"><PillBottle />Suppliers</NavLink></li>
                         <li><NavLink to="/dashboard/workers"><BriefcaseBusiness />Workers</NavLink></li>
+                    </ul>
+                </div>
+
+                <div className="dashboard-sidebar-section">
+                    <button onClick={() => handleSection("stats")}>Stats <Menu /></button>
+                    <ul hidden={!openSections.stats}>
+                        <li><NavLink to="/dashboard/income"><FileUser />Income</NavLink></li>
+                        <li><NavLink to="/dashboard/expenses"><PillBottle />Expenses</NavLink></li>
+                        <li><NavLink to="/dashboard/activity"><BriefcaseBusiness />Activity</NavLink></li>
+                        <li><NavLink to="/dashboard/pending"><BriefcaseBusiness />Pending</NavLink></li>
                     </ul>
                 </div>
 
