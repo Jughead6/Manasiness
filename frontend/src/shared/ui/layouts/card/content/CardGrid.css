@@ -1,21 +1,20 @@
 .shared-card-grid {
-    border: 1px solid black;
-    margin-top: 35px;
+    border: 2px solid black;
     padding: 30px 40px;
-    background-color: #c6d4e1;
+    background-color: #dfd3b7;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    max-height: 600px;
+    height: 100%;
     overflow-y: auto;
 }
 
 .shared-card-item {
     width: 220px;
     border: 2px solid black;
-    background-color: #bdb8ad;
+    background-color: #f4f1ea;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,19 +25,34 @@
 .shared-card-item > h3 {
     width: 100%;
     text-align: center;
+    font-family: "OSwald";
+    font-size: 20px;
     padding: 7px;
     margin-bottom: 12px;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 
 .shared-card-item > img {
-    width: 100px;
-    height: 100px;
+    width: 80%;
+    height: 130px;
     margin-bottom: 12px;
+    border: 1px solid black;
 }
 
 .shared-card-item > button {
     margin-top: 12px;
     width: 100%;
     padding: 8px;
+    font-family: "Sekuya";
+    background-color: #759dc0;
+    color: white;
+    cursor: pointer;
+}
+
+.shared-card-item > button:hover {
+    background-color: #648caf;
+}
+
+.shared-card-item > button:active {
+    background-color: #537c9f;
 }

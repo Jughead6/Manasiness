@@ -7,25 +7,34 @@ function ActivityPage() {
     const [growthRate, setGrowthRate] = useState(null)
     const [dayPerformance, setDayPerformance] = useState(null)
     const [catalogPerformance, setCatalogPerformance] = useState(null)
+    const [activityDateFilter, setActivityDateFilter] = useState("week")
+    const [catalogOption, setCatalogOption] = useState("topSold")
+    const [offset, setOffset] = useState(0)
+    const [hasPrevious, setHasPrevious] = useState(false)
 
     useEffect(() => {
         async function fetchActivity() {
             try {
-                const growthRate = await getGrowthRate()
-                setGrowthRate(growthRateMapper(growthRate))
-                const dayPerformance = await getDayPerformance()
-                setDayPerformance(dayPerformanceMapper(dayPerformance))
-                const catalogPerformance = await getCatalogPerformance()
-                setCatalogPerformance(catalogPerformanceMapper(catalogPerformance))
+                const filters = { offset, activityDateFilter, catalogOption }
+
+                const growthRateData = await getGrowthRate(filters)
+                const dayPerformanceData = await getDayPerformance(filters)
+                const catalogPerformanceData = await getCatalogPerformance(filters)
+
+                setGrowthRate(growthRateMapper(growthRateData))
+                setDayPerformance(dayPerformanceMapper(dayPerformanceData))
+                setCatalogPerformance(catalogPerformanceMapper(catalogPerformanceData))
+                setHasPrevious(growthRateData.has_older)
             } catch {
                 setGrowthRate(null)
                 setDayPerformance(null)
                 setCatalogPerformance(null)
+                setHasPrevious(false)
             }
-
         }
+
         fetchActivity()
-    }, [])
+    }, [offset, activityDateFilter, catalogOption])
 
     return (
         <ActivityLayout
@@ -34,6 +43,12 @@ function ActivityPage() {
             growthRate={growthRate}
             dayPerformance={dayPerformance}
             catalogPerformance={catalogPerformance}
+            activityDateFilter={activityDateFilter}
+            setActivityDateFilter={setActivityDateFilter}
+            setCatalogOption={setCatalogOption}
+            offset={offset}
+            setOffset={setOffset}
+            hasPrevious={hasPrevious}
         />
     )
 }

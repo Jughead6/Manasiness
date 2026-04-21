@@ -1,13 +1,12 @@
 import "./TableToolbar.css"
-
-import TableActions from "./button/TableActions.jsx"
+import TableButtonRegister from "./filter/buttons/TableButtonRegister.jsx"
 import TableFilter from "./filter/TableFilter.jsx"
 
 function TableToolbar({ onCreateClick, filterValue, onFilterChange }) {
     return (
         <div className="shared-table-toolbar">
             <TableFilter value={filterValue} onChange={onFilterChange} />
-            {onCreateClick && <TableActions onClick={onCreateClick} />}
+            {onCreateClick && <TableButtonRegister onCreateClick={onCreateClick} />}
         </div>
     )
 }

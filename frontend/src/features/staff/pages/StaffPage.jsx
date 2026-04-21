@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
 import { getStaff, registerStaff } from "../api/staff.api.js"
 import { mapStaffToTables, mapStaffTotalPage } from "../mappers/staff.mapper.js"
@@ -63,11 +62,9 @@ function StaffPage() {
 
     return (
         <>
-            <PageTitle 
+            <TableLayout 
                 title="Your Staff" 
                 subtitle="In this section you can view your staff record."
-            />
-            <TableLayout 
                 data={staff} 
                 columns={staffColumns} 
                 onCreateClick={() => setIsRegisterModalOpen(true)}

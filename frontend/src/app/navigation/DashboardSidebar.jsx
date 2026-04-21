@@ -11,7 +11,8 @@ function DashboardSidebar() {
         actions: false,
         yourspace: false,
         users: false,
-        stats: false
+        stats: false,
+        settings: false
     })
 
     async function handleLogout() {
@@ -69,6 +70,14 @@ function DashboardSidebar() {
                         <li><NavLink to="/dashboard/expenses"><PillBottle />Expenses</NavLink></li>
                         <li><NavLink to="/dashboard/activity"><BriefcaseBusiness />Activity</NavLink></li>
                         <li><NavLink to="/dashboard/pending"><BriefcaseBusiness />Pending</NavLink></li>
+                    </ul>
+                </div>
+
+                <div className="dashboard-sidebar-section">
+                    <button onClick={() => handleSection("settings")}>Settings <Menu /></button>
+                    <ul hidden={!openSections.settings}>
+                        <li><NavLink to="/dashboard/information"><FileUser />Information</NavLink></li>
+                        <li><NavLink to="/dashboard/password"><PillBottle />Password</NavLink></li>
                     </ul>
                 </div>
 

@@ -3,7 +3,7 @@ import StatsTitle from "../../../shared/ui/titles/stats/StatsTitle"
 import ActivityContent from "./content/ActivityContent"
 
 function ActivityLayout(data) {
-    const { title, description, growthRate, dayPerformance, catalogPerformance} = data
+    const { title, description, growthRate, dayPerformance, catalogPerformance, activityDateFilter, setActivityDateFilter, setCatalogOption, offset, setOffset, hasPrevious} = data
     return (
         <div className="activity-layout">
             <div className="activity-layout-title"> 
@@ -17,6 +17,12 @@ function ActivityLayout(data) {
                     growthRate={growthRate}
                     dayPerformance={dayPerformance}
                     catalogPerformance={catalogPerformance}
+                    activityDateFilter={activityDateFilter}
+                    setActivityDateFilter={setActivityDateFilter}
+                    setCatalogOption={setCatalogOption}
+                    offset={offset}
+                    setOffset={setOffset}
+                    hasPrevious={hasPrevious}
                 />
             </div>
         </div>

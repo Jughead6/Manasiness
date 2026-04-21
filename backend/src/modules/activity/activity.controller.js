@@ -3,7 +3,9 @@ import { getGrowthRateByDate, getDayPerformanceByDate, getCatalogPerformanceByDa
 export async function getGrowthRate(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const growthRate = await getGrowthRateByDate({storeId})
+        const offset = req.query.offset
+        const activityDateFilter = req.query.activityDateFilter
+        const growthRate = await getGrowthRateByDate({storeId, offset, activityDateFilter})
 
         res.json(growthRate)  
     } catch (error) {
@@ -14,7 +16,9 @@ export async function getGrowthRate(req, res, next) {
 export async function getDayPerformance(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const dayPerformance = await getDayPerformanceByDate({storeId})
+        const offset = req.query.offset
+        const activityDateFilter = req.query.activityDateFilter
+        const dayPerformance = await getDayPerformanceByDate({storeId, offset, activityDateFilter})
 
         res.json(dayPerformance)
     } catch (error) {
@@ -25,7 +29,10 @@ export async function getDayPerformance(req, res, next) {
 export async function getCatalogPerformance(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const catalogPerformance = await getCatalogPerformanceByDate({storeId})
+        const offset = req.query.offset
+        const activityDateFilter = req.query.activityDateFilter
+        const catalogOption = req.query.catalogOption
+        const catalogPerformance = await getCatalogPerformanceByDate({storeId, offset, activityDateFilter, catalogOption})
 
         res.json(catalogPerformance)
     } catch (error) {

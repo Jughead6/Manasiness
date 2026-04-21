@@ -1,7 +1,9 @@
 .shared-card-layout {
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 40px;
     display: flex;
     flex-direction: column;
     background-color: #ebe7e0;
+    gap: 35px;
+    height: 100%;
 }

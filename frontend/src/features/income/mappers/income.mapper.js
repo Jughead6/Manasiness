@@ -9,10 +9,11 @@ export function incomeMapper(data) {
         }
     })
 }
+
 export function incomeByDayMapper(data) {
     return {
         total: Number(data.net_income ?? 0),
-        totalsub1: Number(data.total_spent ?? 0),
-        totalsub2: Number(data.total_sold ?? 0)
+        totalsub1: Number(data.total_sold ?? 0),
+        totalsub2: Number(data.total_spent ?? 0)
     }
 }

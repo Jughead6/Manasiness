@@ -1,7 +1,7 @@
 import { apiGet } from "../../../shared/api/client.js";
 
-export async function getIncome() {
-    return apiGet(`/income`)
+export async function getIncome(offset) {
+    return apiGet(`/income?offset=${offset}`)
 }
 
 export async function getInfoCard(date) {

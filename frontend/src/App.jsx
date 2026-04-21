@@ -42,6 +42,9 @@ import ExpensesPage from "./features/expenses/pages/ExpensesPage.jsx"
 import PendingPage from "./features/pending/pages/PendingPage.jsx"
 import ActivityPage from "./features/activity/pages/ActivityPage.jsx"
 
+import InformationPage from "./features/information/pages/InformationPage.jsx"
+import PasswordPage from "./features/password/pages/PasswordPage.jsx"
+
 import NotFoundPage from "./features/not-found/pages/NotFoundPage.jsx"
 
 function App() {
@@ -75,6 +78,8 @@ function App() {
           <Route path="expenses" element={<ExpensesPage/>}></Route>
           <Route path="pending" element={<PendingPage/>}></Route>
           <Route path="activity" element={<ActivityPage/>}></Route>
+          <Route path="information" element={<InformationPage/>}></Route>
+          <Route path="password" element={<PasswordPage/>}></Route>
           <Route path="*" element={<NotFoundPage/>}/>
         </Route>
         <Route path="*" element={<NotFoundPage/>}/>

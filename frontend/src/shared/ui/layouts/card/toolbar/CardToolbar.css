@@ -1,9 +1,9 @@
 .shared-card-toolbar {
     width: 100%;
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 20px;
     justify-items: center;
-    background-color: #c6d4e1;
+    background-color: #dfd3b7;
     display: flex;
     justify-content: space-between;
 }

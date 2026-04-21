@@ -1,8 +1,8 @@
 .activity-layout {
     background-color: #ebe7e0;
     height: 100%;
+    overflow-y: auto;
     padding: 40px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
 }

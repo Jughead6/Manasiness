@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
 import { getOrders, registerOrders } from "../api/orders.api.js"
 import { mapOrdersToTables, mapOrdersTotalPage } from "../mappers/orders.mapper.js"
@@ -65,11 +64,9 @@ function OrdersPage() {
 
     return (
         <>
-            <PageTitle 
+            <TableLayout 
                 title="Your Orders" 
                 subtitle="In this section you can view your orders record."
-            />
-            <TableLayout 
                 data={orders} 
                 columns={ordersColumns} 
                 onCreateClick={() => setIsRegisterModalOpen(true)}

@@ -2,10 +2,15 @@ import "./CardLayout.css"
 
 import CardGrid from "./content/CardGrid.jsx"
 import CardToolbar from "./toolbar/CardToolbar.jsx"
+import PageTitle from "../../titles/page/PageTitle.jsx"
 
-function CardLayout({ data, action, route, onCreateClick, searchValue, onSearchChange }) {
+function CardLayout({ title, subtitle, data, action, route, onCreateClick, searchValue, onSearchChange }) {
     return (
         <div className="shared-card-layout">
+            <PageTitle  
+                title={title}
+                subtitle={subtitle}
+            />
             <CardToolbar
                 action={action}
                 onCreateClick={onCreateClick}

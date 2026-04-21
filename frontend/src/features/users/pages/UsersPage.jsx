@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
-import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
 import { getUsers, createUser } from "../api/users.api.js"
 import { mapUsersToCards } from "../mappers/users.mapper.js"
@@ -41,11 +40,9 @@ function UsersPage() {
 
     return (
         <>
-            <PageTitle  
+            <CardLayout 
                 title="Welcome to Users" 
                 subtitle="In this section you can create, edit and view the users you have"
-            />
-            <CardLayout 
                 data={users} 
                 action="Users" 
                 route="users" 

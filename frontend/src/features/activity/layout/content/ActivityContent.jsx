@@ -1,35 +1,36 @@
 import "./ActivityContent.css"
+import { StepForward, StepBack } from "lucide-react"
 
 function ActivityContent(data) {
-    const { growthRate, dayPerformance, catalogPerformance} = data
+    const { growthRate, dayPerformance, catalogPerformance, activityDateFilter, setActivityDateFilter, setCatalogOption, offset, setOffset, hasPrevious } = data
     
     return (
         <div className="activity-content">
+            <div className="activity-content-toolbar">
+                <select value={activityDateFilter} onChange={(e) => setActivityDateFilter(e.target.value)}>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                </select>
+                <div className="activity-content-toolbar-buttons">
+                    { hasPrevious ? <button onClick={() => setOffset(offset + 1)}><StepBack /></button> : null }
+                    <p>{growthRate?.date ?? ""}</p>
+                    { offset > 0 ? <button onClick={() => setOffset(offset - 1)}><StepForward /></button> : null }                
+                </div>
+            </div>
             <div className="activity-content-cards">
                 <div className="activity-content-card">
                     <div className="activity-content-card-title">
                         <h1>Growth Rate</h1>
-                        <select>
-                            <option>Day</option>
-                            <option>Week</option>
-                            <option>Month</option>
-                        </select>
                     </div>                    
                     <div className="activity-content-card-content">
                         <div>
-                            <h2>{growthRate?.growthRate ?? 0} %</h2>
-                            <h3>{growthRate?.date ?? ""}</h3>
-                        </div>
+                            <h2 className="activity-content-card-percentage">{growthRate?.growthRate ?? 0} %</h2>
+                        </div>  
                     </div>               
                 </div>
                 <div className="activity-content-card">
                     <div className="activity-content-card-title">
                         <h1>Day Performance</h1>
-                        <select>
-                            <option>Day</option>
-                            <option>Week</option>
-                            <option>Month</option>
-                        </select>
                     </div>
                     <div className="activity-content-card-content">
                         <div>
@@ -46,11 +47,13 @@ function ActivityContent(data) {
             <div className="activity-content-catalog-performance">
                 <div className="catalog-performance-title">
                     <h1>Catalog Performance</h1>
-                    <select>
-                        <option>Day</option>
-                        <option>Week</option>
-                        <option>Month</option>
-                    </select>
+                    <div className="activity-content-filter-switch" onChange={(e) => setCatalogOption(e.target.value)}>
+                        <input defaultChecked id="activity-catalog-option-quantity" name="activityCatalogOptions" type="radio" value="topSold" />
+                        <label className="activity-content-filter-option" htmlFor="activity-catalog-option-quantity">Top Sold</label>
+                        <input id="activity-catalog-option-revenue" name="activityCatalogOptions" type="radio" value="leastSold" />
+                        <label className="activity-content-filter-option" htmlFor="activity-catalog-option-revenue">Least Sold</label>
+                        <span className="activity-content-filter-background"></span>
+                    </div>
                 </div>
                 <div className="catalog-performance-content">
                     <div className="catalog-performance-content-item">

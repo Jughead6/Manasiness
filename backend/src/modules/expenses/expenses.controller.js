@@ -3,7 +3,8 @@ import { getExpensesByWeek, getExpensesByDay } from "./expenses.service.js"
 export async function getInfoBar(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const expenses = await getExpensesByWeek({ storeId })
+        const offset = req.query.offset
+        const expenses = await getExpensesByWeek({ storeId, offset })
 
         res.json(expenses)
     } catch (error) {

@@ -65,11 +65,9 @@ function SalesPage() {
 
     return (
         <>
-            <PageTitle 
+            <TableLayout 
                 title="Your Sales" 
                 subtitle="In this section you can view your sales record."
-            />
-            <TableLayout 
                 data={sales} 
                 columns={salesColumns} 
                 onCreateClick={() => setIsRegisterModalOpen(true)}
