@@ -1,6 +1,5 @@
 import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
-import PersonTitle from "../../../shared/ui/titles/person/PersonTitle.jsx"
 import PersonLayout from "../../../shared/ui/layouts/person/PersonLayout.jsx"
 import { getCustomerById } from "../api/customers.api.js"
 import { mapCustomerToDetail, mapTotalPage } from "../mappers/customers.mapper.js"
@@ -10,7 +9,6 @@ function CustomerDetailPage() {
     const navigate = useNavigate()
 
     const [detail, setDetail] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [sortOrder, setSortOrder] = useState("recent")
     const [currentPage, setCurrentPage] = useState(1)
@@ -19,7 +17,6 @@ function CustomerDetailPage() {
     useEffect(() => {
         async function fetchCustomerDetail() {
             try {
-                setIsLoading(true)
                 setHasError(false)
                 const response = await getCustomerById(id, sortOrder, currentPage)
                 setDetail(mapCustomerToDetail(response))
@@ -28,8 +25,6 @@ function CustomerDetailPage() {
                 setDetail(null)
                 setTotalPage(0)
                 setHasError(true)
-            } finally {
-                setIsLoading(false)
             }
         }
 
@@ -49,10 +44,6 @@ function CustomerDetailPage() {
         setCurrentPage((prev) => prev - 1)
     }
 
-    if (isLoading) {
-        return <div>Loading customer...</div>
-    }
-
     if (hasError || !detail) {
         return (
             <div>
@@ -64,20 +55,19 @@ function CustomerDetailPage() {
 
 
     return (
-        <>
-            <PersonTitle title="Customer" name={detail.name} />
-            <PersonLayout
-                data={detail.details}
-                columns={["Date", "Product", "Price", "Quantity", "State"]}
-                sectionTitle="Sales"
-                filterValue={sortOrder}
-                onFilterChange={handleFilterChange}
-                currentPage={currentPage}
-                totalPage={totalPage}
-                onNextPage={handleNextPage}
-                onPrevPage={handlePrevPage}
-            />
-        </>
+        <PersonLayout
+            title="Customer" 
+            name={detail.name} 
+            data={detail.details}
+            columns={["Date", "Product", "Price", "Quantity", "State"]}
+            sectionTitle="Sales"
+            filterValue={sortOrder}
+            onFilterChange={handleFilterChange}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onNextPage={handleNextPage}
+            onPrevPage={handlePrevPage}
+        />
     )
 }
 

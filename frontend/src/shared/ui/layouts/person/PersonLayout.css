@@ -1,8 +1,10 @@
 .shared-person-layout {
-    border: 1px solid black;
-    padding: 25px;
+    border: 2px solid black;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    background-color: #c6d4e1;
+    background-color: #ebe7e0;
+    height: 100%;
+    min-height: 0;
 }

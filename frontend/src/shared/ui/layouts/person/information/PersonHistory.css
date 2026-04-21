@@ -1,34 +1,33 @@
 .shared-person-history {
-    border: 1px solid;
     padding: 25px;
     display: flex;
     flex-direction: column;
     gap: 25px;
-    background-color: #bdb8ad  ;
+    background-color: #dfd3b7;
+    border: 2px solid black;
+    flex: 1;
+    min-height: 0;
 }
 
-.shared-person-history > h2 {
-    border: 1px solid black;
-    text-align: center;
-    padding: 15px;
-    background-color: #ebe7e0;
+.shared-person-history-table {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
 }
 
-.shared-person-history > table {
-    border: 1px solid black;
+.shared-person-history-table > table {
     width: 100%;
     text-align: center;
     background-color: black;
+    border: 1px solid black;
 }
 
-.shared-person-history > table > tbody {
+.shared-person-table-head {
+    padding: 8px;
+    background-color: #44749d;
+}
+
+.shared-person-table-cell {
+    padding: 8px;
     background-color: white;
-}
-
-.shared-person-history > table > thead {
-    background-color: gray;
-}
-
-.shared-person-history th, .shared-person-history td {
-    padding: 5px;
 }

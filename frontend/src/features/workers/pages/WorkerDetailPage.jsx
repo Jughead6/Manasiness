@@ -10,7 +10,6 @@ function WorkerDetailPage() {
     const navigate = useNavigate()
 
     const [detail, setDetail] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [sortOrder, setSortOrder] = useState('recent')
     const [currentPage, setCurrentPage] = useState(1)
@@ -19,7 +18,6 @@ function WorkerDetailPage() {
     useEffect(() => {
         async function fetchWorkerDetail() {
             try {
-                setIsLoading(true)
                 setHasError(false)
                 const response = await getWorkerById(id, sortOrder, currentPage)
                 setDetail(mapWorkerToDetail(response))
@@ -28,8 +26,6 @@ function WorkerDetailPage() {
                 setDetail(null)
                 setTotalPage(0)
                 setHasError(true)
-            } finally {
-                setIsLoading(false)
             }
         }
         fetchWorkerDetail()
@@ -48,11 +44,6 @@ function WorkerDetailPage() {
         setCurrentPage((prev) => prev - 1)
     }
 
-
-    if (isLoading) {
-        return <div>Loading worker...</div>
-    }
-
     if (hasError || !detail) {
         return (
             <div>
@@ -64,12 +55,9 @@ function WorkerDetailPage() {
 
 
     return (
-        <>
-            <PersonTitle 
-                title="Worker" 
-                name={detail.name}
-            />
             <PersonLayout
+                title="Supplier"
+                name={detail.name}
                 data={detail.details}
                 columns={['Date', 'Salary', 'State']}
                 sectionTitle="Staff"
@@ -80,7 +68,6 @@ function WorkerDetailPage() {
                 onNextPage={handleNextPage}
                 onPrevPage={handlePrevPage}
             />
-        </>
     )
 }
 

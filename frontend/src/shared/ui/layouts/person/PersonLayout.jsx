@@ -1,12 +1,17 @@
 import "./PersonLayout.css"
-
 import PersonToolbar from "./toolbar/PersonToolbar.jsx"
 import PersonHistory from "./information/PersonHistory.jsx"
 import PersonActions from "./buttons/PersonActions.jsx"
+import PersonTitle from "../../titles/person/PersonTitle.jsx"
 
-function PersonLayout({ data, columns, sectionTitle, filterValue, onFilterChange, currentPage, totalPage, onPrevPage, onNextPage  }) {
+function PersonLayout({ title, name, data, columns, sectionTitle, filterValue, onFilterChange, currentPage, totalPage, onPrevPage, onNextPage  }) {
     return (
         <div className="shared-person-layout">
+            <PersonTitle 
+                title={title} 
+                name={name}
+                sectionTitle={sectionTitle}
+            />
             <PersonToolbar
                 filterValue={filterValue}
                 onFilterChange={onFilterChange}
@@ -14,7 +19,6 @@ function PersonLayout({ data, columns, sectionTitle, filterValue, onFilterChange
             <PersonHistory 
                 data={data} 
                 columns={columns} 
-                sectionTitle={sectionTitle}
             />
             <PersonActions
                 currentPage={currentPage}

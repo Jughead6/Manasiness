@@ -10,7 +10,6 @@ function SupplierDetailPage() {
     const navigate = useNavigate()
 
     const [detail, setDetail] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [sortOrder, setSortOrder] = useState('recent')
     const [currentPage, setCurrentPage] = useState(1)
@@ -19,7 +18,6 @@ function SupplierDetailPage() {
     useEffect(() => {
         async function fetchSupplierDetail() {
             try {
-                setIsLoading(true)
                 setHasError(false)
                 const response = await getSupplierById(id, sortOrder, currentPage)
                 setDetail(mapSupplierToDetail(response))
@@ -28,8 +26,6 @@ function SupplierDetailPage() {
                 setDetail(null)
                 setTotalPage(0)
                 setHasError(true)
-            } finally {
-                setIsLoading(false)
             }
         }
 
@@ -50,9 +46,6 @@ function SupplierDetailPage() {
     }
 
 
-    if (isLoading) {
-        return <div>Loading supplier...</div>
-    }
 
     if (hasError || !detail) {
         return (
@@ -65,23 +58,19 @@ function SupplierDetailPage() {
 
 
     return (
-        <>
-            <PersonTitle 
-                title="Supplier"
-                name={detail.name}
-            />
-            <PersonLayout
-                data={detail.details}
-                columns={['Date', 'Product', 'Price', 'Quantity', 'State']}
-                sectionTitle="Orders"
-                filterValue={sortOrder}
-                onFilterChange={handleFilterChange}
-                currentPage={currentPage}
-                totalPage={totalPage}
-                onNextPage={handleNextPage}
-                onPrevPage={handlePrevPage}
-            />
-        </>
+        <PersonLayout
+            title="Supplier"
+            name={detail.name}
+            data={detail.details}
+            columns={['Date', 'Product', 'Price', 'Quantity', 'State']}
+            sectionTitle="Orders"
+            filterValue={sortOrder}
+            onFilterChange={handleFilterChange}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onNextPage={handleNextPage}
+            onPrevPage={handlePrevPage}
+        />
     )
 }
 

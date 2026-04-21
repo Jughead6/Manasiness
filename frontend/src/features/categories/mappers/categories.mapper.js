@@ -17,9 +17,9 @@ export function mapCategoryToDetail(item) {
         image: item.image,
         isActive: item.is_active,
         details: [
-            `Created At: ${item.created_at}`,
-            `Updated At: ${item.updated_at || 'No updates yet'}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            { label: "Created At", value: item.created_at },
+            { label: "Updated At", value: item.updated_at || "No updates yet" },
+            { label: "Active", value: item.is_active ? "Yes" : "No" }
         ]
     }
 }

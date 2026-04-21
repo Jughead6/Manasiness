@@ -20,13 +20,13 @@ export function mapProductToDetail(item) {
         image: item.image,
         isActive: item.is_active,
         details: [
-            `Category: ${item.category}`,
-            `Cost Price: ${item.cost_price}`,
-            `Sale Price: ${item.sale_price}`,
-            `Stock: ${item.stock}`,
-            `Created At: ${item.created_at}`,
-            `Updated At: ${item.updated_at || 'No updates yet'}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            { label: "Category", value: item.category },
+            { label: "Cost Price", value: item.cost_price },
+            { label: "Sale Price", value: item.sale_price },
+            { label: "Stock", value: item.stock },
+            { label: "Created At", value: item.created_at },
+            { label: "Updated At", value: item.updated_at || "No updates yet" },
+            { label: "Active", value: item.is_active ? "Yes" : "No" }
         ]
     }
 }

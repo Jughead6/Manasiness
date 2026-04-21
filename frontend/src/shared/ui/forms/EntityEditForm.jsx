@@ -62,8 +62,8 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                     </div>
                 ))}
                 <div className="shared-entity-edit-form-actions">
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={onCancel}>Cancel</button>
+                    <button id="submit" type="submit">Save</button>
+                    <button id="cancel" type="button" onClick={onCancel}>Cancel</button>
                 </div>
             </div>
         </form>

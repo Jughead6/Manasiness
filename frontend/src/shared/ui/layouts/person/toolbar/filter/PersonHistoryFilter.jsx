@@ -2,10 +2,29 @@ import "./PersonHistoryFilter.css"
 
 function PersonHistoryFilter({ value, onChange }) {
     return (
-        <select className="shared-person-history-filter" value={value} onChange={onChange}>
-            <option value="recent">Most Recent</option>
-            <option value="oldest">Oldest</option>
-        </select>
+        <div className="shared-person-history-filter">
+            <input
+                id="shared-person-history-filter-recent"
+                name="person-history-sort-order"
+                type="radio"
+                value="recent"
+                checked={value === "recent"}
+                onChange={onChange}
+            />
+            <label className="shared-person-history-filter-option" htmlFor="shared-person-history-filter-recent">Most Recent</label>
+
+            <input
+                id="shared-person-history-filter-oldest"
+                name="person-history-sort-order"
+                type="radio"
+                value="oldest"
+                checked={value === "oldest"}
+                onChange={onChange}
+            />
+            <label className="shared-person-history-filter-option" htmlFor="shared-person-history-filter-oldest">Oldest</label>
+
+            <span className="shared-person-history-filter-background"></span>
+        </div>
     )
 }
 

@@ -6,8 +6,8 @@ function EntityActions({ isActive, onDeactivateClick, onActivateClick }) {
 
     return (
         <div className="shared-entity-actions">
-            <button type="button" onClick={() => navigate('edit')}>Edit</button>
-            <button type="button" onClick={isActive ? onDeactivateClick : onActivateClick}>
+            <button id="edit" type="button" onClick={() => navigate('edit')}>Edit</button>
+            <button id="deactive" type="button" onClick={isActive ? onDeactivateClick : onActivateClick}>
                 {isActive ? 'Deactivate' : 'Activate'}
             </button>
         </div>

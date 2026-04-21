@@ -12,8 +12,10 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
     
     return (
         <form className="shared-entity-form" onSubmit={handleSubmit}>
-            <h4>{sectionLabel}----</h4>
-            <h2>{title}</h2>
+            <div className="shared-entity-form-title">
+                <h4>{sectionLabel}----</h4>
+                <h2>{title}</h2>
+            </div>
 
             <div className="shared-entity-form-rows">
                 {safeFields.map((field) => (
@@ -63,8 +65,8 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
             </div>
 
             <div className="shared-entity-form-actions">
-                <button type="submit">Create</button>
-                <button type="button" onClick={onCancel}>Cancel</button>
+                <button id="submit" type="submit">Create</button>
+                <button id="cancel" type="button" onClick={onCancel}>Cancel</button>
             </div>
         </form>
     )

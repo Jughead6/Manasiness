@@ -20,7 +20,7 @@
 .dashboard-layout-page {
     flex: 1;
     width: 100%;
-    padding: 30px 80px;
+    padding: 30px 50px;
     display: flex;
     flex-direction: column;
     gap: 25px;

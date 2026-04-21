@@ -12,22 +12,18 @@ function ProductDetailPage() {
     const navigate = useNavigate()
 
     const [detail, setDetail] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [isDeactivationOpen, setIsDeactivationOpen] = useState(false)
 
     useEffect(() => {
         async function fetchProductDetail() {
             try {
-                setIsLoading(true)
                 setHasError(false)
                 const data = await getProductById(id)
                 setDetail(mapProductToDetail(data))
             } catch {
                 setDetail(null)
                 setHasError(true)
-            } finally {
-                setIsLoading(false)
             }
         }
         fetchProductDetail()
@@ -56,10 +52,6 @@ function ProductDetailPage() {
         }
     }
 
-    if (isLoading) {
-        return <div>Loading product...</div>
-    }
-
     if (hasError || !detail) {
         return (
             <div>
@@ -71,11 +63,9 @@ function ProductDetailPage() {
 
     return (
         <>
-            <EntityTitle 
+            <EntityLayout 
                 entity="Product" 
                 idx={id}
-            />
-            <EntityLayout 
                 detail={detail} 
                 onDeactivateClick={() => setIsDeactivationOpen(true)}
                 onActivateClick={handleActivate}
