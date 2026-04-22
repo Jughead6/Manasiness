@@ -16,6 +16,8 @@ import incomeRoutes from "../modules/income/income.routes.js"
 import expensesRoutes from "../modules/expenses/expenses.routes.js"
 import pendingRoutes from "../modules/pending/pending.routes.js"
 import activityRoutes from "../modules/activity/activity.routes.js"
+import informationRoutes from "../modules/information/information.routes.js"
+import passwordRoutes from "../modules/password/password.routes.js"
 
 const router = Router()
 
@@ -36,5 +38,7 @@ router.use("/income", incomeRoutes)
 router.use("/expenses", expensesRoutes)
 router.use("/pending", pendingRoutes)
 router.use("/activity", activityRoutes)
+router.use("/information", informationRoutes)
+router.use("/password", passwordRoutes)
 
 export default router

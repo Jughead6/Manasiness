@@ -3,10 +3,11 @@ import { useState } from "react"
 import { TableOfContents, PackageSearch, Menu, User, BadgeDollarSign, FileUser, ChartColumnDecreasing, PillBottle, BriefcaseBusiness } from "lucide-react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useAuth } from "../../features/auth/context/AuthContext.jsx"
+import Logotipo from "../../assets/images/Logotipo.png"
 
 function DashboardSidebar() {
     const navigate = useNavigate()
-    const { store, logoutSession } = useAuth()
+    const { logoutSession } = useAuth()
     const [openSections, setOpenSections] = useState({
         actions: false,
         yourspace: false,
@@ -31,7 +32,7 @@ function DashboardSidebar() {
         <div className="dashboard-sidebar">
             <div className="dashboard-sidebar-brand-wrapper">
                 <Link to="/dashboard" className="dashboard-sidebar-brand">
-                    <h2>Manasiness</h2>
+                    <img src={Logotipo} alt="Manasiness" />
                 </Link>
             </div>
 
@@ -82,10 +83,6 @@ function DashboardSidebar() {
                 </div>
 
                 <div className="dashboard-sidebar-logout">
-                    <div className="dashboard-sidebar-profile">
-                        <img src={store?.image || ""} alt="user perfil" />
-                        <p>{store?.name || ""}</p>
-                    </div>
                     <button className="dashboard-sidebar-logout-button" onClick={handleLogout}>Log Out</button>
                 </div>
             </div>
