@@ -3,7 +3,8 @@ import { getUsersPending } from "./pending.service.js"
 export async function getCustomersPending(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const customers = await getUsersPending({storeId, rol: "customer"})
+
+        const customers = await getUsersPending({ storeId, role: "customer" })
 
         res.json(customers)
     } catch (error) {
@@ -14,7 +15,8 @@ export async function getCustomersPending(req, res, next) {
 export async function getSuppliersPending(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const suppliers = await getUsersPending({storeId, rol: "supplier"})
+
+        const suppliers = await getUsersPending({ storeId, role: "supplier" })
 
         res.json(suppliers)
     } catch (error) {
@@ -22,11 +24,11 @@ export async function getSuppliersPending(req, res, next) {
     }
 }
 
-
 export async function getWorkersPending(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const workers = await getUsersPending({storeId, rol: "worker"})
+
+        const workers = await getUsersPending({ storeId, role: "worker" })
 
         res.json(workers)
     } catch (error) {

@@ -1,9 +1,11 @@
 import { getExpensesByWeek, getExpensesByDay } from "./expenses.service.js"
+import { requireNonNegativeNumber, requireISODate } from "../../utils/validators/index.js"
 
 export async function getInfoBar(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const offset = req.query.offset
+        const offset = requireNonNegativeNumber(req.query.offset, "offset")
+
         const expenses = await getExpensesByWeek({ storeId, offset })
 
         res.json(expenses)
@@ -13,10 +15,10 @@ export async function getInfoBar(req, res, next) {
 }
 
 export async function getInfoCard(req, res, next) {
-    const { date } = req.query
-
     try {
         const storeId = req.store.storeId
+        const date = requireISODate(req.query.date, "date")
+        
         const expenses = await getExpensesByDay({ storeId, date })
 
         res.json(expenses)

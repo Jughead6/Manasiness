@@ -1,15 +1,13 @@
 import { getAllSales, createNewSale } from "./sales.service.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { parsePageSortQuery, requirePositiveInteger, requireAllowedValue } from "../../utils/validators/index.js"
+
+const SALE_STATES = ["pending", "paid", "canceled"]
 
 export async function getSales(req, res, next) {
-    const { sort = "recent", page = 1 } = req.query
-    const orderDirection = sort === "oldest" ? "ASC" : "DESC"
-    const currentPage = requirePositiveInteger(page, "page")
-    const limit = 20
-    const offset = (currentPage - 1) * limit
-
     try {
+        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
         const storeId = req.store.storeId
+
         const sales = await getAllSales({ orderDirection, limit, offset, storeId })
 
         res.json(sales)
@@ -19,11 +17,14 @@ export async function getSales(req, res, next) {
 }
 
 export async function registerSale(req, res, next) {
-    const { product_id, user_id, quantity, state } = req.body
-
     try {
         const storeId = req.store.storeId
-        const sale = await createNewSale({ product_id, user_id, quantity, state, storeId })
+        const productId = requirePositiveInteger(req.body.product_id, "product_id")
+        const userId = requirePositiveInteger(req.body.user_id, "user_id")
+        const quantity = requirePositiveInteger(req.body.quantity, "quantity")
+        const state = requireAllowedValue(req.body.state, SALE_STATES, "state")
+
+        const sale = await createNewSale({ productId, userId, quantity, state, storeId })
 
         res.status(201).json({
             message: "Register successfully",

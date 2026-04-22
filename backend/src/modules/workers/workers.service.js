@@ -1,31 +1,41 @@
-import { findActiveWorkersOptions, findAllWorkers, findWorkerBaseById, findWorkerRowsById, getWorkerTotalRows } from "./workers.repository.js"
-import { notFound } from "../../errors/http-errors.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { getActiveWorkersOptions, getAllWorkers, getWorkerDetail } from "./workers.service.js"
+import { parseOptionalSearch, parsePageSortQuery, requirePositiveInteger } from "../../utils/validators/index.js"
 
-export async function getAllWorkers(data) {
-    return findAllWorkers(data)
-}
+export async function getWorkers(req, res, next) {
+    try {
+        const storeId = req.store.storeId
+        const search = parseOptionalSearch(req.query.search, "search")
 
-export async function getWorkerDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
+        const workers = await getAllWorkers({ storeId, search })
 
-    const worker = await findWorkerBaseById({ id, storeId })
-
-    if (!worker) {
-        throw notFound("Worker not found")
-    }
-
-    const rows = await findWorkerRowsById({ ...data, id, storeId })
-    const totalRows = await getWorkerTotalRows({ id, storeId })
-
-    return {
-        ...worker,
-        rows,
-        total_rows: Number(totalRows.total_rows)
+        res.json(workers)
+    } catch (error) {
+        next(error)
     }
 }
 
-export async function getActiveWorkersOptions(data) {
-    return findActiveWorkersOptions(data)
+export async function getWorkerById(req, res, next) {
+    try {
+        const id = requirePositiveInteger(req.params.id, "id")
+        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
+        const storeId = req.store.storeId
+
+        const worker = await getWorkerDetail({ id, orderDirection, limit, offset, storeId })
+
+        res.json(worker)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export async function getWorkerOptions(req, res, next) {
+    try {
+        const storeId = req.store.storeId
+
+        const workers = await getActiveWorkersOptions({ storeId })
+
+        res.json(workers)
+    } catch (error) {
+        next(error)
+    }
 }

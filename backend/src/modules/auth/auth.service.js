@@ -42,7 +42,7 @@ export async function registerStore(data) {
     const existingStore = await findStoreByEmail(email)
 
     if (existingStore) {
-        throw conflict("Store already exists")
+        throw conflict("Register failed")
     }
 
     const password_hash = await bcrypt.hash(password, 10)

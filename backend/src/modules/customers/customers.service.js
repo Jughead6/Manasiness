@@ -1,14 +1,13 @@
 import { findActiveCustomersOptions, findAllCustomers, findCustomerBaseById, findCustomerRowsById, getCustomerTotalRows } from "./customers.repository.js"
 import { notFound } from "../../errors/http-errors.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getAllCustomers(data) {
     return findAllCustomers(data)
 }
 
 export async function getCustomerDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
+    const { id, storeId } = data
 
     const customer = await findCustomerBaseById({ id, storeId })
 

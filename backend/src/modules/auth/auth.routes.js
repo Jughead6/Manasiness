@@ -6,8 +6,8 @@ import { authRateLimit } from "../../middlewares/auth-rate-limit.js"
 const router = Router()
 
 router.post("/login", authRateLimit, login)
-router.post("/register", register)
+router.post("/register", authRateLimit, register)
 router.get("/me", verifyToken, me)
-router.post("/logout", verifyToken, logout)
+router.post("/logout", logout)
 
 export default router

@@ -1,17 +1,12 @@
 import { findAllUsers, findUserById, findUserByPhone, insertUser, updateUserById, updateUserStatus } from "./users.repository.js"
 import { conflict, notFound } from "../../errors/http-errors.js"
-import { requireAllowedValue, requirePositiveInteger, requireText } from "../../utils/validators.js"
-
-const USER_ROLES = ["customer", "worker", "supplier"]
-const USER_STATES = [true, false]
 
 export async function getAllUsers(data) {
     return findAllUsers(data)
 }
 
 export async function getUserDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
+    const { id, storeId } = data
 
     const user = await findUserById({ id, storeId })
 
@@ -23,11 +18,7 @@ export async function getUserDetail(data) {
 }
 
 export async function createNewUser(data) {
-    const storeId = data.storeId
-    const name = requireText(data.name, "name")
-    const phone = requireText(data.phone, "phone")
-    const role = requireAllowedValue(data.role, USER_ROLES, "role")
-    const image = data.image?.trim() || null
+    const { storeId, name, phone, role, image } = data
 
     const existingUser = await findUserByPhone({ phone, storeId })
 
@@ -45,11 +36,7 @@ export async function createNewUser(data) {
 }
 
 export async function updateUser(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
-    const name = requireText(data.name, "name")
-    const phone = requireText(data.phone, "phone")
-    const image = data.image?.trim() || null
+    const { id, storeId, name, phone, role, image } = data
 
     const user = await findUserById({ id, storeId })
 
@@ -63,12 +50,8 @@ export async function updateUser(data) {
         throw conflict("User already exists")
     }
 
-    if (data.role !== undefined) {
-        const requestedRole = requireAllowedValue(data.role, USER_ROLES, "role")
-
-        if (requestedRole !== user.role) {
-            throw conflict("Role change unavailable")
-        }
+    if (role !== user.role) {
+        throw conflict("Role change unavailable")
     }
 
     return updateUserById({
@@ -82,9 +65,7 @@ export async function updateUser(data) {
 }
 
 export async function disableUser(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
-    const isActive = requireAllowedValue(data.isActive, USER_STATES, "is_active")
+    const { id, storeId, isActive } = data
 
     const user = await findUserById({ id, storeId })
 
@@ -100,9 +81,7 @@ export async function disableUser(data) {
 }
 
 export async function enableUser(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
-    const isActive = requireAllowedValue(data.isActive, USER_STATES, "is_active")
+    const { id, storeId, isActive } = data
 
     const user = await findUserById({ id, storeId })
 

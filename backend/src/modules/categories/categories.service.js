@@ -1,16 +1,13 @@
 import { findActiveCategoryOptions, findAllCategories, findCategoryById, insertCategory, updateCategoryById, updateCategoryStatus, findCategoryByName } from "./categories.repository.js"
 import { conflict, notFound } from "../../errors/http-errors.js"
-import { requireAllowedValue, requirePositiveInteger, requireText } from "../../utils/validators.js"
-
-const CATEGORY_STATES = [true, false]
+import { requireAllowedValue, requirePositiveInteger, requireText, parseOptionalImage } from "../../utils/validators/index.js"
 
 export async function getAllCategories(data) {
     return findAllCategories(data)
 }
 
 export async function getCategoryDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "category_id")
+    const { id, storeId } = data
 
     const category = await findCategoryById({ id, storeId })
 
@@ -22,9 +19,7 @@ export async function getCategoryDetail(data) {
 }
 
 export async function createNewCategory(data) {
-    const storeId = data.storeId
-    const name = requireText(data.name, "name")
-    const image = data.image?.trim() || null
+    const { storeId, name, image } = data
 
     const existingCategory = await findCategoryByName({ name, storeId })
 
@@ -40,10 +35,7 @@ export async function createNewCategory(data) {
 }
 
 export async function updateCategory(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "category_id")
-    const name = requireText(data.name, "name")
-    const image = data.image?.trim() || null
+    const { id ,storeId, name, image } = data
 
     const category = await findCategoryById({ id, storeId })
 
@@ -66,9 +58,7 @@ export async function updateCategory(data) {
 }
 
 export async function disableCategory(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "category_id")
-    const isActive = requireAllowedValue(data.isActive, CATEGORY_STATES, "is_active")
+    const { id, storeId, isActive} = data
 
     const category = await findCategoryById({ id, storeId })
 
@@ -84,9 +74,7 @@ export async function disableCategory(data) {
 }
 
 export async function enableCategory(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "category_id")
-    const isActive = requireAllowedValue(data.isActive, CATEGORY_STATES, "is_active")
+    const { id, storeId, isActive} = data
 
     const category = await findCategoryById({ id, storeId })
 

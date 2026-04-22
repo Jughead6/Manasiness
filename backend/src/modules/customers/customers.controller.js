@@ -1,12 +1,12 @@
 import { getActiveCustomersOptions, getAllCustomers, getCustomerDetail } from "./customers.service.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { parseOptionalSearch, parsePageSortQuery, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getCustomers(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const { search = "" } = req.query
+        const search = parseOptionalSearch(req.query.search, "search")
         const customers = await getAllCustomers({ storeId, search })
-        
+
         res.json(customers)
     } catch (error) {
         next(error)
@@ -14,16 +14,12 @@ export async function getCustomers(req, res, next) {
 }
 
 export async function getCustomerById(req, res, next) {
-    const { sort = "recent", page = 1 } = req.query
-    const { id } = req.params
-    const orderDirection = sort === "oldest" ? "ASC" : "DESC"
-    const currentPage = requirePositiveInteger(page, "page")
-    const limit = 20
-    const offset = (currentPage - 1) * limit
-
     try {
+        const id = requirePositiveInteger(req.params.id, "id")
+        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
         const storeId = req.store.storeId
-        const customer = await getCustomerDetail({id, orderDirection, limit, offset, storeId})
+
+        const customer = await getCustomerDetail({ id, orderDirection, limit, offset, storeId })
 
         res.json(customer)
     } catch (error) {
@@ -34,7 +30,8 @@ export async function getCustomerById(req, res, next) {
 export async function getCustomerOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const customers = await getActiveCustomersOptions({storeId})
+
+        const customers = await getActiveCustomersOptions({ storeId })
 
         res.json(customers)
     } catch (error) {

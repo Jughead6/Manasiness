@@ -1,27 +1,13 @@
 import { findActiveProductOptions, findAllProducts, findProductById, findProductByName, insertProduct, updateProductById, updateProductStatus } from "./products.repository.js"
 import { findCategoryById } from "../categories/categories.repository.js"
-import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
-import { requireAllowedValue, requirePositiveInteger, requirePositiveNumber, requireText } from "../../utils/validators.js"
-
-const PRODUCT_STATES = [true, false]
-
-function requireStock(value) {
-    const parsed = Number(value)
-
-    if (!Number.isInteger(parsed) || parsed < 0) {
-        throw badRequest("stock invalid")
-    }
-
-    return parsed
-}
+import { conflict, notFound } from "../../errors/http-errors.js"
 
 export async function getAllProducts(data) {
     return findAllProducts(data)
 }
 
 export async function getProductDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "product_id")
+    const { id, storeId } = data
 
     const product = await findProductById({ id, storeId })
 
@@ -33,13 +19,7 @@ export async function getProductDetail(data) {
 }
 
 export async function createNewProduct(data) {
-    const storeId = data.storeId
-    const categoryId = requirePositiveInteger(data.category_id, "category_id")
-    const name = requireText(data.name, "name")
-    const image = data.image?.trim() || null
-    const costPrice = requirePositiveNumber(data.cost_price, "cost_price")
-    const salePrice = requirePositiveNumber(data.sale_price, "sale_price")
-    const stock = requireStock(data.stock)
+    const { storeId, name, image, costPrice, salePrice, stock, categoryId } = data
 
     const category = await findCategoryById({ id: categoryId, storeId })
 
@@ -69,14 +49,7 @@ export async function createNewProduct(data) {
 }
 
 export async function updateProduct(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "product_id")
-    const name = requireText(data.name, "name")
-    const image = data.image?.trim() || null
-    const costPrice = requirePositiveNumber(data.cost_price, "cost_price")
-    const salePrice = requirePositiveNumber(data.sale_price, "sale_price")
-    const stock = requireStock(data.stock)
-    const categoryId = requirePositiveInteger(data.category_id, "category_id")
+    const { id, storeId, name, image, costPrice, salePrice, stock, categoryId } = data
 
     const product = await findProductById({ id, storeId })
 
@@ -115,9 +88,7 @@ export async function updateProduct(data) {
 }
 
 export async function disableProduct(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "product_id")
-    const isActive = requireAllowedValue(data.isActive, PRODUCT_STATES, "is_active")
+    const { id, storeId, isActive } = data
 
     const product = await findProductById({ id, storeId })
 
@@ -133,9 +104,7 @@ export async function disableProduct(data) {
 }
 
 export async function enableProduct(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "product_id")
-    const isActive = requireAllowedValue(data.isActive, PRODUCT_STATES, "is_active")
+    const { id, storeId, isActive } = data
 
     const product = await findProductById({ id, storeId })
 

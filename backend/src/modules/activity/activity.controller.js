@@ -1,10 +1,12 @@
 import { getGrowthRateByDate, getDayPerformanceByDate, getCatalogPerformanceByDate } from "./activity.service.js"
+import { requireNonNegativeOffset, requirePeriodFilter, requireCatalogOption } from "../../utils/validators/index.js"
 
 export async function getGrowthRate(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const offset = req.query.offset
-        const activityDateFilter = req.query.activityDateFilter
+        const offset = requireNonNegativeOffset(req.query.offset, "offset")
+        const activityDateFilter = requirePeriodFilter(req.query.activityDateFilter, "period")
+        
         const growthRate = await getGrowthRateByDate({storeId, offset, activityDateFilter})
 
         res.json(growthRate)  
@@ -16,8 +18,9 @@ export async function getGrowthRate(req, res, next) {
 export async function getDayPerformance(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const offset = req.query.offset
-        const activityDateFilter = req.query.activityDateFilter
+        const offset = requireNonNegativeOffset(req.query.offset, "offset")
+        const activityDateFilter = requirePeriodFilter(req.query.activityDateFilter, "period")
+
         const dayPerformance = await getDayPerformanceByDate({storeId, offset, activityDateFilter})
 
         res.json(dayPerformance)
@@ -29,9 +32,10 @@ export async function getDayPerformance(req, res, next) {
 export async function getCatalogPerformance(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const offset = req.query.offset
-        const activityDateFilter = req.query.activityDateFilter
-        const catalogOption = req.query.catalogOption
+        const offset = requireNonNegativeOffset(req.query.offset, "offset")
+        const activityDateFilter = requirePeriodFilter(req.query.activityDateFilter, "period")
+        const catalogOption = requireCatalogOption(req.query.catalogOption, "catalogOption")
+
         const catalogPerformance = await getCatalogPerformanceByDate({storeId, offset, activityDateFilter, catalogOption})
 
         res.json(catalogPerformance)

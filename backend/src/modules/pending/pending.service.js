@@ -2,19 +2,19 @@ import { badRequest } from "../../errors/http-errors.js"
 import { findCustomersPending, findSuppliersPending, findStaffPending } from "./pending.repository.js"
 
 export async function getUsersPending(data) {
-    const storeId = data.storeId
-    const rol = data.rol
+    const { storeId, role } = data
 
-    if(rol === "customer") {
-        return findCustomersPending({storeId})
+    if (role === "customer") {
+        return findCustomersPending({ storeId })
     }
-    if(rol === "supplier") {
-        return findSuppliersPending({storeId})
+
+    if (role === "supplier") {
+        return findSuppliersPending({ storeId })
     }
-    if(rol ===  "worker") {
-        return findStaffPending({storeId})
+
+    if (role === "worker") {
+        return findStaffPending({ storeId })
     }
-    
-    throw badRequest("rol invalid")
-    
+
+    throw badRequest("role invalid")
 }
