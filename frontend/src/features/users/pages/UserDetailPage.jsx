@@ -1,7 +1,6 @@
 import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import EntityTitle from "../../../shared/ui/titles/entity/EntityTitle.jsx"
 import EntityLayout from "../../../shared/ui/layouts/entity/EntityLayout.jsx"
 import { activateUser, deactivateUser, getUserById } from "../api/users.api.js"
 import { mapUserToDetail } from "../mappers/users.mapper.js"

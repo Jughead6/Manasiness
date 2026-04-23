@@ -9,10 +9,10 @@ function DashboardSidebar() {
     const navigate = useNavigate()
     const { logoutSession } = useAuth()
     const [openSections, setOpenSections] = useState({
-        actions: false,
-        yourspace: false,
-        users: false,
-        stats: false,
+        catalog: false,
+        register: false,
+        people: false,
+        reports: false,
         settings: false
     })
 
@@ -38,8 +38,8 @@ function DashboardSidebar() {
 
             <div className="dashboard-sidebar-list">
                 <div className="dashboard-sidebar-section">
-                    <button onClick={() => handleSection("actions")}>Actions <Menu /></button>
-                    <ul hidden={!openSections.actions}>
+                    <button onClick={() => handleSection("catalog")}>Catalog <Menu /></button>
+                    <ul hidden={!openSections.catalog}>
                         <li><NavLink to="/dashboard/categories"><TableOfContents />Categories</NavLink></li>
                         <li><NavLink to="/dashboard/products"><PackageSearch />Products</NavLink></li>
                         <li><NavLink to="/dashboard/users"><User />Users</NavLink></li>
@@ -47,8 +47,8 @@ function DashboardSidebar() {
                 </div>
 
                 <div className="dashboard-sidebar-section">
-                    <button onClick={() => handleSection("yourspace")}>YOUR SPACE <Menu /></button>
-                    <ul hidden={!openSections.yourspace}>
+                    <button onClick={() => handleSection("register")}>Register <Menu /></button>
+                    <ul hidden={!openSections.register}>
                         <li><NavLink to="/dashboard/sales"><BadgeDollarSign />Sales</NavLink></li>
                         <li><NavLink to="/dashboard/orders"><ChartColumnDecreasing />Orders</NavLink></li>
                         <li><NavLink to="/dashboard/staff"><FileUser />Staff</NavLink></li>
@@ -56,8 +56,8 @@ function DashboardSidebar() {
                 </div>
 
                 <div className="dashboard-sidebar-section">
-                    <button onClick={() => handleSection("users")}>USERS <Menu /></button>
-                    <ul hidden={!openSections.users}>
+                    <button onClick={() => handleSection("people")}>People <Menu /></button>
+                    <ul hidden={!openSections.people}>
                         <li><NavLink to="/dashboard/customers"><FileUser />Customers</NavLink></li>
                         <li><NavLink to="/dashboard/suppliers"><PillBottle />Suppliers</NavLink></li>
                         <li><NavLink to="/dashboard/workers"><BriefcaseBusiness />Workers</NavLink></li>
@@ -65,8 +65,8 @@ function DashboardSidebar() {
                 </div>
 
                 <div className="dashboard-sidebar-section">
-                    <button onClick={() => handleSection("stats")}>Stats <Menu /></button>
-                    <ul hidden={!openSections.stats}>
+                    <button onClick={() => handleSection("reports")}>Reports <Menu /></button>
+                    <ul hidden={!openSections.reports}>
                         <li><NavLink to="/dashboard/income"><FileUser />Income</NavLink></li>
                         <li><NavLink to="/dashboard/expenses"><PillBottle />Expenses</NavLink></li>
                         <li><NavLink to="/dashboard/activity"><BriefcaseBusiness />Activity</NavLink></li>

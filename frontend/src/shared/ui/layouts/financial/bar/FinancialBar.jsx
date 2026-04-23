@@ -14,7 +14,7 @@ function FinancialBar({ infoBar = [], setDate }) {
 
     return (
         <div className="shared-financial-bar">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={infoBar}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />

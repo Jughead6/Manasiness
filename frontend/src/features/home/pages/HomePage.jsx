@@ -1,130 +1,77 @@
 import "./HomePage.css"
-import { useState, useEffect } from "react"
-import { getSalesStats, getOrdersStats, getStaffStats } from "../api/home.api.js"
+import { Link } from "react-router-dom"
 import { useAuth } from "../../auth/context/useAuth.js"
 
-function createEmptyStats() {
-    return {
-        dayTotal: 0,
-        dayCount: 0,
-        weekTotal: 0,
-        weekCount: 0,
-        monthTotal: 0,
-        monthCount: 0
+const firstSteps = [
+    {
+        title: "Categories",
+        description: "Create the groups that organize your products.",
+        path: "/dashboard/categories",
+        action: "Create categories"
+    },
+    {
+        title: "Products",
+        description: "Add your products with prices, stock and category.",
+        path: "/dashboard/products",
+        action: "Create products"
+    },
+    {
+        title: "Users",
+        description: "Register the main users connected to your business.",
+        path: "/dashboard/users",
+        action: "Create users"
     }
-}
+]
 
 function HomePage() {
     const { store } = useAuth()
 
-    const [salesStats, setSalesStats] = useState(createEmptyStats())
-    const [ordersStats, setOrdersStats] = useState(createEmptyStats())
-    const [staffStats, setStaffStats] = useState(createEmptyStats())
-
-    useEffect(() => {
-        async function loadStats() {
-            try {
-                const [salesResponse, ordersResponse, staffResponse] = await Promise.all([
-                    getSalesStats(),
-                    getOrdersStats(),
-                    getStaffStats()
-                ])
-
-                setSalesStats(salesResponse || createEmptyStats())
-                setOrdersStats(ordersResponse || createEmptyStats())
-                setStaffStats(staffResponse || createEmptyStats())
-            } catch {
-                setSalesStats(createEmptyStats())
-                setOrdersStats(createEmptyStats())
-                setStaffStats(createEmptyStats())
-            }
-        }
-
-        loadStats()
-    }, [])
-
     return (
         <div className="home">
-            <div className="home-welcome">
-                <div className="home-welcome-left">
-                    <h2>Welcome to dashboard!</h2>
-                    <h1 className="home-welcome-title">Hi, {store?.name || ""}</h1>
-                </div>
-                <div className="home-welcome-right">
-                    <p className="home-welcome-description">Manasiness is a web platform that helps you manage your store. This platform offers you better organized information about your business.</p>
-                </div>
-            </div>
-
-            <div className="home-stats">
-                <div className="home-stats-section">
-                    <div className="home-stats-section-title">
-                        <p>Sales</p>
-                    </div>
-                    <div className="home-stats-section-information">
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Today</p>
-                            <p className="home-stats-section-amount">S/ {salesStats.dayTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.dayCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Weekly</p>
-                            <p className="home-stats-section-amount">S/ {salesStats.weekTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.weekCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Monthly</p>
-                            <p className="home-stats-section-amount">S/ {salesStats.monthTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Sales: {salesStats.monthCount}</p>
-                        </div>
-                    </div>
+            <section className="home-hero">
+                <div className="home-hero-left">
+                    <p className="home-hero-welcome">Welcome to dashboard!</p>
+                    <p className="home-hero-label">MISSION & START</p>
+                    <h1 className="home-hero-title">Build your store step by step</h1>
+                    <p className="home-hero-description">Hi, {store?.name || ""}. Start with the base of your business. Create your categories, products and users to begin using Manasiness in a simpler and more organized way.</p>
+                    <Link className="home-hero-button" to="/dashboard/categories">Start now</Link>
                 </div>
 
-                <div className="home-stats-section">
-                    <div className="home-stats-section-title">
-                        <p>Orders</p>
+                <div className="home-hero-right">
+                    <div className="home-steps-header">
+                        <p className="home-steps-label">FIRST STEPS</p>
+                        <h2 className="home-steps-title">Create your main structure</h2>
                     </div>
-                    <div className="home-stats-section-information">
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Today</p>
-                            <p className="home-stats-section-amount">S/ {ordersStats.dayTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.dayCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Weekly</p>
-                            <p className="home-stats-section-amount">S/ {ordersStats.weekTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.weekCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Monthly</p>
-                            <p className="home-stats-section-amount">S/ {ordersStats.monthTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Orders: {ordersStats.monthCount}</p>
-                        </div>
+
+                    <div className="home-steps-showcase">
+                        {firstSteps.map((step, index) => (
+                            <div className="home-step-card" key={step.title}>
+                                <div className="home-step-card-top">
+                                    <p className="home-step-number">0{index + 1}</p>
+                                    <h3 className="home-step-title">{step.title}</h3>
+                                </div>
+
+                                <div className="home-step-card-bottom">
+                                    <p className="home-step-description">{step.description}</p>
+                                    <Link className="home-step-link" to={step.path}>{step.action}</Link>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                </div>
+            </section>
+
+            <section className="home-mission">
+                <div className="home-mission-left">
+                    <p className="home-mission-label">MISSION</p>
+                    <h2 className="home-mission-title">Simple management for everyday business</h2>
                 </div>
 
-                <div className="home-stats-section">
-                    <div className="home-stats-section-title">
-                        <p>Staff</p>
-                    </div>
-                    <div className="home-stats-section-information">
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Today</p>
-                            <p className="home-stats-section-amount">S/ {staffStats.dayTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.dayCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Weekly</p>
-                            <p className="home-stats-section-amount">S/ {staffStats.weekTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.weekCount}</p>
-                        </div>
-                        <div className="home-stats-section-date">
-                            <p className="home-stats-section-time">Monthly</p>
-                            <p className="home-stats-section-amount">S/ {staffStats.monthTotal}</p>
-                            <p className="home-stats-section-qunatity">Total Paid: {staffStats.monthCount}</p>
-                        </div>
-                    </div>
+                <div className="home-mission-right">
+                    <p>Manasiness helps small businesses manage their information in a cleaner, simpler and more organized way. The goal is to give each part of the business its own clear space without making the system feel heavy.</p>
+                    <p>Start with the basic setup, continue with your daily records, and keep everything easier to understand. Categories, products and users are the first steps that help organize the rest of the system.</p>
                 </div>
-            </div>
+            </section>
         </div>
     )
 }

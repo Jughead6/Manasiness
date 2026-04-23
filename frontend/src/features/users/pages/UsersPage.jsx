@@ -23,7 +23,7 @@ function UsersPage() {
                 const data = await getUsers({ search: searchTerm, status: statusFilter, role: roleFilter })
                 setUsers(mapUsersToCards(data))
             } catch {
-                setUsers([])
+                toast.error("Could not load users")
             } finally {
                 setIsLoading(false)
             }

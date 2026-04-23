@@ -17,7 +17,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
     }
 
     return (
-        <form className="shared-entity-edit-form" onSubmit={handleSubmit}>
+        <form key={JSON.stringify(values)} className="shared-entity-edit-form" onSubmit={handleSubmit}>
             <div className="shared-entity-edit-form-hero">
                 <h4>{sectionLabel}----</h4>
                 <h1>{title}</h1>

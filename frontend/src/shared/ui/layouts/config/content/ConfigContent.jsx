@@ -16,7 +16,7 @@ function ConfigContent({ formFields = [], informationValues = {}, onSubmit, onCa
     }
 
     return (
-        <form className="shared-config-content" onSubmit={handleSubmit}>
+        <form key={JSON.stringify(informationValues)} className="shared-config-content" onSubmit={handleSubmit}>
             <div className="shared-config-content-information">
                 <div className="shared-config-content-fields">
                     {formFields.map((item) => (

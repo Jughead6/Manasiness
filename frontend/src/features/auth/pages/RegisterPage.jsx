@@ -12,7 +12,7 @@ function RegisterPage() {
     async function handleRegister(data) {
         try {
             await register(data)
-            toast.success("Register Successfull!")
+            toast.success("Register Successful!")
             navigate("/login")
         } catch (error) {
             toast.error(error.message || "Could not register")
