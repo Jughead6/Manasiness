@@ -1,15 +1,30 @@
 import "./FinancialToolbar.css"
-import { StepForward, StepBack } from "lucide-react"
+import FinancialToolbarFilter from "./filter/FinancialToolbarFilter.jsx"
+import FinancialWindow from "./window/FinancialWindow.jsx"
 
-function FinancialToolbar(data) {
-    const { offset, setOffset, hasOlder, startDate, endDate } = data
+function FinancialToolbar({ period, setPeriod, offset, setOffset, hasOlder, startDate, endDate }) {
+    const filterGroups = [
+        {
+            key: "financial-period-filter",
+            label: "Range",
+            value: period,
+            onChange: (e) => setPeriod(e.target.value),
+            options: [
+                { value: "week", label: "Week" },
+                { value: "month", label: "Month" }
+            ]
+        }
+    ]
 
     return (
         <div className="shared-financial-toolbar">
-            { hasOlder ? <button onClick={() => setOffset(offset + 1)}><StepBack/></button> : null}
-            <p>{startDate} to {endDate}</p>
-            { offset === 0 ? null : <button onClick={() => setOffset(offset - 1)}><StepForward/></button> }
-            
+            <div className="shared-financial-toolbar-side">
+                <FinancialToolbarFilter filterGroups={filterGroups} />
+            </div>
+            <div className="shared-financial-toolbar-center">
+                <FinancialWindow offset={offset} setOffset={setOffset} hasOlder={hasOlder} startDate={startDate} endDate={endDate} />
+            </div>
+            <div className="shared-financial-toolbar-side"></div>
         </div>
     )
 }

@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { getSession, logout } from "../api/auth.api.js"
-
-const AuthContext = createContext(null)
+import AuthContext from "./AuthContextInstance.js"
 
 export function AuthProvider({ children }) {
     const [store, setStore] = useState(null)
@@ -27,29 +26,18 @@ export function AuthProvider({ children }) {
         try {
             await logout()
         } catch {
-        } finally {
             setStore(null)
             setIsLoading(false)
+            return
         }
+
+        setStore(null)
+        setIsLoading(false)
     }
 
     useEffect(() => {
         loadSession()
     }, [])
 
-    return (
-        <AuthContext.Provider value={{ store, isLoading, loadSession, loginSession, logoutSession }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext)
-
-    if (!context) {
-        throw new Error("Auth context invalid")
-    }
-
-    return context
+    return <AuthContext.Provider value={{ store, isLoading, loadSession, loginSession, logoutSession }}>{children}</AuthContext.Provider>
 }

@@ -1,8 +1,6 @@
 import "./StatsTitle.css"
 
-function StatsTitle(data) {
-    const { title, description } = data
-
+function StatsTitle({ title, description }) {
     return (
         <div className="shared-stats-title">
             <div className="shared-stats-welcome">

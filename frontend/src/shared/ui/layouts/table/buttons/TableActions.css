@@ -5,8 +5,9 @@
     display: flex;
     gap: 25px;
     justify-content: center;
+    align-items: center;
 }
 
-.shared-table-actions > button{
+.shared-table-actions > button {
     padding: 5px;
 }

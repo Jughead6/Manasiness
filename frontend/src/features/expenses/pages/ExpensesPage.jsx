@@ -11,12 +11,15 @@ const emptyInfoCard = {
 
 function ExpensesPage() {
     const [infoBar, setInfoBar] = useState([])
-    const [date, setDate] = useState(null)
+    const [date, setDate] = useState("")
     const [infoCard, setInfoCard] = useState(emptyInfoCard)
     const [offset, setOffset] = useState(0)
+    const [period, setPeriod] = useState("week")
     const [hasOlder, setHasOlder] = useState(false)
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
+    const [isLoadingBar, setIsLoadingBar] = useState(true)
+    const [isLoadingCard, setIsLoadingCard] = useState(false)
 
     const titlesCard = {
         total: "Total Expenses",
@@ -30,49 +33,74 @@ function ExpensesPage() {
                 setInfoCard(emptyInfoCard)
                 return
             }
+
             try {
-                const data = await getInfoCard(date)
+                setIsLoadingCard(true)
+                const data = await getInfoCard({ date, period })
                 setInfoCard(expensesByDayMapper(data))
             } catch {
                 setInfoCard(emptyInfoCard)
+            } finally {
+                setIsLoadingCard(false)
             }
         }
+
         fetchInfoCard()
-    }, [date])
+    }, [date, period])
 
     useEffect(() => {
-        async function fetchIncome() {
+        async function fetchExpenses() {
             try {
-                const data = await getInfoBar(offset)
-                setInfoBar(expensesMapper(data))
+                setIsLoadingBar(true)
+                const data = await getInfoBar({ offset, period })
+                const mapped = expensesMapper(data)
+
+                setInfoBar(mapped)
                 setHasOlder(data[0]?.has_older ?? false)
                 setStartDate(data[0]?.start_date ? String(data[0].start_date).split("T")[0] : null)
                 setEndDate(data[0]?.end_date ? String(data[0].end_date).split("T")[0] : null)
+
+                if (!mapped.length) {
+                    setDate("")
+                    return
+                }
+
+                setDate((prev) => {
+                    const stillExists = mapped.some((item) => item.day === prev)
+                    return stillExists ? prev : mapped[mapped.length - 1].day
+                })
             } catch {
                 setInfoBar([])
                 setHasOlder(false)
                 setStartDate(null)
                 setEndDate(null)
+                setDate("")
+            } finally {
+                setIsLoadingBar(false)
             }
         }
 
-        fetchIncome()
-    }, [offset])
+        fetchExpenses()
+    }, [offset, period])
 
     return (
         <FinancialLayout 
-            infoBar={infoBar} 
-            date={date} 
-            setDate={setDate} 
-            infoCard={infoCard} 
+            infoBar={infoBar}
+            date={date}
+            setDate={setDate}
+            infoCard={infoCard}
             titlesCard={titlesCard}
             title="Expenses"
-            description="On this page, you can view your expenses in a more organized and straightforward way. Select a day on the graph and check the information!"
+            description="On this page, you can view your expenses in a more organized and straightforward way. Select a bar and check the information."
             hasOlder={hasOlder}
             offset={offset}
             setOffset={setOffset}
             startDate={startDate}
             endDate={endDate}
+            period={period}
+            setPeriod={setPeriod}
+            isLoadingBar={isLoadingBar}
+            isLoadingCard={isLoadingCard}
         />
     )
 }

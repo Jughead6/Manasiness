@@ -3,12 +3,12 @@ export function mapProductsToCards(data) {
         id: item.id,
         name: item.name,
         image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
         details: [
             `Category: ${item.category}`,
             `Cost Price: ${item.cost_price}`,
             `Sale Price: ${item.sale_price}`,
-            `Stock: ${item.stock}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            `Stock: ${item.stock}`
         ]
     }))
 }

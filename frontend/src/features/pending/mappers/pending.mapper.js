@@ -6,23 +6,38 @@ function formatPendingTime(date) {
     const hours = Math.floor(diffMs / (1000 * 60 * 60))
     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
-    if ( hours < 1 ) {
+    if (hours < 1) {
         return "Just now"
     }
 
-    if ( hours < 24) {
+    if (hours < 24) {
         return `${hours} h ago`
     }
 
     return `${days} ${days === 1 ? "day" : "days"} ago`
 }
 
-export function userPendingMapper(data) {
+function mapPendingGroup(data) {
+    return {
+        count: Number(data?.count ?? 0),
+        total: Number(data?.total ?? 0)
+    }
+}
 
+export function userPendingMapper(data) {
     return data.map((item) => ({
         id: item.id,
         name: item.name,
-        day_ago: formatPendingTime(item.day_ago),
-        amount: item.amount
+        dayAgo: formatPendingTime(item.day_ago),
+        amount: Number(item.amount ?? 0)
     }))
+}
+
+export function pendingSummaryMapper(data) {
+    return {
+        customers: mapPendingGroup(data?.customers),
+        suppliers: mapPendingGroup(data?.suppliers),
+        workers: mapPendingGroup(data?.workers),
+        global: mapPendingGroup(data?.global)
+    }
 }

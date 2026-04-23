@@ -1,75 +1,22 @@
 import "./ActivityContent.css"
-import { StepForward, StepBack } from "lucide-react"
+import ActivityToolbar from "./toolbar/ActivityToolbar.jsx"
+import ActivityCards from "./cards/ActivityCards.jsx"
+import ActivityCatalogPerformance from "./catalog/ActivityCatalogPerformance.jsx"
 
-function ActivityContent(data) {
-    const { growthRate, dayPerformance, catalogPerformance, activityDateFilter, setActivityDateFilter, setCatalogOption, offset, setOffset, hasPrevious } = data
-    
+function ActivityContent({ growthRate, dayPerformance, catalogPerformance, period, setPeriod, catalogOption, setCatalogOption, offset, setOffset, hasOlder }) {
     return (
         <div className="activity-content">
-            <div className="activity-content-toolbar">
-                <select value={activityDateFilter} onChange={(e) => setActivityDateFilter(e.target.value)}>
-                    <option value="week">Week</option>
-                    <option value="month">Month</option>
-                </select>
-                <div className="activity-content-toolbar-buttons">
-                    { hasPrevious ? <button onClick={() => setOffset(offset + 1)}><StepBack /></button> : null }
-                    <p>{growthRate?.date ?? ""}</p>
-                    { offset > 0 ? <button onClick={() => setOffset(offset - 1)}><StepForward /></button> : null }                
-                </div>
-            </div>
-            <div className="activity-content-cards">
-                <div className="activity-content-card">
-                    <div className="activity-content-card-title">
-                        <h1>Growth Rate</h1>
-                    </div>                    
-                    <div className="activity-content-card-content">
-                        <div>
-                            <h2 className="activity-content-card-percentage">{growthRate?.growthRate ?? 0} %</h2>
-                        </div>  
-                    </div>               
-                </div>
-                <div className="activity-content-card">
-                    <div className="activity-content-card-title">
-                        <h1>Day Performance</h1>
-                    </div>
-                    <div className="activity-content-card-content">
-                        <div>
-                            <h3>Best Day</h3>
-                            <h2>{dayPerformance?.bestDay ?? ""}</h2>
-                        </div>
-                        <div>
-                            <h3>Worst Day</h3>
-                            <h2>{dayPerformance?.worstDay ?? ""}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="activity-content-catalog-performance">
-                <div className="catalog-performance-title">
-                    <h1>Catalog Performance</h1>
-                    <div className="activity-content-filter-switch" onChange={(e) => setCatalogOption(e.target.value)}>
-                        <input defaultChecked id="activity-catalog-option-quantity" name="activityCatalogOptions" type="radio" value="topSold" />
-                        <label className="activity-content-filter-option" htmlFor="activity-catalog-option-quantity">Top Sold</label>
-                        <input id="activity-catalog-option-revenue" name="activityCatalogOptions" type="radio" value="leastSold" />
-                        <label className="activity-content-filter-option" htmlFor="activity-catalog-option-revenue">Least Sold</label>
-                        <span className="activity-content-filter-background"></span>
-                    </div>
-                </div>
-                <div className="catalog-performance-content">
-                    <div className="catalog-performance-content-item">
-                        <h2>Category</h2>
-                        <img src={catalogPerformance?.categoryImg} alt="top category"></img>
-                        <h3>{catalogPerformance?.categoryName ?? ""}</h3>
-                        <h4>Quantity: {catalogPerformance?.categoryQuantity ?? 0}</h4>
-                    </div>
-                    <div className="catalog-performance-content-item">
-                        <h2>Product</h2>
-                        <img src={catalogPerformance?.productImg} alt="top product"></img>
-                        <h3>{catalogPerformance?.productName ?? ""}</h3>
-                        <h4>Quantity: {catalogPerformance?.productQuantity ?? 0}</h4>
-                    </div>
-                </div>
-            </div>
+            <ActivityToolbar
+                windowLabel={growthRate?.date ?? ""}
+                period={period}
+                setPeriod={setPeriod}
+                offset={offset}
+                setOffset={setOffset}
+                hasOlder={hasOlder}
+            />
+
+            <ActivityCards growthRate={growthRate} dayPerformance={dayPerformance} />
+            <ActivityCatalogPerformance catalogPerformance={catalogPerformance} catalogOption={catalogOption} setCatalogOption={setCatalogOption} />
         </div>
     )
 }

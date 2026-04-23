@@ -1,5 +1,5 @@
 import { getAllUsers, getUserDetail, createNewUser, updateUser, disableUser, enableUser } from "./users.service.js"
-import { parseOptionalSearch, requireText, parseOptionalImage, requirePhone, requireAllowedValue, requirePositiveInteger } from "../../utils/validators/index.js"
+import { parseOptionalSearch, parseOptionalStatus, parseOptionalUserRole, requireText, parseOptionalImage, requirePhone, requireAllowedValue, requirePositiveInteger } from "../../utils/validators/index.js"
 
 const USER_ROLES = ["customer", "worker", "supplier"]
 
@@ -7,8 +7,10 @@ export async function getUsers(req, res, next) {
     try {
         const storeId = req.store.storeId
         const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+        const role = parseOptionalUserRole(req.query.role, "role")
 
-        const users = await getAllUsers({ storeId, search })
+        const users = await getAllUsers({ storeId, search, status, role })
 
         res.json(users)
     } catch (error) {

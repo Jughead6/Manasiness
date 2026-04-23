@@ -3,10 +3,11 @@ export function mapUsersToCards(data) {
         id: item.id,
         name: item.name,
         image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
         details: [
-            `Phone: ${item.phone}`,
+            `Phone: ${item.phone || 'No phone'}`,
             `Role: ${item.role}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            `Created At: ${item.created_at}`
         ]
     }))
 }

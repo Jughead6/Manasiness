@@ -1,22 +1,82 @@
+function parseDateValue(date) {
+    if (!date) return null
+
+    const normalizedDate = typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date)
+        ? `${date}T00:00:00`
+        : date
+    const parsedDate = new Date(normalizedDate)
+
+    return Number.isNaN(parsedDate.getTime()) ? null : parsedDate
+}
+
+function formatDateTime(value) {
+    const parsedDate = parseDateValue(value)
+
+    if (!parsedDate) {
+        return "-"
+    }
+
+    const day = String(parsedDate.getDate()).padStart(2, "0")
+    const month = String(parsedDate.getMonth() + 1).padStart(2, "0")
+    const year = parsedDate.getFullYear()
+
+    return `${day}/${month}/${year}`
+}
+
+function formatDayLabel(value) {
+    const parsedDate = parseDateValue(value)
+
+    if (!parsedDate) {
+        return ""
+    }
+
+    const day = String(parsedDate.getDate()).padStart(2, "0")
+    const month = String(parsedDate.getMonth() + 1).padStart(2, "0")
+    const year = parsedDate.getFullYear()
+
+    return `${day}/${month}/${year}`
+}
+
+function formatSalary(value) {
+    const parsed = Number(value)
+
+    if (!Number.isFinite(parsed)) {
+        return value
+    }
+
+    return parsed.toFixed(2)
+}
+
 export function mapWorkersToCards(data) {
     return data.map((item) => ({
         id: item.id,
         name: item.name,
-        image: item.image
+        image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
+        details: [
+            `Phone: ${item.phone || 'No phone'}`,
+            `Role: Worker`
+        ]
     }))
 }
 
 export function mapWorkerToDetail(data) {
+    const startDate = formatDayLabel(data.start_date)
+    const endDate = formatDayLabel(data.end_date)
+
     return {
-        name: data.name || '',
+        name: data.name || "",
         details: (data.rows || []).map((item) => ([
-            item.date,
-            item.salary,
+            formatDateTime(item.date),
+            formatSalary(item.salary),
             item.state
-        ]))
+        ])),
+        windowLabel: startDate === endDate ? startDate : `${startDate} - ${endDate}`,
+        hasOlder: Boolean(data.has_older),
+        hasNewer: Boolean(data.has_newer)
     }
 }
 
-export function mapTotalPage(data) {
+export function mapWorkersTotalPage(data) {
     return Math.ceil((data.total_rows || 0) / 20)
 }

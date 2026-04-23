@@ -54,3 +54,45 @@ export function parseOptionalSearch(value, fieldName = "search") {
 
     return value.trim()
 }
+
+export function parseOptionalStatus(value, fieldName = "status") {
+    if (value === undefined || value === null || value === "") {
+        return "all"
+    }
+
+    if (typeof value !== "string") {
+        throw badRequest(`${fieldName} invalid`)
+    }
+
+    const parsed = value.trim()
+
+    return requireAllowedValue(parsed, ["all", "active", "inactive"], fieldName)
+}
+
+export function parseOptionalUserRole(value, fieldName = "role") {
+    if (value === undefined || value === null || value === "") {
+        return "all"
+    }
+
+    if (typeof value !== "string") {
+        throw badRequest(`${fieldName} invalid`)
+    }
+
+    const parsed = value.trim()
+
+    return requireAllowedValue(parsed, ["all", "customer", "supplier", "worker"], fieldName)
+}
+
+export function parseOptionalPositiveInteger(value, fieldName = "value") {
+    if (value === undefined || value === null || value === "") {
+        return null
+    }
+
+    const parsed = Number(value)
+
+    if (!Number.isInteger(parsed) || parsed <= 0) {
+        throw badRequest(`${fieldName} invalid`)
+    }
+
+    return parsed
+}

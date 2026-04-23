@@ -2,7 +2,7 @@ import AuthOverlay from "../../../shared/ui/modal/AuthOverlay.jsx"
 import AuthLayout from "../../../shared/ui/layouts/auth/AuthLayout.jsx"
 import { useNavigate, Navigate } from "react-router-dom"
 import { login } from "../api/auth.api"
-import { useAuth } from "../context/AuthContext.jsx"
+import { useAuth } from "../context/useAuth.js"
 import { toast } from "react-toastify"
 import LoginForm from "../../../shared/ui/forms/LoginForm"
 

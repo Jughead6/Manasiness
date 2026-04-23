@@ -1,7 +1,19 @@
-function formatDateTime(date) {
-    if (!date) return ""
+function parseDateValue(date) {
+    if (!date) return null
 
-    const newDate = new Date(date)
+    const normalizedDate = typeof date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(date)
+        ? `${date}T00:00:00`
+        : date
+    const parsedDate = new Date(normalizedDate)
+
+    return Number.isNaN(parsedDate.getTime()) ? null : parsedDate
+}
+
+function formatDateTime(date) {
+    const newDate = parseDateValue(date)
+
+    if (!newDate) return ""
+
     const day = String(newDate.getDate()).padStart(2, "0")
     const month = String(newDate.getMonth() + 1).padStart(2, "0")
     const year = newDate.getFullYear()
@@ -9,6 +21,18 @@ function formatDateTime(date) {
     const minutes = String(newDate.getMinutes()).padStart(2, "0")
 
     return `${day}/${month}/${year} - ${hours}:${minutes}`
+}
+
+function formatDayLabel(date) {
+    const newDate = parseDateValue(date)
+
+    if (!newDate) return ""
+
+    const day = String(newDate.getDate()).padStart(2, "0")
+    const month = String(newDate.getMonth() + 1).padStart(2, "0")
+    const year = newDate.getFullYear()
+
+    return `${day}/${month}/${year}`
 }
 
 export function mapOrdersToTables(data) {
@@ -25,6 +49,20 @@ export function mapOrdersToTables(data) {
 
 export function mapOrdersTotalPage(data) {
     return Math.ceil((data.total_rows || 0) / 20)
+}
+
+export function mapOrdersWindowLabel(data) {
+    if (!data.start_date) return ""
+
+    return formatDayLabel(data.start_date)
+}
+
+export function mapOrdersWindowState(data) {
+    return {
+        label: mapOrdersWindowLabel(data),
+        hasOlder: Boolean(data.has_older),
+        hasNewer: Boolean(data.has_newer)
+    }
 }
 
 export function mapSupplierOptions(data) {

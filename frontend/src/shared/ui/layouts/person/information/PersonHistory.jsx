@@ -1,6 +1,8 @@
 import "./PersonHistory.css"
 
-function PersonHistory({ data, columns }) {
+function PersonHistory({ data, columns, emptyMessage = "No records found" }) {
+    const hasRows = Array.isArray(data) && data.length > 0
+
     return (
         <div className="shared-person-history">
             <div className="shared-person-history-table">
@@ -13,7 +15,11 @@ function PersonHistory({ data, columns }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item, index) => (
+                        {!hasRows ? (
+                            <tr>
+                                <td className="shared-person-table-cell shared-person-table-cell-message" colSpan={columns.length}>{emptyMessage}</td>
+                            </tr>
+                        ) : data.map((item, index) => (
                             <tr key={index}>
                                 {item.map((reg, regIndex) => (
                                     <td className="shared-person-table-cell" key={regIndex}>{reg}</td>

@@ -2,7 +2,7 @@ import pool from "../../config/db.js"
 import { conflict, notFound } from "../../errors/http-errors.js"
 
 export async function findAllSales(data) {
-    const { orderDirection, limit, offset, storeId } = data
+    const { orderDirection, limit, rowOffset, storeId, dayOffset } = data
 
     const result = await pool.query(`
         SELECT
@@ -17,21 +17,47 @@ export async function findAllSales(data) {
         JOIN products ON sales.product_id = products.id AND sales.store_id = products.store_id
         JOIN users ON sales.user_id = users.id AND sales.store_id = users.store_id
         WHERE sales.store_id = $1
+            AND sales.sold_at >= (CURRENT_DATE - ($4 * INTERVAL '1 day'))
+            AND sales.sold_at < (CURRENT_DATE - ($4 * INTERVAL '1 day') + INTERVAL '1 day')
         ORDER BY sales.sold_at ${orderDirection}
         LIMIT $2 OFFSET $3
-    `, [storeId, limit, offset])
+    `, [storeId, limit, rowOffset, dayOffset])
 
     return result.rows
 }
 
 export async function getSalesTotalRows(data) {
-    const { storeId } = data
+    const { storeId, dayOffset } = data
 
     const result = await pool.query(`
         SELECT COUNT(*) AS total_rows
         FROM sales
         WHERE store_id = $1
-    `, [storeId])
+            AND sold_at >= (CURRENT_DATE - ($2 * INTERVAL '1 day'))
+            AND sold_at < (CURRENT_DATE - ($2 * INTERVAL '1 day') + INTERVAL '1 day')
+    `, [storeId, dayOffset])
+
+    return result.rows[0]
+}
+
+export async function getSalesWindowInfo(data) {
+    const { storeId, dayOffset } = data
+
+    const result = await pool.query(`
+        SELECT
+            target_day AS start_date,
+            target_day AS end_date,
+            EXISTS (
+                SELECT 1
+                FROM sales
+                WHERE store_id = $1
+                    AND sold_at < target_day
+            ) AS has_older,
+            ($2 > 0) AS has_newer
+        FROM (
+            SELECT (CURRENT_DATE - ($2 * INTERVAL '1 day'))::date AS target_day
+        ) AS window_data
+    `, [storeId, dayOffset])
 
     return result.rows[0]
 }

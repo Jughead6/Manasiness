@@ -1,24 +1,33 @@
 import pool from "../../config/db.js"
 
-export async function findIncomeByWeek(data) {
-    const { storeId, offset } = data
+export async function findIncomeByPeriod(data) {
+    const { storeId, offset, period } = data
 
     const result = await pool.query(`
         WITH base AS (
             SELECT
-                (date_trunc('week', CURRENT_DATE)::date - 1) AS base_end
+                CASE
+                    WHEN $3 = 'month' THEN (date_trunc('month', CURRENT_DATE)::date - 1)
+                    ELSE (date_trunc('week', CURRENT_DATE)::date - 1)
+                END AS base_end
         ),
-        range_week AS (
+        range_period AS (
             SELECT
-                (base_end - ($2::int * 7) - 6) AS start_date,
-                (base_end - ($2::int * 7)) AS end_date
+                CASE
+                    WHEN $3 = 'month' THEN date_trunc('month', (base_end - ($2::int * INTERVAL '1 month')))::date
+                    ELSE (base_end - ($2::int * 7) - 6)
+                END AS start_date,
+                CASE
+                    WHEN $3 = 'month' THEN (date_trunc('month', (base_end - ($2::int * INTERVAL '1 month'))) + INTERVAL '1 month' - INTERVAL '1 day')::date
+                    ELSE (base_end - ($2::int * 7))
+                END AS end_date
             FROM base
         ),
         older AS (
             SELECT EXISTS (
                 SELECT 1
                 FROM sales
-                CROSS JOIN range_week r
+                CROSS JOIN range_period r
                 WHERE store_id = $1
                 AND state = 'paid'
                 AND sold_at::date < r.start_date
@@ -27,7 +36,7 @@ export async function findIncomeByWeek(data) {
 
                 SELECT 1
                 FROM orders
-                CROSS JOIN range_week r
+                CROSS JOIN range_period r
                 WHERE store_id = $1
                 AND state = 'paid'
                 AND ordered_at::date < r.start_date
@@ -45,7 +54,7 @@ export async function findIncomeByWeek(data) {
                 SUM(sale_price * quantity) AS total_sold,
                 0::numeric AS total_spent
             FROM sales
-            CROSS JOIN range_week r
+            CROSS JOIN range_period r
             WHERE store_id = $1
             AND state = 'paid'
             AND sold_at::date BETWEEN r.start_date AND r.end_date
@@ -58,17 +67,17 @@ export async function findIncomeByWeek(data) {
                 0::numeric AS total_sold,
                 SUM(cost_price * quantity) AS total_spent
             FROM orders
-            CROSS JOIN range_week r
+            CROSS JOIN range_period r
             WHERE store_id = $1
             AND state = 'paid'
             AND ordered_at::date BETWEEN r.start_date AND r.end_date
             GROUP BY ordered_at::date
         ) AS movement
-        CROSS JOIN range_week r
+        CROSS JOIN range_period r
         CROSS JOIN older o
         GROUP BY movement.day, r.start_date, r.end_date, o.has_older
         ORDER BY movement.day ASC;
-    `, [storeId, offset])
+    `, [storeId, offset, period])
 
     return result.rows
 }

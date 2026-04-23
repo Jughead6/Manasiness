@@ -1,51 +1,21 @@
 import "./PendingContent.css"
+import PendingSummary from "./summary/PendingSummary.jsx"
+import PendingSection from "./section/PendingSection.jsx"
 
-function PendingContent(data) {
-    const { customers, suppliers, workers } = data
+function PendingContent({ customers = [], suppliers = [], workers = [], summary, onResolve, submittingKey }) {
+    const sections = [
+        { title: "Customer", scope: "customers", items: customers },
+        { title: "Supplier", scope: "suppliers", items: suppliers },
+        { title: "Worker", scope: "workers", items: workers }
+    ]
 
     return (
         <div className="pending-content">
-            <div className="pending-content-section">
-                <div className="pending-content-title">
-                    <h3>Customer</h3>
-                </div>
-                <div className="pending-content-users">
-                    { customers.map((item) => (
-                        <div className="pending-content-user" key={item.id}>
-                            <p>{item.name}</p>
-                            <p>{item.amount}</p>
-                            <p>{item.day_ago}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="pending-content-section">
-                <div className="pending-content-title">
-                    <h3>Supplier</h3>
-                </div>
-                <div className="pending-content-users">
-                    { suppliers.map((item) => (
-                        <div className="pending-content-user" key={item.id}>
-                            <p>{item.name}</p>
-                            <p>{item.amount}</p>
-                            <p>{item.day_ago}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <div className="pending-content-section">
-                <div className="pending-content-title">
-                    <h3>Worker</h3>
-                </div>
-                <div className="pending-content-users">
-                    { workers.map((item) => (
-                        <div className="pending-content-user" key={item.id}>
-                            <p>{item.name}</p>
-                            <p>{item.amount}</p>
-                            <p>{item.day_ago}</p>
-                        </div>
-                    ))}
-                </div>
+            <PendingSummary summary={summary} />
+            <div className="pending-content-sections">
+                {sections.map((section) => (
+                    <PendingSection key={section.scope} title={section.title} scope={section.scope} items={section.items} onResolve={onResolve} submittingKey={submittingKey} />
+                ))}
             </div>
         </div>
     )

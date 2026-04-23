@@ -1,17 +1,22 @@
-import { findAllSales, getSalesTotalRows, insertSale } from "./sales.repository.js"
+import { findAllSales, getSalesTotalRows, getSalesWindowInfo, insertSale } from "./sales.repository.js"
 import { findProductById } from "../products/products.repository.js"
 import { findUserById } from "../users/users.repository.js"
 import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
 
 export async function getAllSales(data) {
-    const [rows, total] = await Promise.all([
+    const [rows, total, windowInfo] = await Promise.all([
         findAllSales(data),
-        getSalesTotalRows(data)
+        getSalesTotalRows(data),
+        getSalesWindowInfo(data)
     ])
 
     return {
         rows,
-        total_rows: Number(total.total_rows)
+        total_rows: Number(total.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 

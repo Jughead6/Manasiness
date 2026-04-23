@@ -1,40 +1,46 @@
-import ActivityLayout from "../layout/ActivityLayout"
-import { useState, useEffect } from "react"
-import { getGrowthRate, getDayPerformance, getCatalogPerformance } from "../api/activity.api"
-import { growthRateMapper, dayPerformanceMapper, catalogPerformanceMapper } from "../mappers/activity.mapper"
+import { useEffect, useState } from "react"
+import ActivityLayout from "../layout/ActivityLayout.jsx"
+import { getGrowthRate, getDayPerformance, getCatalogPerformance } from "../api/activity.api.js"
+import { growthRateMapper, dayPerformanceMapper, catalogPerformanceMapper } from "../mappers/activity.mapper.js"
 
 function ActivityPage() {
     const [growthRate, setGrowthRate] = useState(null)
     const [dayPerformance, setDayPerformance] = useState(null)
     const [catalogPerformance, setCatalogPerformance] = useState(null)
-    const [activityDateFilter, setActivityDateFilter] = useState("week")
+    const [period, setPeriod] = useState("week")
     const [catalogOption, setCatalogOption] = useState("topSold")
     const [offset, setOffset] = useState(0)
-    const [hasPrevious, setHasPrevious] = useState(false)
+    const [hasOlder, setHasOlder] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         async function fetchActivity() {
             try {
-                const filters = { offset, activityDateFilter, catalogOption }
+                setIsLoading(true)
+                const filters = { offset, activityDateFilter: period, catalogOption }
 
-                const growthRateData = await getGrowthRate(filters)
-                const dayPerformanceData = await getDayPerformance(filters)
-                const catalogPerformanceData = await getCatalogPerformance(filters)
+                const [growthRateData, dayPerformanceData, catalogPerformanceData] = await Promise.all([
+                    getGrowthRate(filters),
+                    getDayPerformance(filters),
+                    getCatalogPerformance(filters)
+                ])
 
                 setGrowthRate(growthRateMapper(growthRateData))
                 setDayPerformance(dayPerformanceMapper(dayPerformanceData))
                 setCatalogPerformance(catalogPerformanceMapper(catalogPerformanceData))
-                setHasPrevious(growthRateData.has_older)
+                setHasOlder(growthRateData?.has_older ?? false)
             } catch {
                 setGrowthRate(null)
                 setDayPerformance(null)
                 setCatalogPerformance(null)
-                setHasPrevious(false)
+                setHasOlder(false)
+            } finally {
+                setIsLoading(false)
             }
         }
 
         fetchActivity()
-    }, [offset, activityDateFilter, catalogOption])
+    }, [offset, period, catalogOption])
 
     return (
         <ActivityLayout
@@ -43,12 +49,14 @@ function ActivityPage() {
             growthRate={growthRate}
             dayPerformance={dayPerformance}
             catalogPerformance={catalogPerformance}
-            activityDateFilter={activityDateFilter}
-            setActivityDateFilter={setActivityDateFilter}
+            period={period}
+            setPeriod={setPeriod}
+            catalogOption={catalogOption}
             setCatalogOption={setCatalogOption}
             offset={offset}
             setOffset={setOffset}
-            hasPrevious={hasPrevious}
+            hasOlder={hasOlder}
+            isLoading={isLoading}
         />
     )
 }

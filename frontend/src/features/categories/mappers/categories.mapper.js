@@ -3,9 +3,10 @@ export function mapCategoriesToCards(data) {
         id: item.id,
         name: item.name,
         image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
         details: [
             `Created At: ${item.created_at}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            `Updated At: ${item.updated_at || 'No updates yet'}`
         ]
     }))
 }

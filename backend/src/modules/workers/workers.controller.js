@@ -1,12 +1,13 @@
 import { getActiveWorkersOptions, getAllWorkers, getWorkerDetail } from "./workers.service.js"
-import { parseOptionalSearch, parsePageSortQuery } from "../../utils/validators/index.js"
+import { parseHistoryWindowQuery, parseOptionalSearch, parseOptionalStatus, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getWorkers(req, res, next) {
     try {
         const storeId = req.store.storeId
         const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
 
-        const workers = await getAllWorkers({storeId, search})
+        const workers = await getAllWorkers({ storeId, search, status })
 
         res.json(workers)
     } catch (error) {
@@ -15,13 +16,12 @@ export async function getWorkers(req, res, next) {
 }
 
 export async function getWorkerById(req, res, next) {
-    const { id } = req.params
-
     try {
-        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
+        const id = requirePositiveInteger(req.params.id, "id")
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
         const storeId = req.store.storeId
 
-        const worker = await getWorkerDetail({id, orderDirection, limit, offset, storeId})
+        const worker = await getWorkerDetail({ id, orderDirection, limit, rowOffset, dayOffset, period, storeId })
 
         res.json(worker)
     } catch (error) {
@@ -32,8 +32,8 @@ export async function getWorkerById(req, res, next) {
 export async function getWorkerOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
-        
-        const workers = await getActiveWorkersOptions({storeId})
+
+        const workers = await getActiveWorkersOptions({ storeId })
 
         res.json(workers)
     } catch (error) {

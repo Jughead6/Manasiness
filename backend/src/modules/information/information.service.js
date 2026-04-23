@@ -1,6 +1,6 @@
 import { conflict, unauthorized } from "../../errors/http-errors.js"
 import { findInformationStore, updateInformationStore } from "./information.repository.js"
-import { findStoreByEmail, findStoreById } from "../auth/auth.repository.js"
+import { findStoreByEmail, findStoreById, findStoreByPhone } from "../auth/auth.repository.js"
 
 export async function getInformationStore(data) {
     const { storeId } = data
@@ -23,10 +23,18 @@ export async function editInformationStore(data) {
         throw unauthorized("Unauthorized")
     }
 
-    const existingStore = await findStoreByEmail(email)
+    const existingStoreByEmail = await findStoreByEmail(email)
 
-    if (existingStore && existingStore.id !== storeId) {
+    if (existingStoreByEmail && existingStoreByEmail.id !== storeId) {
         throw conflict("Email unavailable")
+    }
+
+    if (phone) {
+        const existingStoreByPhone = await findStoreByPhone(phone)
+
+        if (existingStoreByPhone && existingStoreByPhone.id !== storeId) {
+            throw conflict("Phone unavailable")
+        }
     }
 
     return updateInformationStore({

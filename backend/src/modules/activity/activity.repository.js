@@ -121,23 +121,27 @@ export async function findDayPerformance(data) {
             AND s.state = 'paid'
             AND s.sold_at::date BETWEEN r.start_date AND r.end_date
             GROUP BY s.sold_at::date
+        ),
+        best_day AS (
+            SELECT day, total
+            FROM sales_by_day
+            ORDER BY total DESC, day ASC
+            LIMIT 1
+        ),
+        worst_day AS (
+            SELECT day, total
+            FROM sales_by_day
+            ORDER BY total ASC, day ASC
+            LIMIT 1
         )
         SELECT
             r.start_date,
             r.end_date,
             o.has_older,
-            (
-                SELECT day
-                FROM sales_by_day
-                ORDER BY total DESC, day ASC
-                LIMIT 1
-            ) AS best_day_date,
-            (
-                SELECT day
-                FROM sales_by_day
-                ORDER BY total ASC, day ASC
-                LIMIT 1
-            ) AS worst_day_date
+            (SELECT day FROM best_day) AS best_day_date,
+            (SELECT total FROM best_day) AS best_day_total,
+            (SELECT day FROM worst_day) AS worst_day_date,
+            (SELECT total FROM worst_day) AS worst_day_total
         FROM range_date r
         CROSS JOIN older o;
     `, [storeId, offset, activityDateFilter])
@@ -243,38 +247,14 @@ export async function findCatalogPerformance(data) {
             r.start_date,
             r.end_date,
             o.has_older,
-            (
-                SELECT id
-                FROM selected_product
-            ) AS product_id,
-            (
-                SELECT name
-                FROM selected_product
-            ) AS product_name,
-            (
-                SELECT image
-                FROM selected_product
-            ) AS product_image,
-            (
-                SELECT total_quantity
-                FROM selected_product
-            ) AS product_total_quantity,
-            (
-                SELECT id
-                FROM selected_category
-            ) AS category_id,
-            (
-                SELECT name
-                FROM selected_category
-            ) AS category_name,
-            (
-                SELECT image
-                FROM selected_category
-            ) AS category_image,
-            (
-                SELECT total_quantity
-                FROM selected_category
-            ) AS category_total_quantity
+            (SELECT id FROM selected_product) AS product_id,
+            (SELECT name FROM selected_product) AS product_name,
+            (SELECT image FROM selected_product) AS product_image,
+            (SELECT total_quantity FROM selected_product) AS product_total_quantity,
+            (SELECT id FROM selected_category) AS category_id,
+            (SELECT name FROM selected_category) AS category_name,
+            (SELECT image FROM selected_category) AS category_image,
+            (SELECT total_quantity FROM selected_category) AS category_total_quantity
         FROM range_date r
         CROSS JOIN older o;
     `, [storeId, offset, activityDateFilter, catalogOption])

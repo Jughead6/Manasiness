@@ -2,7 +2,7 @@ import "./DashboardSidebar.css"
 import { useState } from "react"
 import { TableOfContents, PackageSearch, Menu, User, BadgeDollarSign, FileUser, ChartColumnDecreasing, PillBottle, BriefcaseBusiness } from "lucide-react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import { useAuth } from "../../features/auth/context/AuthContext.jsx"
+import { useAuth } from "../../features/auth/context/useAuth.js"
 import Logotipo from "../../assets/images/Logotipo.png"
 
 function DashboardSidebar() {

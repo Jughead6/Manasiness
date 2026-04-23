@@ -6,7 +6,9 @@
     flex-direction: column;
     padding: 40px;
     gap: 10px;
-    border: 1px solid black
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
 }
 
 .shared-financial-layout-title {

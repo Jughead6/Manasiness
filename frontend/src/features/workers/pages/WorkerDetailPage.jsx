@@ -1,9 +1,8 @@
-import { useParams, useNavigate  } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import PersonTitle from "../../../shared/ui/titles/person/PersonTitle.jsx"
 import PersonLayout from "../../../shared/ui/layouts/person/PersonLayout.jsx"
 import { getWorkerById } from "../api/workers.api.js"
-import { mapTotalPage, mapWorkerToDetail } from "../mappers/workers.mapper.js"
+import { mapWorkersTotalPage, mapWorkerToDetail } from "../mappers/workers.mapper.js"
 
 function WorkerDetailPage() {
     const { id } = useParams()
@@ -11,25 +10,38 @@ function WorkerDetailPage() {
 
     const [detail, setDetail] = useState(null)
     const [hasError, setHasError] = useState(false)
-    const [sortOrder, setSortOrder] = useState('recent')
+    const [isLoading, setIsLoading] = useState(true)
+    const [sortOrder, setSortOrder] = useState("recent")
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
+    const [dayOffset, setDayOffset] = useState(0)
 
     useEffect(() => {
         async function fetchWorkerDetail() {
             try {
                 setHasError(false)
-                const response = await getWorkerById(id, sortOrder, currentPage)
+                setIsLoading(true)
+
+                const response = await getWorkerById(id, {
+                    sort: sortOrder,
+                    page: currentPage,
+                    offset: dayOffset,
+                    period: "day"
+                })
+
                 setDetail(mapWorkerToDetail(response))
-                setTotalPage(mapTotalPage(response))
+                setTotalPage(mapWorkersTotalPage(response))
             } catch {
                 setDetail(null)
                 setTotalPage(0)
                 setHasError(true)
+            } finally {
+                setIsLoading(false)
             }
         }
+
         fetchWorkerDetail()
-    }, [id, sortOrder, currentPage])
+    }, [id, sortOrder, currentPage, dayOffset])
 
     function handleFilterChange(e) {
         setSortOrder(e.target.value)
@@ -44,7 +56,21 @@ function WorkerDetailPage() {
         setCurrentPage((prev) => prev - 1)
     }
 
-    if (hasError || !detail) {
+    function handleOlder() {
+        setDayOffset((prev) => prev + 1)
+        setCurrentPage(1)
+    }
+
+    function handleNewer() {
+        if (!detail?.hasNewer) {
+            return
+        }
+
+        setDayOffset((prev) => prev - 1)
+        setCurrentPage(1)
+    }
+
+    if (hasError || !detail && !isLoading) {
         return (
             <div>
                 <h2>Could not load worker</h2>
@@ -53,21 +79,27 @@ function WorkerDetailPage() {
         )
     }
 
-
     return (
-            <PersonLayout
-                title="Supplier"
-                name={detail.name}
-                data={detail.details}
-                columns={['Date', 'Salary', 'State']}
-                sectionTitle="Staff"
-                filterValue={sortOrder}
-                onFilterChange={handleFilterChange}
-                currentPage={currentPage}
-                totalPage={totalPage}
-                onNextPage={handleNextPage}
-                onPrevPage={handlePrevPage}
-            />
+        <PersonLayout
+            title="Worker"
+            name={detail?.name || ""}
+            data={detail?.details || []}
+            columns={["Date", "Salary", "State"]}
+            sectionTitle="Staff"
+            filterValue={sortOrder}
+            onFilterChange={handleFilterChange}
+            windowLabel={detail?.windowLabel || ""}
+            hasOlder={detail?.hasOlder}
+            hasNewer={detail?.hasNewer}
+            onOlder={handleOlder}
+            onNewer={handleNewer}
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onNextPage={handleNextPage}
+            onPrevPage={handlePrevPage}
+            isLoading={isLoading}
+            emptyMessage="No staff records found in this date."
+        />
     )
 }
 

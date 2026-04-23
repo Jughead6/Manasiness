@@ -1,12 +1,14 @@
 import { getAllProducts, getProductDetail, createNewProduct, updateProduct, disableProduct, enableProduct, getActiveProductOptions } from "./products.service.js"
-import { parseOptionalSearch, requirePositiveInteger, requireText, parseOptionalImage, requirePositiveNumber, requireNonNegativeNumber } from "../../utils/validators/index.js"
+import { parseOptionalSearch, parseOptionalStatus, parseOptionalPositiveInteger, requirePositiveInteger, requireText, parseOptionalImage, requirePositiveNumber, requireNonNegativeNumber } from "../../utils/validators/index.js"
 
 export async function getProducts(req, res, next) {
     try {
         const storeId = req.store.storeId
         const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+        const categoryId = parseOptionalPositiveInteger(req.query.categoryId, "categoryId")
 
-        const products = await getAllProducts({ storeId, search })
+        const products = await getAllProducts({ storeId, search, status, categoryId })
 
         res.json(products)
     } catch (error) {

@@ -1,41 +1,36 @@
-import { getActiveWorkersOptions, getAllWorkers, getWorkerDetail } from "./workers.service.js"
-import { parseOptionalSearch, parsePageSortQuery, requirePositiveInteger } from "../../utils/validators/index.js"
+import { findActiveWorkersOptions, findAllWorkers, findWorkerBaseById, findWorkerRowsById, getWorkerTotalRows, getWorkerWindowInfo } from "./workers.repository.js"
+import { notFound } from "../../errors/http-errors.js"
 
-export async function getWorkers(req, res, next) {
-    try {
-        const storeId = req.store.storeId
-        const search = parseOptionalSearch(req.query.search, "search")
+export async function getAllWorkers(data) {
+    return findAllWorkers(data)
+}
 
-        const workers = await getAllWorkers({ storeId, search })
+export async function getWorkerDetail(data) {
+    const { id, storeId } = data
 
-        res.json(workers)
-    } catch (error) {
-        next(error)
+    const worker = await findWorkerBaseById({ id, storeId })
+
+    if (!worker) {
+        throw notFound("Worker not found")
+    }
+
+    const [rows, totalRows, windowInfo] = await Promise.all([
+        findWorkerRowsById({ ...data, id, storeId }),
+        getWorkerTotalRows({ id, storeId, dayOffset: data.dayOffset }),
+        getWorkerWindowInfo({ id, storeId, dayOffset: data.dayOffset })
+    ])
+
+    return {
+        ...worker,
+        rows,
+        total_rows: Number(totalRows.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 
-export async function getWorkerById(req, res, next) {
-    try {
-        const id = requirePositiveInteger(req.params.id, "id")
-        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
-        const storeId = req.store.storeId
-
-        const worker = await getWorkerDetail({ id, orderDirection, limit, offset, storeId })
-
-        res.json(worker)
-    } catch (error) {
-        next(error)
-    }
-}
-
-export async function getWorkerOptions(req, res, next) {
-    try {
-        const storeId = req.store.storeId
-
-        const workers = await getActiveWorkersOptions({ storeId })
-
-        res.json(workers)
-    } catch (error) {
-        next(error)
-    }
+export async function getActiveWorkersOptions(data) {
+    return findActiveWorkersOptions(data)
 }

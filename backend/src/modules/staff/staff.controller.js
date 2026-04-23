@@ -1,14 +1,14 @@
 import { getAllStaff, createNewStaff } from "./staff.service.js"
-import { parsePageSortQuery, requirePositiveInteger, requirePositiveNumber, requireAllowedValue } from "../../utils/validators/index.js"
+import { parseHistoryWindowQuery, requirePositiveInteger, requirePositiveNumber, requireAllowedValue } from "../../utils/validators/index.js"
 
 const STAFF_STATES = ["pending", "paid", "canceled"]
 
 export async function getStaff(req, res, next) {
     try {
-        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
         const storeId = req.store.storeId
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
 
-        const staff = await getAllStaff({ orderDirection, limit, offset, storeId })
+        const staff = await getAllStaff({ storeId, orderDirection, limit, rowOffset, dayOffset, period })
 
         res.json(staff)
     } catch (error) {

@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
 import { getOrders, registerOrders } from "../api/orders.api.js"
-import { mapOrdersToTables, mapOrdersTotalPage } from "../mappers/orders.mapper.js"
+import { mapOrdersToTables, mapOrdersTotalPage, mapOrdersWindowState } from "../mappers/orders.mapper.js"
 import OrderRegisterModal from "../components/OrderRegisterModal.jsx"
 
 function OrdersPage() {
     const [orders, setOrders] = useState([])
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [sortOrder, setSortOrder] = useState("recent")
+    const [dayOffset, setDayOffset] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
+    const [windowLabel, setWindowLabel] = useState("")
+    const [hasOlder, setHasOlder] = useState(false)
+    const [hasNewer, setHasNewer] = useState(false)
 
     const ordersColumns = [
         { key: "date", label: "Date" },
@@ -21,23 +27,46 @@ function OrdersPage() {
         { key: "state", label: "State" }
     ]
 
-    useEffect(() => {
-        async function fetchOrders() {
-            try {
-                const response = await getOrders(sortOrder, currentPage)
-                setOrders(mapOrdersToTables(response))
-                setTotalPage(mapOrdersTotalPage(response))
-            } catch {
-                setOrders([])
-                setTotalPage(0)
-            }
-        }
+    const fetchOrders = useCallback(async ({ nextSort = sortOrder, nextPage = currentPage, nextDayOffset = dayOffset } = {}) => {
+        try {
+            setIsLoading(true)
+            const response = await getOrders({ sort: nextSort, page: nextPage, offset: nextDayOffset, period: "day" })
+            const windowState = mapOrdersWindowState(response)
 
+            setOrders(mapOrdersToTables(response))
+            setTotalPage(mapOrdersTotalPage(response))
+            setWindowLabel(windowState.label)
+            setHasOlder(windowState.hasOlder)
+            setHasNewer(windowState.hasNewer)
+        } catch (error) {
+            setOrders([])
+            setTotalPage(0)
+            setWindowLabel("")
+            setHasOlder(false)
+            setHasNewer(false)
+            toast.error(error.message || "Could not load orders")
+        } finally {
+            setIsLoading(false)
+        }
+    }, [sortOrder, currentPage, dayOffset])
+
+    useEffect(() => {
         fetchOrders()
-    }, [sortOrder, currentPage])
+    }, [fetchOrders])
 
     function handleFilterChange(e) {
         setSortOrder(e.target.value)
+        setCurrentPage(1)
+    }
+
+    function handleOlder() {
+        setDayOffset((prev) => prev + 1)
+        setCurrentPage(1)
+    }
+
+    function handleNewer() {
+        if (!hasNewer) return
+        setDayOffset((prev) => prev - 1)
         setCurrentPage(1)
     }
 
@@ -50,37 +79,47 @@ function OrdersPage() {
     }
 
     async function handleSubmit(formData) {
+        if (isSubmitting) return
+
         try {
+            setIsSubmitting(true)
             await registerOrders(formData)
-            const response = await getOrders(sortOrder, currentPage)
-            setOrders(mapOrdersToTables(response))
-            setTotalPage(mapOrdersTotalPage(response))
+            setSortOrder("recent")
+            setDayOffset(0)
+            setCurrentPage(1)
+            await fetchOrders({ nextSort: "recent", nextPage: 1, nextDayOffset: 0 })
             setIsRegisterModalOpen(false)
             toast.success("Order created successfully")
-        } catch {
-            toast.error("The order could not be created")
+        } catch (error) {
+            toast.error(error.message || "The order could not be created")
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
     return (
         <>
-            <TableLayout 
-                title="Your Orders" 
+            <TableLayout
+                title="Your Orders"
                 subtitle="In this section you can view your orders record."
-                data={orders} 
-                columns={ordersColumns} 
+                data={orders}
+                columns={ordersColumns}
                 onCreateClick={() => setIsRegisterModalOpen(true)}
                 filterValue={sortOrder}
                 onFilterChange={handleFilterChange}
+                windowLabel={windowLabel}
+                hasOlder={hasOlder}
+                hasNewer={hasNewer}
+                onOlder={handleOlder}
+                onNewer={handleNewer}
                 currentPage={currentPage}
                 totalPage={totalPage}
                 onPrevPage={handlePrevPage}
                 onNextPage={handleNextPage}
+                isLoading={isLoading}
+                emptyMessage="No orders found for this day."
             />
-            {isRegisterModalOpen && <OrderRegisterModal 
-                onClose={() => setIsRegisterModalOpen(false)} 
-                onCreate={handleSubmit}
-            />}
+            {isRegisterModalOpen && <OrderRegisterModal onClose={() => setIsRegisterModalOpen(false)} onCreate={handleSubmit} isSubmitting={isSubmitting} />}
         </>
     )
 }

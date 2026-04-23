@@ -1,45 +1,56 @@
-export function getOrderFormFields(supplierOptions = [], productOptions = []) {
+export function getOrderFormFields(supplierOptions = [], productOptions = [], isDisabled = false) {
     return [
-    {
-        label: 'Product',
-        id: 'order-product',
-        name: 'product_id',
-        options: [
-            { value: '', label: 'Select a product', disabled: true },
-            ...productOptions
-        ],
-        required: true,
-        defaultValue: ''
-    },
-    {
-        label: 'Supplier',
-        placeholder: 'Write the supplier id',
-        id: 'order-supplier',
-        name: 'user_id',
-        options: [
-            { value: '', label: 'Selection a supplier', disabled: true },
-            ...supplierOptions
-        ],
-        required: true
-    },
-    {
-        label: 'Quantity',
-        placeholder: 'Write the quantity',
-        id: 'order-quantity',
-        name: 'quantity',
-        type: 'text',
-        required: true
-    },
-    {
-        label: 'State',
-        placeholder: 'Write the state',
-        id: 'order-state',
-        name: 'state',
-        options: [
-            { value: 'pending', label: 'Pending'},
-            { value: 'paid', label: 'Paid'}
-        ],
-        required: true
-    }
-]}
-
+        {
+            label: "Product",
+            placeholder: "Select a product",
+            id: "order-product",
+            name: "product_id",
+            options: [
+                { value: "", label: "Select a product", disabled: true },
+                ...productOptions
+            ],
+            required: true,
+            defaultValue: "",
+            disabled: isDisabled
+        },
+        {
+            label: "Supplier",
+            placeholder: "Select a supplier",
+            id: "order-supplier",
+            name: "user_id",
+            options: [
+                { value: "", label: "Select a supplier", disabled: true },
+                ...supplierOptions
+            ],
+            required: true,
+            defaultValue: "",
+            disabled: isDisabled
+        },
+        {
+            label: "Quantity",
+            placeholder: "Write the quantity",
+            id: "order-quantity",
+            name: "quantity",
+            type: "number",
+            required: true,
+            min: 1,
+            step: 1,
+            inputMode: "numeric",
+            disabled: isDisabled
+        },
+        {
+            label: "State",
+            placeholder: "Select a state",
+            id: "order-state",
+            name: "state",
+            options: [
+                { value: "", label: "Select a state", disabled: true },
+                { value: "pending", label: "Pending" },
+                { value: "paid", label: "Paid" }
+            ],
+            required: true,
+            defaultValue: "",
+            disabled: isDisabled
+        }
+    ]
+}

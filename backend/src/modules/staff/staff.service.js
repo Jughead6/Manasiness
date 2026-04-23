@@ -1,16 +1,21 @@
-import { findAllStaff, getStaffTotalRows, insertStaff } from "./staff.repository.js"
+import { findAllStaff, getStaffTotalRows, getStaffWindowInfo, insertStaff } from "./staff.repository.js"
 import { findUserById } from "../users/users.repository.js"
 import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
 
 export async function getAllStaff(data) {
-    const [rows, total] = await Promise.all([
+    const [rows, total, windowInfo] = await Promise.all([
         findAllStaff(data),
-        getStaffTotalRows(data)
+        getStaffTotalRows(data),
+        getStaffWindowInfo(data)
     ])
 
     return {
         rows,
-        total_rows: Number(total.total_rows)
+        total_rows: Number(total.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 

@@ -1,12 +1,13 @@
-import { getIncomeByWeek, getIncomeByDay } from "./income.service.js"
-import { requireNonNegativeNumber, requireISODate } from "../../utils/validators/index.js"
+import { getIncomeByPeriod, getIncomeByDay } from "./income.service.js"
+import { requireNonNegativeNumber, requireISODate, requirePeriodFilter } from "../../utils/validators/index.js"
 
 export async function getInfoBar(req, res, next) {
     try {
         const storeId = req.store.storeId
         const offset = requireNonNegativeNumber(req.query.offset, "offset")
+        const period = requirePeriodFilter(req.query.period ?? "week", "period")
 
-        const income = await getIncomeByWeek({ storeId, offset })
+        const income = await getIncomeByPeriod({ storeId, offset, period })
 
         res.json(income)
     } catch (error) {
@@ -15,12 +16,12 @@ export async function getInfoBar(req, res, next) {
 }
 
 export async function getInfoCard(req, res, next) {
-
     try {
         const storeId = req.store.storeId
         const date = requireISODate(req.query.date, "date")
+        const period = requirePeriodFilter(req.query.period ?? "week", "period")
         
-        const income = await getIncomeByDay({ storeId, date })
+        const income = await getIncomeByDay({ storeId, date, period })
 
         res.json(income)
     } catch (error) {

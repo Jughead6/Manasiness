@@ -31,3 +31,8 @@
     padding: 8px;
     background-color: white;
 }
+
+.shared-person-table-cell-message {
+    font-family: "Oswald";
+    font-size: 18px;
+}

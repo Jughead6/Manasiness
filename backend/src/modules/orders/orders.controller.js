@@ -1,14 +1,14 @@
 import { getAllOrders, createNewOrder } from "./orders.service.js"
-import { parsePageSortQuery, requirePositiveInteger, requireAllowedValue } from "../../utils/validators/index.js"
+import { parseHistoryWindowQuery, requirePositiveInteger, requireAllowedValue } from "../../utils/validators/index.js"
 
 const ORDER_STATES = ["pending", "paid", "canceled"]
 
 export async function getOrders(req, res, next) {
     try {
-        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
         const storeId = req.store.storeId
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
 
-        const orders = await getAllOrders({ orderDirection, limit, offset, storeId })
+        const orders = await getAllOrders({ storeId, orderDirection, limit, rowOffset, dayOffset, period })
 
         res.json(orders)
     } catch (error) {

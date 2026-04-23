@@ -8,33 +8,58 @@ import { mapSupplierOptions } from "../mappers/orders.mapper.js"
 import { getProductOptions } from "../../products/api/products.api.js"
 import { mapProductOptions } from "../../products/mappers/products.mapper.js"
 
-function OrderRegisterModal({onClose, onCreate}) {
-    const [ productOptions, setProductOptions ] = useState([])
-    const [ supplierOptions, setSupplierOptions  ] = useState([])
+function OrderRegisterModal({ onClose, onCreate, isSubmitting }) {
+    const [productOptions, setProductOptions] = useState([])
+    const [supplierOptions, setSupplierOptions] = useState([])
+    const [isLoadingOptions, setIsLoadingOptions] = useState(true)
+    const [helperMessage, setHelperMessage] = useState("")
 
     useEffect(() => {
-        async function fetchWorkerOptions() {
+        async function fetchOptions() {
             try {
-                const response = await getSupplierOptions()
-                setSupplierOptions(mapSupplierOptions(response))
-                const products = await getProductOptions()
-                setProductOptions(mapProductOptions(products))
+                setIsLoadingOptions(true)
+                const [suppliersResponse, productsResponse] = await Promise.all([
+                    getSupplierOptions(),
+                    getProductOptions()
+                ])
+
+                const nextSupplierOptions = mapSupplierOptions(suppliersResponse)
+                const nextProductOptions = mapProductOptions(productsResponse)
+
+                setSupplierOptions(nextSupplierOptions)
+                setProductOptions(nextProductOptions)
+
+                if (!nextSupplierOptions.length || !nextProductOptions.length) {
+                    setHelperMessage("You need active products and suppliers before registering an order.")
+                    return
+                }
+
+                setHelperMessage("")
             } catch {
                 setSupplierOptions([])
                 setProductOptions([])
+                setHelperMessage("The form options could not be loaded.")
+            } finally {
+                setIsLoadingOptions(false)
             }
         }
-        fetchWorkerOptions()
+
+        fetchOptions()
     }, [])
+
+    const isDisabled = isLoadingOptions || isSubmitting || !supplierOptions.length || !productOptions.length
 
     return (
         <DrawerPanel onClose={onClose}>
-            <RegisterSpaceForm 
-                fields={getOrderFormFields(supplierOptions, productOptions)}
-                sectionLabel="Orders" 
-                title="Register your new order!" 
-                onCancel={onClose} 
-                onSubmit={onCreate}/>
+            <RegisterSpaceForm
+                fields={getOrderFormFields(supplierOptions, productOptions, isDisabled)}
+                sectionLabel="Orders"
+                title="Register your new order!"
+                helperMessage={helperMessage || (isLoadingOptions ? "Loading options..." : "")}
+                onCancel={onClose}
+                onSubmit={onCreate}
+                isSubmitting={isSubmitting || isLoadingOptions}
+            />
             <div className="shared-drawer-banner-slot">
                 <CreatorBanner />
             </div>
@@ -42,4 +67,4 @@ function OrderRegisterModal({onClose, onCreate}) {
     )
 }
 
-export default OrderRegisterModal   
+export default OrderRegisterModal

@@ -1,10 +1,19 @@
 import { apiGet, apiPost, apiPatch } from "../../../shared/api/client.js"
 
-export async function getProducts(search = "") {
+export async function getProducts(filters = {}) {
+    const { search = "", status = "all", categoryId = "all" } = typeof filters === "string" ? { search: filters } : filters
     const params = new URLSearchParams()
 
     if (search.trim()) {
         params.set("search", search.trim())
+    }
+
+    if (status !== "all") {
+        params.set("status", status)
+    }
+
+    if (categoryId !== "all") {
+        params.set("categoryId", categoryId)
     }
 
     const query = params.toString()

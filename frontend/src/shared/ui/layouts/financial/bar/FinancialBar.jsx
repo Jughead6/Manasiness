@@ -1,13 +1,15 @@
 import "./FinancialBar.css"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts"
 
-function FinancialBar( data = [] ) {
-    const { infoBar = [], setDate } = data
-
+function FinancialBar({ infoBar = [], setDate }) {
     function getBarColor(value) {
         const safeValue = Math.max(-100, Math.min(100, value))
         const hue = ((safeValue + 100) / 200) * 120
         return `hsl(${hue}, 80%, 45%)`
+    }
+
+    if (!infoBar.length) {
+        return <div className="shared-financial-bar">No chart data found for this range.</div>
     }
 
     return (
@@ -20,7 +22,7 @@ function FinancialBar( data = [] ) {
                     <Tooltip />
                     <Bar dataKey="total" radius={[10, 10, 0, 0]}>
                         {infoBar.map((item, index) => (
-                            <Cell key={index} fill={getBarColor(item.total)} onClick={() => setDate(item.day)}/>
+                            <Cell key={index} fill={getBarColor(item.total)} onClick={() => setDate(item.day)} />
                         ))}
                     </Bar>
                 </BarChart>

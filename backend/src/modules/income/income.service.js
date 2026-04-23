@@ -1,7 +1,7 @@
-import { findIncomeByWeek, findIncomeByDay } from "./income.repository.js"
+import { findIncomeByPeriod, findIncomeByDay } from "./income.repository.js"
 
-export async function getIncomeByWeek(data) {
-    return findIncomeByWeek(data)
+export async function getIncomeByPeriod(data) {
+    return findIncomeByPeriod(data)
 }
 
 export async function getIncomeByDay(data) {

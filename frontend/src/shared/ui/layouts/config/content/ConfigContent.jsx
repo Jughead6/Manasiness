@@ -1,11 +1,15 @@
 import "./ConfigContent.css"
 
-function ConfigContent(data) {
-    const { formFields, informationValues, onSubmit, onCancel } = data
+function ConfigContent({ formFields = [], informationValues = {}, onSubmit, onCancel, isLoading = false, isSubmitting = false }) {
     const hasImageField = formFields.some((item) => item.name === "image")
 
     function handleSubmit(e) {
         e.preventDefault()
+
+        if (isSubmitting || isLoading) {
+            return
+        }
+
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         onSubmit(data)
@@ -25,6 +29,11 @@ function ConfigContent(data) {
                                 type={item.type}
                                 required={item.required}
                                 defaultValue={informationValues[item.name] || ""}
+                                autoComplete={item.autoComplete}
+                                minLength={item.minLength}
+                                maxLength={item.maxLength}
+                                disabled={item.disabled || isSubmitting || isLoading}
+                                readOnly={item.readOnly}
                             />
                         </fieldset>
                     ))}
@@ -39,8 +48,8 @@ function ConfigContent(data) {
             </div>
 
             <div className="shared-config-content-button">
-                <button type="submit" id="submit">Save</button>
-                <button type="button" id="cancel" onClick={onCancel}>Cancel</button>
+                <button type="submit" id="submit" disabled={isSubmitting || isLoading}>{isSubmitting ? "Saving..." : "Save"}</button>
+                <button type="button" id="cancel" onClick={onCancel} disabled={isSubmitting || isLoading}>Cancel</button>
             </div>
         </form>
     )

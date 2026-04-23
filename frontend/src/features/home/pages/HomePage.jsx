@@ -1,7 +1,7 @@
 import "./HomePage.css"
 import { useState, useEffect } from "react"
 import { getSalesStats, getOrdersStats, getStaffStats } from "../api/home.api.js"
-import { useAuth } from "../../auth/context/AuthContext.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 function createEmptyStats() {
     return {

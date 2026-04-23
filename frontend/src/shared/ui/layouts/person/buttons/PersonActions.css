@@ -5,8 +5,28 @@
     display: flex;
     gap: 25px;
     justify-content: center;
+    align-items: center;
 }
 
-.shared-person-actions > button{
+.shared-person-actions > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.shared-person-actions > button:hover:enabled {
+    cursor: pointer;
+}
+
+.shared-person-actions > button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.shared-person-actions > p {
+    font-family: "Oswald";
+    font-size: 20px;
 }

@@ -1,7 +1,9 @@
 .shared-person-toolbar {
     border: 2px solid black;
     padding: 25px;
-    text-align: center;
     background-color: #dfd3b7;
-    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }

@@ -1,7 +1,7 @@
-import { findExpensesByWeek, findExpensesByDay } from "./expenses.repository.js"
+import { findExpensesByPeriod, findExpensesByDay } from "./expenses.repository.js"
 
-export async function getExpensesByWeek(data) {
-    return findExpensesByWeek(data)
+export async function getExpensesByPeriod(data) {
+    return findExpensesByPeriod(data)
 }
 
 export async function getExpensesByDay(data) {

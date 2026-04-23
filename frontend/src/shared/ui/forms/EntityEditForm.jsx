@@ -1,10 +1,16 @@
 import "./EntityEditForm.css"
+import LoadingOverlay from "../modal/LoadingOverlay.jsx"
 
-function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit }) {
+function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit, isLoading = false }) {
     const safeFields = Array.isArray(fields) ? fields : []
 
     function handleSubmit(e) {
         e.preventDefault()
+
+        if (isLoading) {
+            return
+        }
+
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         onSubmit(data)
@@ -27,7 +33,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 name={field.name}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             >
                                 {field.options.map((option) => (
                                     <option
@@ -46,7 +52,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 placeholder={field.placeholder}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             />
                         ) : (
                             <input
@@ -56,16 +62,17 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 type={field.type}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             />
                         )}
                     </div>
                 ))}
                 <div className="shared-entity-edit-form-actions">
-                    <button id="submit" type="submit">Save</button>
-                    <button id="cancel" type="button" onClick={onCancel}>Cancel</button>
+                    <button id="submit" type="submit" disabled={isLoading}>Save</button>
+                    <button id="cancel" type="button" onClick={onCancel} disabled={isLoading}>Cancel</button>
                 </div>
             </div>
+            {isLoading ? <LoadingOverlay /> : null}
         </form>
     )
 }

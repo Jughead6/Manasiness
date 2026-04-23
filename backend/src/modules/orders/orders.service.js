@@ -1,17 +1,22 @@
-import { findAllOrders, getOrdersTotalRows, insertOrder } from "./orders.repository.js"
+import { findAllOrders, getOrdersTotalRows, getOrdersWindowInfo, insertOrder } from "./orders.repository.js"
 import { findProductById } from "../products/products.repository.js"
 import { findUserById } from "../users/users.repository.js"
 import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
 
 export async function getAllOrders(data) {
-    const [rows, total] = await Promise.all([
+    const [rows, total, windowInfo] = await Promise.all([
         findAllOrders(data),
-        getOrdersTotalRows(data)
+        getOrdersTotalRows(data),
+        getOrdersWindowInfo(data)
     ])
 
     return {
         rows,
-        total_rows: Number(total.total_rows)
+        total_rows: Number(total.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 

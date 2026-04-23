@@ -6,4 +6,6 @@
     background-color: #ebe7e0;
     gap: 35px;
     height: 100%;
+    position: relative;
+    overflow: hidden;
 }

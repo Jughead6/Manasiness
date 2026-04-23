@@ -1,44 +1,42 @@
 import "./FinancialLayout.css"
-import StatsTitle from "../../titles/stats/StatsTitle.jsx"
+import StatsLayout from "../stats/StatsLayout.jsx"
 import FinancialBar from "./bar/FinancialBar.jsx"
 import FinancialCard from "./card/FinancialCard.jsx"
-import FinancialToolBar from "./toolbar/FinancialToolbar.jsx"
+import FinancialToolbar from "./toolbar/FinancialToolbar.jsx"
+import LoadingOverlay from "../../modal/LoadingOverlay.jsx"
 
-function FinancialLayout(data) {
-    const { infoBar, setDate, infoCard, titlesCard, title, description, offset, setOffset, hasOlder, startDate, endDate } = data
+function FinancialLayout({ infoBar, setDate, infoCard, titlesCard, title, description, offset, setOffset, hasOlder, startDate, endDate, period, setPeriod, isLoadingBar = false, isLoadingCard = false }) {
+    const toolbar = (
+        <FinancialToolbar
+            period={period}
+            setPeriod={setPeriod}
+            offset={offset}
+            setOffset={setOffset}
+            hasOlder={hasOlder}
+            startDate={startDate}
+            endDate={endDate}
+        />
+    )
 
     return (
-        <div className="shared-financial-layout">
-            <div className="shared-financial-layout-title">
-                <StatsTitle 
-                    title={title} 
-                    description={description}
-                />
+        <StatsLayout
+            className="shared-financial-layout"
+            titleClassName="shared-financial-layout-title"
+            contentClassName="shared-financial-layout-content"
+            toolbarClassName="shared-financial-layout-toolbar"
+            title={title}
+            description={description}
+            toolbar={toolbar}
+            toolbarPosition="after-content"
+        >
+            <div className="shared-financial-content-card">
+                <FinancialCard infoCard={infoCard} titlesCard={titlesCard} />
             </div>
-            <div className="shared-financial-layout-content">
-                <div className="shared-financial-content-card">
-                    <FinancialCard 
-                        infoCard={infoCard} 
-                        titlesCard={titlesCard}
-                    />
-                </div>
-                <div className="shared-financial-layout-bar">
-                    <FinancialBar 
-                        infoBar={infoBar} 
-                        setDate={setDate} 
-                    />
-                </div>
+            <div className="shared-financial-layout-bar">
+                <FinancialBar infoBar={infoBar} setDate={setDate} />
             </div>
-            <div  className="shared-financial-layout-toolbar">
-                <FinancialToolBar 
-                    offset={offset} 
-                    setOffset={setOffset}
-                    hasOlder={hasOlder}
-                    startDate={startDate}
-                    endDate={endDate}
-                />
-            </div>
-        </div>
+            {isLoadingBar || isLoadingCard ? <LoadingOverlay /> : null}
+        </StatsLayout>
     )
 }
 

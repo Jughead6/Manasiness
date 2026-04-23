@@ -7,4 +7,6 @@
     background-color: #ebe7e0;
     height: 100%;
     min-height: 0;
+    position: relative;
+    overflow: hidden;
 }

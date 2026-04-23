@@ -1,12 +1,13 @@
 import { createNewCategory, disableCategory, enableCategory, getActiveCategoryOptions, getAllCategories, getCategoryDetail, updateCategory } from "./categories.service.js"
-import { parseOptionalSearch, requireText, parseOptionalImage, requirePositiveInteger } from "../../utils/validators/index.js"
+import { parseOptionalSearch, parseOptionalStatus, requireText, parseOptionalImage, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getCategories(req, res, next) {
     try {
         const storeId = req.store.storeId
         const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
 
-        const categories = await getAllCategories({storeId, search})
+        const categories = await getAllCategories({ storeId, search, status })
 
         res.json(categories)
     } catch (error) {

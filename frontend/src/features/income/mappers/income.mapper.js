@@ -1,10 +1,15 @@
+function getWeekDayName(date) {
+    return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", { weekday: "short" })
+}
+
 export function incomeMapper(data) {
     return data.map((item) => {
         const safeDay = String(item.day).split("T")[0]
 
         return {
             day: safeDay,
-            name: new Date(`${safeDay}T00:00:00`).toLocaleDateString("en-US", { weekday: "long" }),
+            name: getWeekDayName(safeDay),
+            label: new Date(`${safeDay}T00:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
             total: Number(item.total ?? 0)
         }
     })

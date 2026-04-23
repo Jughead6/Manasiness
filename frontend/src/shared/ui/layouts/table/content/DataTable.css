@@ -6,7 +6,7 @@
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    padding: 15px
+    padding: 15px;
 }
 
 .shared-data-table > table {
@@ -16,13 +16,15 @@
 }
 
 .shared-data-table-head {
-
     padding: 8px;
     background-color: #44749d;
 }
 
 .shared-data-table-cell {
-
     padding: 8px;
     background-color: white;
+}
+
+.shared-data-table-feedback {
+    height: 120px;
 }

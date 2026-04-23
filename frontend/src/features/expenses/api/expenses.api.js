@@ -1,9 +1,13 @@
-import { apiGet } from "../../../shared/api/client.js";
+import { apiGet } from "../../../shared/api/client.js"
 
-export async function getInfoBar(offset) {
-    return apiGet(`/expenses?offset=${offset}`)
+export async function getInfoBar(data) {
+    const { offset, period } = data
+
+    return apiGet(`/expenses?offset=${offset}&period=${encodeURIComponent(period)}`)
 }
 
-export async function getInfoCard(date) {
-    return apiGet(`/expenses/day?date=${encodeURIComponent(date)}`)
+export async function getInfoCard(data) {
+    const { date, period } = data
+
+    return apiGet(`/expenses/day?date=${encodeURIComponent(date)}&period=${encodeURIComponent(period)}`)
 }

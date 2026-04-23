@@ -1,5 +1,7 @@
 import app from "./src/app.js"
 
-app.listen(3000, () => {
-    console.log("Servidor corriendo")
+const PORT = Number(process.env.PORT) || 3000
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en ${PORT}`)
 })

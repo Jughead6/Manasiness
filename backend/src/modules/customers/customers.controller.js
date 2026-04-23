@@ -1,11 +1,12 @@
 import { getActiveCustomersOptions, getAllCustomers, getCustomerDetail } from "./customers.service.js"
-import { parseOptionalSearch, parsePageSortQuery, requirePositiveInteger } from "../../utils/validators/index.js"
+import { parseHistoryWindowQuery, parseOptionalSearch, parseOptionalStatus, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getCustomers(req, res, next) {
     try {
         const storeId = req.store.storeId
         const search = parseOptionalSearch(req.query.search, "search")
-        const customers = await getAllCustomers({ storeId, search })
+        const status = parseOptionalStatus(req.query.status, "status")
+        const customers = await getAllCustomers({ storeId, search, status })
 
         res.json(customers)
     } catch (error) {
@@ -16,10 +17,10 @@ export async function getCustomers(req, res, next) {
 export async function getCustomerById(req, res, next) {
     try {
         const id = requirePositiveInteger(req.params.id, "id")
-        const { orderDirection, limit, offset } = parsePageSortQuery(req.query)
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
         const storeId = req.store.storeId
 
-        const customer = await getCustomerDetail({ id, orderDirection, limit, offset, storeId })
+        const customer = await getCustomerDetail({ id, orderDirection, limit, rowOffset, dayOffset, period, storeId })
 
         res.json(customer)
     } catch (error) {

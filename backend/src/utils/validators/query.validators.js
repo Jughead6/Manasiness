@@ -41,6 +41,16 @@ export function requireNonNegativeOffset(value, fieldName = "offset") {
     return parsed
 }
 
+export function requireHistoryPeriod(value, fieldName = "period") {
+    if (typeof value !== "string") {
+        throw badRequest(`${fieldName} invalid`)
+    }
+
+    const parsed = value.trim()
+
+    return requireAllowedValue(parsed, ["day"], fieldName)
+}
+
 export function parsePageSortQuery({ page = 1, sort = "recent", limit = 20 } = {}) {
     const currentPage = requirePage(page, "page")
     const parsedSort = requireHistorySort(sort, "sort")
@@ -53,6 +63,26 @@ export function parsePageSortQuery({ page = 1, sort = "recent", limit = 20 } = {
         sort: parsedSort,
         limit: parsedLimit,
         offset,
+        orderDirection
+    }
+}
+
+export function parseHistoryWindowQuery({ page = 1, sort = "recent", limit = 20, offset = 0, period = "day" } = {}) {
+    const currentPage = requirePage(page, "page")
+    const parsedSort = requireHistorySort(sort, "sort")
+    const parsedLimit = requirePositiveInteger(limit, "limit")
+    const parsedOffset = requireNonNegativeOffset(offset, "offset")
+    const parsedPeriod = requireHistoryPeriod(period, "period")
+    const rowOffset = (currentPage - 1) * parsedLimit
+    const orderDirection = parsedSort === "oldest" ? "ASC" : "DESC"
+
+    return {
+        page: currentPage,
+        sort: parsedSort,
+        period: parsedPeriod,
+        limit: parsedLimit,
+        dayOffset: parsedOffset,
+        rowOffset,
         orderDirection
     }
 }

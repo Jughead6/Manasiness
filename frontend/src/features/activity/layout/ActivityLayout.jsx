@@ -1,31 +1,31 @@
 import "./ActivityLayout.css"
-import StatsTitle from "../../../shared/ui/titles/stats/StatsTitle"
-import ActivityContent from "./content/ActivityContent"
+import StatsLayout from "../../../shared/ui/layouts/stats/StatsLayout.jsx"
+import ActivityContent from "./content/ActivityContent.jsx"
+import LoadingOverlay from "../../../shared/ui/modal/LoadingOverlay.jsx"
 
-function ActivityLayout(data) {
-    const { title, description, growthRate, dayPerformance, catalogPerformance, activityDateFilter, setActivityDateFilter, setCatalogOption, offset, setOffset, hasPrevious} = data
+function ActivityLayout({ title, description, growthRate, dayPerformance, catalogPerformance, period, setPeriod, catalogOption, setCatalogOption, offset, setOffset, hasOlder, isLoading }) {
     return (
-        <div className="activity-layout">
-            <div className="activity-layout-title"> 
-                <StatsTitle
-                    title={title}
-                    description={description}
-                />
-            </div>
-            <div className="activity-layout-content">
-                <ActivityContent
-                    growthRate={growthRate}
-                    dayPerformance={dayPerformance}
-                    catalogPerformance={catalogPerformance}
-                    activityDateFilter={activityDateFilter}
-                    setActivityDateFilter={setActivityDateFilter}
-                    setCatalogOption={setCatalogOption}
-                    offset={offset}
-                    setOffset={setOffset}
-                    hasPrevious={hasPrevious}
-                />
-            </div>
-        </div>
+        <StatsLayout
+            className="activity-layout"
+            titleClassName="activity-layout-title"
+            contentClassName="activity-layout-content"
+            title={title}
+            description={description}
+        >
+            <ActivityContent
+                growthRate={growthRate}
+                dayPerformance={dayPerformance}
+                catalogPerformance={catalogPerformance}
+                period={period}
+                setPeriod={setPeriod}
+                catalogOption={catalogOption}
+                setCatalogOption={setCatalogOption}
+                offset={offset}
+                setOffset={setOffset}
+                hasOlder={hasOlder}
+            />
+            {isLoading ? <LoadingOverlay /> : null}
+        </StatsLayout>
     )
 }
 
