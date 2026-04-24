@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 import { getSales, registerSales } from "../api/sales.api.js"
 import { mapSalesToTables, mapSalesTotalPage, mapSalesWindowState } from "../mappers/sales.mapper.js"
 import SaleRegisterModal from "../components/SaleRegisterModal.jsx"
 
 function SalesPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [sales, setSales] = useState([])
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -33,7 +36,7 @@ function SalesPage() {
             const response = await getSales({ sort: nextSort, page: nextPage, offset: nextDayOffset, period: "day" })
             const windowState = mapSalesWindowState(response)
 
-            setSales(mapSalesToTables(response))
+            setSales(mapSalesToTables(response, currencyCode))
             setTotalPage(mapSalesTotalPage(response))
             setWindowLabel(windowState.label)
             setHasOlder(windowState.hasOlder)
@@ -48,7 +51,7 @@ function SalesPage() {
         } finally {
             setIsLoading(false)
         }
-    }, [sortOrder, currentPage, dayOffset])
+    }, [sortOrder, currentPage, dayOffset, currencyCode])
 
     useEffect(() => {
         fetchSales()

@@ -1,3 +1,1 @@
-export function formatCurrency(value) {
-    return `S/ ${Number(value ?? 0).toFixed(2)}`
-}
+export { formatCurrency } from "../../../../../shared/utils/currency.js"

@@ -1,4 +1,5 @@
 import "./EntityForm.css"
+import PhoneInput from "./PhoneInput.jsx"
 
 function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
     const safeFields = Array.isArray(fields) ? fields : []
@@ -40,6 +41,15 @@ function EntityForm({ sectionLabel, title, fields, onCancel, onSubmit }) {
                                     </option>
                                 ))}
                             </select>
+                        ) : field.type === 'phone' ? (
+                            <PhoneInput
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                defaultValue={field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled}
+                            />
                         ) : field.type === 'textarea' ? (
                             <textarea
                                 id={field.id}

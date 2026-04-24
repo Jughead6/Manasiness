@@ -1,7 +1,42 @@
+import { useState } from "react"
 import "./RegisterSpaceForm.css"
 
 function RegisterSpaceForm({ fields, sectionLabel, title, helperMessage = "", onCancel, onSubmit, isSubmitting = false }) {
     const safeFields = Array.isArray(fields) ? fields : []
+    const [formValues, setFormValues] = useState({})
+
+    function isOptionDisabled(option, field, values) {
+        return Boolean(option.disabled || option.disabledWhen?.(values))
+    }
+
+    function getOptionLabel(option, field, values) {
+        if (option.disabledWhen?.(values) && option.disabledLabel) {
+            return `${option.label} (${option.disabledLabel})`
+        }
+
+        return option.label
+    }
+
+    function handleChange(e) {
+        const nextValues = {
+            ...formValues,
+            [e.target.name]: e.target.value
+        }
+
+        safeFields.forEach((field) => {
+            if (!field.options) return
+
+            const currentValue = nextValues[field.name]
+            const currentOption = field.options.find((option) => option.value === currentValue)
+
+            if (currentOption && isOptionDisabled(currentOption, field, nextValues)) {
+                e.currentTarget.form.elements[field.name].value = ""
+                nextValues[field.name] = ""
+            }
+        })
+
+        setFormValues(nextValues)
+    }
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -29,9 +64,10 @@ function RegisterSpaceForm({ fields, sectionLabel, title, helperMessage = "", on
                                 defaultValue={field.defaultValue ?? ""}
                                 required={field.required}
                                 disabled={field.disabled || isSubmitting}
+                                onChange={handleChange}
                             >
                                 {field.options.map((option) => (
-                                    <option key={option.value} value={option.value} disabled={option.disabled}>{option.label}</option>
+                                    <option key={option.value} value={option.value} disabled={isOptionDisabled(option, field, formValues)}>{getOptionLabel(option, field, formValues)}</option>
                                 ))}
                             </select>
                         ) : field.type === "textarea" ? (
@@ -42,6 +78,7 @@ function RegisterSpaceForm({ fields, sectionLabel, title, helperMessage = "", on
                                 defaultValue={field.defaultValue ?? ""}
                                 required={field.required}
                                 disabled={field.disabled || isSubmitting}
+                                onChange={handleChange}
                             />
                         ) : (
                             <input
@@ -55,6 +92,7 @@ function RegisterSpaceForm({ fields, sectionLabel, title, helperMessage = "", on
                                 min={field.min}
                                 step={field.step}
                                 inputMode={field.inputMode}
+                                onChange={handleChange}
                             />
                         )}
                     </div>

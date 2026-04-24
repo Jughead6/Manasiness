@@ -1,7 +1,7 @@
 import "./PendingSection.css"
 import { formatCurrency } from "../utils/formatCurrency"
 
-function PendingSection({ title, scope, items, onResolve, submittingKey }) {
+function PendingSection({ title, scope, items, onResolve, submittingKey, currencyCode = "PEN" }) {
     return (
         <div className="pending-content-section">
             <div className="pending-content-title">
@@ -25,7 +25,7 @@ function PendingSection({ title, scope, items, onResolve, submittingKey }) {
                         <div className="pending-content-user" key={item.id}>
                             <div className="pending-content-user-info">
                                 <p className="pending-content-user-name">{item.name}</p>
-                                <p className="pending-content-user-amount">{formatCurrency(item.amount)}</p>
+                                <p className="pending-content-user-amount">{formatCurrency(item.amount, currencyCode)}</p>
                                 <p className="pending-content-user-time">{item.dayAgo}</p>
                             </div>
 

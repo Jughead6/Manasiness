@@ -1,3 +1,5 @@
+import { CURRENCY_OPTIONS } from "../../../shared/utils/currency.js"
+
 export const informationFormFields = [
     {
         label: 'Store Name',
@@ -17,10 +19,18 @@ export const informationFormFields = [
     },
     {
         label: 'Phone Number',
-        placeholder: 'Write your phone number',
+        placeholder: '999 999 999',
         id: 'information-phone',
         name: 'phone',
-        type: 'text'
+        type: 'phone'
+    },
+    {
+        label: 'Currency',
+        id: 'information-currency',
+        name: 'currency_code',
+        options: CURRENCY_OPTIONS,
+        required: true,
+        defaultValue: 'PEN'
     },
     {
         label: 'Profile Image URL',

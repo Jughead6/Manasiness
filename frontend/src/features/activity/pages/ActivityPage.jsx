@@ -2,8 +2,11 @@ import { useEffect, useState } from "react"
 import ActivityLayout from "../layout/ActivityLayout.jsx"
 import { getGrowthRate, getDayPerformance, getCatalogPerformance } from "../api/activity.api.js"
 import { growthRateMapper, dayPerformanceMapper, catalogPerformanceMapper } from "../mappers/activity.mapper.js"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 function ActivityPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [growthRate, setGrowthRate] = useState(null)
     const [dayPerformance, setDayPerformance] = useState(null)
     const [catalogPerformance, setCatalogPerformance] = useState(null)
@@ -26,7 +29,7 @@ function ActivityPage() {
                 ])
 
                 setGrowthRate(growthRateMapper(growthRateData))
-                setDayPerformance(dayPerformanceMapper(dayPerformanceData))
+                setDayPerformance(dayPerformanceMapper(dayPerformanceData, currencyCode))
                 setCatalogPerformance(catalogPerformanceMapper(catalogPerformanceData))
                 setHasOlder(growthRateData?.has_older ?? false)
             } catch {
@@ -40,7 +43,7 @@ function ActivityPage() {
         }
 
         fetchActivity()
-    }, [offset, period, catalogOption])
+    }, [offset, period, catalogOption, currencyCode])
 
     return (
         <ActivityLayout

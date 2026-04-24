@@ -32,7 +32,7 @@ export function getStaffFormFields(workerOptions = [], isDisabled = false) {
             name: "state",
             options: [
                 { value: "", label: "Select a state", disabled: true },
-                { value: "pending", label: "Pending" },
+                { value: "pending", label: "Pending", disabledWhen: (formValues) => workerOptions.some((item) => item.value === formValues.user_id && item.isDefault), disabledLabel: "Cash payment must be paid" },
                 { value: "paid", label: "Paid" }
             ],
             required: true,

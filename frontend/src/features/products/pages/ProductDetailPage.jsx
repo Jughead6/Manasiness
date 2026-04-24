@@ -6,8 +6,11 @@ import EntityLayout from "../../../shared/ui/layouts/entity/EntityLayout.jsx"
 import { activateProduct, deactivateProduct, getProductById } from "../api/products.api.js"
 import { mapProductToDetail } from "../mappers/products.mapper.js"
 import ProductDeactivationModal from "../components/ProductDeactivationModal.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 function ProductDetailPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -20,20 +23,20 @@ function ProductDetailPage() {
             try {
                 setHasError(false)
                 const data = await getProductById(id)
-                setDetail(mapProductToDetail(data))
+                setDetail(mapProductToDetail(data, currencyCode))
             } catch {
                 setDetail(null)
                 setHasError(true)
             }
         }
         fetchProductDetail()
-    }, [id])
+    }, [id, currencyCode])
 
     async function handleDeactivate() {
         try {
             await deactivateProduct(id)
             const data = await getProductById(id)
-            setDetail(mapProductToDetail(data))
+            setDetail(mapProductToDetail(data, currencyCode))
             setIsDeactivationOpen(false)
             toast.success("Product successfully deactivated")
         } catch {
@@ -45,7 +48,7 @@ function ProductDetailPage() {
         try {
             await activateProduct(id)
             const data = await getProductById(id)
-            setDetail(mapProductToDetail(data))
+            setDetail(mapProductToDetail(data, currencyCode))
             toast.success("Product successfully activated")
         } catch {
             toast.error("The product could not be activated")

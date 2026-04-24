@@ -36,6 +36,10 @@ export async function createNewStaff(data) {
         throw badRequest("Invalid worker")
     }
 
+    if (user.is_default && state === "pending") {
+        throw badRequest("Invalid state")
+    }
+
     return insertStaff({
         user_id: userId,
         salary,

@@ -1,10 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import PersonLayout from "../../../shared/ui/layouts/person/PersonLayout.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 import { getCustomerById } from "../api/customers.api.js"
 import { mapCustomerToDetail, mapCustomersTotalPage } from "../mappers/customers.mapper.js"
 
 function CustomerDetailPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -29,7 +32,7 @@ function CustomerDetailPage() {
                     period: "day"
                 })
 
-                setDetail(mapCustomerToDetail(response))
+                setDetail(mapCustomerToDetail(response, currencyCode))
                 setTotalPage(mapCustomersTotalPage(response))
             } catch {
                 setDetail(null)
@@ -41,7 +44,7 @@ function CustomerDetailPage() {
         }
 
         fetchCustomerDetail()
-    }, [id, sortOrder, currentPage, dayOffset])
+    }, [id, sortOrder, currentPage, dayOffset, currencyCode])
 
     function handleFilterChange(e) {
         setSortOrder(e.target.value)

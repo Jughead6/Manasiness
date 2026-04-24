@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getIncome, getInfoCard } from "../api/income.api.js"
 import { incomeMapper, incomeByDayMapper } from "../mappers/income.mapper.js"
 import FinancialLayout from "../../../shared/ui/layouts/financial/FinancialLayout.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 const emptyInfoCard = {
     total: 0,
@@ -10,6 +11,8 @@ const emptyInfoCard = {
 }
 
 function IncomePage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [infoBar, setInfoBar] = useState([])
     const [date, setDate] = useState("")
     const [infoCard, setInfoCard] = useState(emptyInfoCard)
@@ -101,6 +104,7 @@ function IncomePage() {
             setPeriod={setPeriod}
             isLoadingBar={isLoadingBar}
             isLoadingCard={isLoadingCard}
+            currencyCode={currencyCode}
         />
     )
 }

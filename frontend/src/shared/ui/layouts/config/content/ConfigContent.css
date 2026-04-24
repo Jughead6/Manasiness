@@ -105,3 +105,11 @@
     transform: scale(0.97);
     background-color: #743a3a;
 }
+
+.shared-config-content-field > select {
+    width: 100%;
+    height: 42px;
+    padding: 10px;
+    border: 2px solid black;
+    background-color: white;
+}

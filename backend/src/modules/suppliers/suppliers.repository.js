@@ -7,7 +7,7 @@ export async function findAllSuppliers(data) {
     const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, is_active
+        SELECT id, name, image, phone, is_default, is_active
         FROM users
         WHERE role = 'supplier'
             AND store_id = $1
@@ -27,7 +27,7 @@ export async function findSupplierBaseById(data) {
     const { id, storeId } = data
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, role, created_at, updated_at, is_active
+        SELECT id, name, image, phone, role, is_default, created_at, updated_at, is_active
         FROM users
         WHERE id = $1 AND role = 'supplier' AND store_id = $2
     `, [id, storeId])
@@ -63,10 +63,10 @@ export async function findActiveSuppliersOptions(data) {
     const { storeId } = data
 
     const result = await pool.query(`
-        SELECT id, name
+        SELECT id, name, is_default
         FROM users
         WHERE role = 'supplier' AND is_active = true AND store_id = $1
-        ORDER BY name
+        ORDER BY is_default DESC, name
     `, [storeId])
 
     return result.rows

@@ -3,7 +3,7 @@ import StatsLayout from "../../../shared/ui/layouts/stats/StatsLayout.jsx"
 import PendingContent from "./content/PendingContent.jsx"
 import LoadingOverlay from "../../../shared/ui/modal/LoadingOverlay.jsx"
 
-function PendingLayout({ title, description, customers, suppliers, workers, summary, isLoading, onResolve, submittingKey }) {
+function PendingLayout({ title, description, customers, suppliers, workers, summary, isLoading, onResolve, submittingKey, currencyCode = "PEN" }) {
     return (
         <StatsLayout
             className="pending-layout"
@@ -19,6 +19,7 @@ function PendingLayout({ title, description, customers, suppliers, workers, summ
                 summary={summary}
                 onResolve={onResolve}
                 submittingKey={submittingKey}
+                currencyCode={currencyCode}
             />
             {isLoading ? <LoadingOverlay /> : null}
         </StatsLayout>

@@ -4,7 +4,7 @@ export async function findInformationStore(data) {
     const { storeId } = data
 
     const result = await pool.query(`
-        SELECT name, email, phone, image
+        SELECT name, email, phone, currency_code, currency_symbol, image
         FROM stores
         WHERE id = $1
     `, [storeId])
@@ -13,7 +13,7 @@ export async function findInformationStore(data) {
 }
 
 export async function updateInformationStore(data) {
-    const { storeId, name, email, phone, cleanImage } = data
+    const { storeId, name, email, phone, currency_code, currency_symbol, cleanImage } = data
 
     const result = await pool.query(`
         UPDATE stores
@@ -21,10 +21,12 @@ export async function updateInformationStore(data) {
             name = $1,
             email = $2,
             phone = $3,
-            image = $4
-        WHERE id = $5
-        RETURNING name, email, phone, image
-    `, [name, email, phone, cleanImage, storeId])
+            currency_code = $4,
+            currency_symbol = $5,
+            image = $6
+        WHERE id = $7
+        RETURNING name, email, phone, currency_code, currency_symbol, image
+    `, [name, email, phone, currency_code, currency_symbol, cleanImage, storeId])
 
     return result.rows[0]
 }

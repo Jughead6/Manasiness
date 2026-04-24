@@ -47,6 +47,10 @@ export async function createNewOrder(data) {
         throw badRequest("Invalid supplier")
     }
 
+    if (user.is_default && state === "pending") {
+        throw badRequest("Invalid state")
+    }
+
     return insertOrder({
         product_id: productId,
         user_id: userId,

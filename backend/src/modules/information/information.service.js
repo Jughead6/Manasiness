@@ -1,6 +1,7 @@
 import { conflict, unauthorized } from "../../errors/http-errors.js"
 import { findInformationStore, updateInformationStore } from "./information.repository.js"
 import { findStoreByEmail, findStoreById, findStoreByPhone } from "../auth/auth.repository.js"
+import { getCurrencySymbol } from "../../utils/validators/index.js"
 
 export async function getInformationStore(data) {
     const { storeId } = data
@@ -15,7 +16,7 @@ export async function getInformationStore(data) {
 }
 
 export async function editInformationStore(data) {
-    const { storeId, name, email, phone, image } = data
+    const { storeId, name, email, phone, currency_code, image } = data
 
     const currentStore = await findStoreById(storeId)
 
@@ -42,6 +43,8 @@ export async function editInformationStore(data) {
         name,
         email,
         phone,
+        currency_code,
+        currency_symbol: getCurrencySymbol(currency_code),
         cleanImage: image
     })
 }

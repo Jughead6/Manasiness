@@ -7,8 +7,11 @@ import { getCategories } from "../../categories/api/categories.api.js"
 import { mapProductsToCards } from "../mappers/products.mapper.js"
 import { mapCategoryOptions } from "../../categories/mappers/categories.mapper.js"
 import ProductCreateModal from "../components/ProductCreateModal.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 function ProductsPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -37,7 +40,7 @@ function ProductsPage() {
 
             try {
                 const data = await getProducts({ search: searchTerm, status: statusFilter, categoryId: categoryFilter })
-                setProducts(mapProductsToCards(data))
+                setProducts(mapProductsToCards(data, currencyCode))
             } catch {
                 setProducts([])
             } finally {
@@ -46,14 +49,14 @@ function ProductsPage() {
         }
 
         fetchProducts()
-    }, [searchTerm, statusFilter, categoryFilter])
+    }, [searchTerm, statusFilter, categoryFilter, currencyCode])
 
     async function handleCreateProduct(formData) {
         try {
             await createProduct(formData)
 
             const data = await getProducts({ search: searchTerm, status: statusFilter, categoryId: categoryFilter })
-            setProducts(mapProductsToCards(data))
+            setProducts(mapProductsToCards(data, currencyCode))
             setIsCreateModalOpen(false)
             toast.success("Successfully created product") 
         } catch {

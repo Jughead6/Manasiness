@@ -1,3 +1,5 @@
+import { formatCurrency } from "../../../shared/utils/currency.js"
+
 function formatDate(date) {
     if (!date) return ""
 
@@ -14,15 +16,6 @@ function getEnglishDay(date) {
     return new Date(`${String(date).slice(0, 10)}T00:00:00`).toLocaleDateString("en-US", { weekday: "long" })
 }
 
-function formatCurrency(value) {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(Number(value ?? 0))
-}
-
 export function growthRateMapper(data) {
     const rate = Number(data?.growth_rate ?? 0)
 
@@ -33,14 +26,14 @@ export function growthRateMapper(data) {
     }
 }
 
-export function dayPerformanceMapper(data) {
+export function dayPerformanceMapper(data, currencyCode = "PEN") {
     return {
         bestDay: getEnglishDay(data?.best_day_date),
         bestDayDate: formatDate(data?.best_day_date),
-        bestDayTotalLabel: formatCurrency(data?.best_day_total),
+        bestDayTotalLabel: formatCurrency(data?.best_day_total, currencyCode),
         worstDay: getEnglishDay(data?.worst_day_date),
         worstDayDate: formatDate(data?.worst_day_date),
-        worstDayTotalLabel: formatCurrency(data?.worst_day_total)
+        worstDayTotalLabel: formatCurrency(data?.worst_day_total, currencyCode)
     }
 }
 

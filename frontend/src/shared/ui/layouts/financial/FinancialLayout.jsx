@@ -5,7 +5,7 @@ import FinancialCard from "./card/FinancialCard.jsx"
 import FinancialToolbar from "./toolbar/FinancialToolbar.jsx"
 import LoadingOverlay from "../../modal/LoadingOverlay.jsx"
 
-function FinancialLayout({ infoBar, setDate, infoCard, titlesCard, title, description, offset, setOffset, hasOlder, startDate, endDate, period, setPeriod, isLoadingBar = false, isLoadingCard = false }) {
+function FinancialLayout({ infoBar, setDate, infoCard, titlesCard, title, description, offset, setOffset, hasOlder, startDate, endDate, period, setPeriod, isLoadingBar = false, isLoadingCard = false, currencyCode = "PEN" }) {
     const toolbar = (
         <FinancialToolbar
             period={period}
@@ -30,10 +30,10 @@ function FinancialLayout({ infoBar, setDate, infoCard, titlesCard, title, descri
             toolbarPosition="after-content"
         >
             <div className="shared-financial-content-card">
-                <FinancialCard infoCard={infoCard} titlesCard={titlesCard} />
+                <FinancialCard infoCard={infoCard} titlesCard={titlesCard} currencyCode={currencyCode} />
             </div>
             <div className="shared-financial-layout-bar">
-                <FinancialBar infoBar={infoBar} setDate={setDate} />
+                <FinancialBar infoBar={infoBar} setDate={setDate} currencyCode={currencyCode} />
             </div>
             {isLoadingBar || isLoadingCard ? <LoadingOverlay /> : null}
         </StatsLayout>

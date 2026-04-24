@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 import { getStaff, registerStaff } from "../api/staff.api.js"
 import { mapStaffToTables, mapStaffTotalPage, mapStaffWindowState } from "../mappers/staff.mapper.js"
 import StaffRegisterModal from "../components/StaffRegisterModal.jsx"
 
 function StaffPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [staff, setStaff] = useState([])
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +34,7 @@ function StaffPage() {
             const response = await getStaff({ sort: nextSort, page: nextPage, offset: nextDayOffset, period: "day" })
             const windowState = mapStaffWindowState(response)
 
-            setStaff(mapStaffToTables(response))
+            setStaff(mapStaffToTables(response, currencyCode))
             setTotalPage(mapStaffTotalPage(response))
             setWindowLabel(windowState.label)
             setHasOlder(windowState.hasOlder)
@@ -46,7 +49,7 @@ function StaffPage() {
         } finally {
             setIsLoading(false)
         }
-    }, [sortOrder, currentPage, dayOffset])
+    }, [sortOrder, currentPage, dayOffset, currencyCode])
 
     useEffect(() => {
         fetchStaff()

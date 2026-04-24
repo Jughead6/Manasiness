@@ -31,7 +31,6 @@ function HomePage() {
             <section className="home-hero">
                 <div className="home-hero-left">
                     <p className="home-hero-welcome">Welcome to dashboard!</p>
-                    <p className="home-hero-label">MISSION & START</p>
                     <h1 className="home-hero-title">Build your store step by step</h1>
                     <p className="home-hero-description">Hi, {store?.name || ""}. Start with the base of your business. Create your categories, products and users to begin using Manasiness in a simpler and more organized way.</p>
                     <Link className="home-hero-button" to="/dashboard/categories">Start now</Link>
@@ -39,7 +38,6 @@ function HomePage() {
 
                 <div className="home-hero-right">
                     <div className="home-steps-header">
-                        <p className="home-steps-label">FIRST STEPS</p>
                         <h2 className="home-steps-title">Create your main structure</h2>
                     </div>
 
@@ -63,7 +61,6 @@ function HomePage() {
 
             <section className="home-mission">
                 <div className="home-mission-left">
-                    <p className="home-mission-label">MISSION</p>
                     <h2 className="home-mission-title">Simple management for everyday business</h2>
                 </div>
 

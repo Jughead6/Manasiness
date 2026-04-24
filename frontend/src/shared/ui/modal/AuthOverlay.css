@@ -4,7 +4,8 @@
     justify-content: center;
     align-items: center;
     padding: 24px;
-    background-image: URL(https://i.ytimg.com/vi/QESJFiXS87c/maxresdefault.jpg);
+    background-color: #ebe7e0;
+    background-image: linear-gradient(rgba(235, 231, 224, 0.2), rgba(198, 212, 225, 0.1)), url("../../../assets/images/background.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

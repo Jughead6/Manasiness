@@ -1,3 +1,5 @@
+import { formatCurrency } from "../../../shared/utils/currency.js"
+
 function parseDateValue(date) {
     if (!date) return null
 
@@ -35,12 +37,12 @@ function formatDayLabel(date) {
     return `${day}/${month}/${year}`
 }
 
-export function mapStaffToTables(data) {
+export function mapStaffToTables(data, currencyCode = "PEN") {
     return (data.rows || []).map((item) => ({
         id: item.id,
         date: formatDateTime(item.date),
         worker: item.worker,
-        salary: item.salary,
+        salary: formatCurrency(item.salary, currencyCode),
         state: item.state
     }))
 }
@@ -66,6 +68,7 @@ export function mapStaffWindowState(data) {
 export function mapWorkerOptions(data) {
     return data.map((item) => ({
         value: String(item.id),
-        label: item.name
+        label: item.is_default ? item.name + " - Cash payment" : item.name,
+        isDefault: Boolean(item.is_default)
     }))
 }

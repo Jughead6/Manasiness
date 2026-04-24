@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import TableLayout from "../../../shared/ui/layouts/table/TableLayout.jsx"
+import { useAuth } from "../../auth/context/useAuth.js"
 import { getOrders, registerOrders } from "../api/orders.api.js"
 import { mapOrdersToTables, mapOrdersTotalPage, mapOrdersWindowState } from "../mappers/orders.mapper.js"
 import OrderRegisterModal from "../components/OrderRegisterModal.jsx"
 
 function OrdersPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [orders, setOrders] = useState([])
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
@@ -33,7 +36,7 @@ function OrdersPage() {
             const response = await getOrders({ sort: nextSort, page: nextPage, offset: nextDayOffset, period: "day" })
             const windowState = mapOrdersWindowState(response)
 
-            setOrders(mapOrdersToTables(response))
+            setOrders(mapOrdersToTables(response, currencyCode))
             setTotalPage(mapOrdersTotalPage(response))
             setWindowLabel(windowState.label)
             setHasOlder(windowState.hasOlder)
@@ -48,7 +51,7 @@ function OrdersPage() {
         } finally {
             setIsLoading(false)
         }
-    }, [sortOrder, currentPage, dayOffset])
+    }, [sortOrder, currentPage, dayOffset, currencyCode])
 
     useEffect(() => {
         fetchOrders()

@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 import PendingLayout from "../layout/PendingLayout"
 import { getPendingSummary, getCustomersPending, getSuppliersPending, getWorkersPending, updatePendingState } from "../api/pending.api"
 import { userPendingMapper, pendingSummaryMapper } from "../mappers/pending.mapper"
+import { useAuth } from "../../auth/context/useAuth.js"
 
 function createEmptySummary() {
     return {
@@ -15,6 +16,8 @@ function createEmptySummary() {
 }
 
 function PendingPage() {
+    const { store } = useAuth()
+    const currencyCode = store?.currency_code || "PEN"
     const [customers, setCustomers] = useState([])
     const [suppliers, setSuppliers] = useState([])
     const [workers, setWorkers] = useState([])
@@ -77,6 +80,7 @@ function PendingPage() {
             isLoading={isLoading}
             onResolve={handleResolve}
             submittingKey={submittingKey}
+            currencyCode={currencyCode}
         />
     )
 }

@@ -1,5 +1,6 @@
 import "./EntityEditForm.css"
 import LoadingOverlay from "../modal/LoadingOverlay.jsx"
+import PhoneInput from "./PhoneInput.jsx"
 
 function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit, isLoading = false }) {
     const safeFields = Array.isArray(fields) ? fields : []
@@ -45,6 +46,15 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                     </option>
                                 ))}
                             </select>
+                        ) : field.type === 'phone' ? (
+                            <PhoneInput
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled || isLoading}
+                            />
                         ) : field.type === 'textarea' ? (
                             <textarea
                                 id={field.id}

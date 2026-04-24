@@ -44,6 +44,10 @@ export async function updateUser(data) {
         throw notFound("User not found")
     }
 
+    if (user.is_default) {
+        throw conflict("User unavailable")
+    }
+
     const existingUser = await findUserByPhone({ phone, storeId })
 
     if (existingUser && existingUser.id !== id) {
@@ -73,6 +77,10 @@ export async function disableUser(data) {
         throw notFound("User not found")
     }
 
+    if (user.is_default) {
+        throw conflict("User unavailable")
+    }
+
     return updateUserStatus({
         isActive,
         id,
@@ -87,6 +95,10 @@ export async function enableUser(data) {
 
     if (!user) {
         throw notFound("User not found")
+    }
+
+    if (user.is_default) {
+        throw conflict("User unavailable")
     }
 
     return updateUserStatus({

@@ -1,3 +1,5 @@
+import { formatCurrency } from "../../../shared/utils/currency.js"
+
 function parseDateValue(date) {
     if (!date) return null
 
@@ -35,13 +37,13 @@ function formatDayLabel(date) {
     return `${day}/${month}/${year}`
 }
 
-export function mapSalesToTables(data) {
+export function mapSalesToTables(data, currencyCode = "PEN") {
     return (data.rows || []).map((item) => ({
         id: item.id,
         date: formatDateTime(item.date),
         product: item.product,
         customer: item.customer,
-        price: item.price,
+        price: formatCurrency(item.price, currencyCode),
         quantity: item.quantity,
         state: item.state
     }))
@@ -68,6 +70,7 @@ export function mapSalesWindowState(data) {
 export function mapCustomerOptions(data) {
     return data.map((item) => ({
         value: String(item.id),
-        label: item.name
+        label: item.is_default ? item.name + " - Cash sale" : item.name,
+        isDefault: Boolean(item.is_default)
     }))
 }

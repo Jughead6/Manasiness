@@ -1,3 +1,6 @@
+import { formatCurrency } from "../../../shared/utils/currency.js"
+import { formatPhone } from "../../../shared/utils/phone.js"
+
 function parseDateValue(date) {
     if (!date) return null
 
@@ -37,16 +40,6 @@ function formatDayLabel(value) {
     return `${day}/${month}/${year}`
 }
 
-function formatSalary(value) {
-    const parsed = Number(value)
-
-    if (!Number.isFinite(parsed)) {
-        return value
-    }
-
-    return parsed.toFixed(2)
-}
-
 export function mapWorkersToCards(data) {
     return data.map((item) => ({
         id: item.id,
@@ -54,13 +47,13 @@ export function mapWorkersToCards(data) {
         image: item.image,
         status: item.is_active ? "Active" : "Inactive",
         details: [
-            `Phone: ${item.phone || 'No phone'}`,
+            `Phone: ${formatPhone(item.phone)}`,
             `Role: Worker`
         ]
     }))
 }
 
-export function mapWorkerToDetail(data) {
+export function mapWorkerToDetail(data, currencyCode = "PEN") {
     const startDate = formatDayLabel(data.start_date)
     const endDate = formatDayLabel(data.end_date)
 
@@ -68,7 +61,7 @@ export function mapWorkerToDetail(data) {
         name: data.name || "",
         details: (data.rows || []).map((item) => ([
             formatDateTime(item.date),
-            formatSalary(item.salary),
+            formatCurrency(item.salary, currencyCode),
             item.state
         ])),
         windowLabel: startDate === endDate ? startDate : `${startDate} - ${endDate}`,

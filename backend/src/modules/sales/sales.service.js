@@ -51,6 +51,10 @@ export async function createNewSale(data) {
         throw badRequest("Invalid customer")
     }
 
+    if (user.is_default && state === "pending") {
+        throw badRequest("Invalid state")
+    }
+
     return insertSale({
         product_id: productId,
         user_id: userId,

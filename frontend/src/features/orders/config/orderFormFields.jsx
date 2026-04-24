@@ -45,7 +45,7 @@ export function getOrderFormFields(supplierOptions = [], productOptions = [], is
             name: "state",
             options: [
                 { value: "", label: "Select a state", disabled: true },
-                { value: "pending", label: "Pending" },
+                { value: "pending", label: "Pending", disabledWhen: (formValues) => supplierOptions.some((item) => item.value === formValues.user_id && item.isDefault), disabledLabel: "Cash order must be paid" },
                 { value: "paid", label: "Paid" }
             ],
             required: true,

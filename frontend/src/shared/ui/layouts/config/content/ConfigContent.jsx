@@ -1,4 +1,5 @@
 import "./ConfigContent.css"
+import PhoneInput from "../../../forms/PhoneInput.jsx"
 
 function ConfigContent({ formFields = [], informationValues = {}, onSubmit, onCancel, isLoading = false, isSubmitting = false }) {
     const hasImageField = formFields.some((item) => item.name === "image")
@@ -22,19 +23,40 @@ function ConfigContent({ formFields = [], informationValues = {}, onSubmit, onCa
                     {formFields.map((item) => (
                         <fieldset className="shared-config-content-field" key={item.id}>
                             <legend>{item.label}</legend>
-                            <input
-                                id={item.id}
-                                name={item.name}
-                                placeholder={item.placeholder}
-                                type={item.type}
-                                required={item.required}
-                                defaultValue={informationValues[item.name] || ""}
-                                autoComplete={item.autoComplete}
-                                minLength={item.minLength}
-                                maxLength={item.maxLength}
-                                disabled={item.disabled || isSubmitting || isLoading}
-                                readOnly={item.readOnly}
-                            />
+                            {item.options ? (
+                                <select
+                                    id={item.id}
+                                    name={item.name}
+                                    required={item.required}
+                                    defaultValue={informationValues[item.name] || item.defaultValue || ""}
+                                    disabled={item.disabled || isSubmitting || isLoading}
+                                >
+                                    {item.options.map((option) => <option key={option.value} value={option.value} disabled={option.disabled}>{option.label}</option>)}
+                                </select>
+                            ) : item.type === "phone" ? (
+                                <PhoneInput
+                                    id={item.id}
+                                    name={item.name}
+                                    placeholder={item.placeholder}
+                                    defaultValue={informationValues[item.name] || ""}
+                                    required={item.required}
+                                    disabled={item.disabled || isSubmitting || isLoading}
+                                />
+                            ) : (
+                                <input
+                                    id={item.id}
+                                    name={item.name}
+                                    placeholder={item.placeholder}
+                                    type={item.type}
+                                    required={item.required}
+                                    defaultValue={informationValues[item.name] || ""}
+                                    autoComplete={item.autoComplete}
+                                    minLength={item.minLength}
+                                    maxLength={item.maxLength}
+                                    disabled={item.disabled || isSubmitting || isLoading}
+                                    readOnly={item.readOnly}
+                                />
+                            )}
                         </fieldset>
                     ))}
                 </div>

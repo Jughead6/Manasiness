@@ -45,7 +45,7 @@ export function getSaleFormFields(customerOptions = [], productOptions = [], isD
             name: "state",
             options: [
                 { value: "", label: "Select a state", disabled: true },
-                { value: "pending", label: "Pending" },
+                { value: "pending", label: "Pending", disabledWhen: (formValues) => customerOptions.some((item) => item.value === formValues.user_id && item.isDefault), disabledLabel: "Cash sale must be paid" },
                 { value: "paid", label: "Paid" }
             ],
             required: true,
