@@ -92,15 +92,6 @@ export async function insertOrder(data) {
             RETURNING *
         `, [product_id, user_id, product.cost_price, quantity, state, storeId])
 
-        if (state === "paid") {
-            await client.query(`
-                UPDATE products
-                SET stock = stock + $1,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE id = $2 AND store_id = $3
-            `, [quantity, product_id, storeId])
-        }
-
         await client.query("COMMIT")
         return orderResult.rows[0]
     } catch (error) {

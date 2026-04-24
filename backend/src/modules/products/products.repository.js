@@ -9,14 +9,11 @@ export async function findAllProducts(data) {
     const result = await pool.query(`
         SELECT
             products.id,
-            products.category_id,
             products.name,
             products.image,
             products.cost_price,
             products.sale_price,
             products.stock,
-            products.created_at,
-            products.updated_at,
             products.is_active,
             categories.name AS category
         FROM products

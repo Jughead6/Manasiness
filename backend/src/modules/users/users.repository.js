@@ -7,7 +7,7 @@ export async function findAllUsers(data) {
     const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, role, is_default, created_at, updated_at, is_active
+        SELECT id, name, image, phone, role, created_at, is_active
         FROM users
         WHERE store_id = $1
             AND (

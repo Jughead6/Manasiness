@@ -7,7 +7,7 @@ export async function findAllCustomers(data) {
     const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, is_default, is_active
+        SELECT id, name, image, phone, is_active
         FROM users
         WHERE role = 'customer'
             AND store_id = $1
@@ -27,7 +27,7 @@ export async function findCustomerBaseById(data) {
     const { id, storeId } = data
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, role, is_default, created_at, updated_at, is_active
+        SELECT id, name
         FROM users
         WHERE id = $1 AND role = 'customer' AND store_id = $2
     `, [id, storeId])

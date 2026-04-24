@@ -14,7 +14,6 @@ export async function findCustomersPending(data) {
     const result = await pool.query(`
         SELECT
             sales.id,
-            sales.user_id,
             users.name,
             sales.sale_price * sales.quantity AS amount,
             sales.sold_at AS day_ago
@@ -56,7 +55,6 @@ export async function findSuppliersPending(data) {
     const result = await pool.query(`
         SELECT
             orders.id,
-            orders.user_id,
             users.name,
             orders.cost_price * orders.quantity AS amount,
             orders.ordered_at AS day_ago
@@ -98,7 +96,6 @@ export async function findStaffPending(data) {
     const result = await pool.query(`
         SELECT
             staff.id,
-            staff.user_id,
             users.name,
             staff.salary AS amount,
             staff.created_at AS day_ago
@@ -176,13 +173,6 @@ export async function resolveCustomerPending(data) {
                 throw conflict("Insufficient stock")
             }
 
-            await client.query(`
-                UPDATE products
-                SET stock = stock - $1,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE id = $2 AND store_id = $3
-            `, [sale.quantity, sale.product_id, storeId])
-
             const updateResult = await client.query(`
                 UPDATE sales
                 SET state = $1,
@@ -249,13 +239,6 @@ export async function resolveSupplierPending(data) {
             if (!product || !product.is_active) {
                 throw conflict("Action unavailable")
             }
-
-            await client.query(`
-                UPDATE products
-                SET stock = stock + $1,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE id = $2 AND store_id = $3
-            `, [order.quantity, order.product_id, storeId])
 
             const updateResult = await client.query(`
                 UPDATE orders
