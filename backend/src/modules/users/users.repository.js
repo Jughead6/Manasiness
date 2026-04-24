@@ -1,12 +1,13 @@
 import pool from "../../config/db.js"
 
 export async function findAllUsers(data) {
-    const { storeId, search = "" } = data
+    const { storeId, search = "", status = "all", role = "all" } = data
     const cleanSearch = search.trim()
     const searchValue = `%${cleanSearch}%`
+    const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, role, created_at, updated_at, is_active
+        SELECT id, name, image, phone, role, created_at, is_active
         FROM users
         WHERE store_id = $1
             AND (
@@ -15,8 +16,10 @@ export async function findAllUsers(data) {
                 OR phone ILIKE $3
                 OR role ILIKE $3
             )
+            AND ($4::boolean IS NULL OR is_active = $4)
+            AND ($5 = 'all' OR role = $5)
         ORDER BY id ASC
-    `, [storeId, cleanSearch, searchValue])
+    `, [storeId, cleanSearch, searchValue, isActive, role])
 
     return result.rows
 }
@@ -25,7 +28,7 @@ export async function findUserById(data) {
     const { id, storeId } = data
 
     const result = await pool.query(`
-        SELECT id, name, image, phone, role, created_at, updated_at, is_active
+        SELECT id, name, image, phone, role, is_default, created_at, updated_at, is_active
         FROM users
         WHERE id = $1 AND store_id = $2
     `, [id, storeId])

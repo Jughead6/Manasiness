@@ -1,11 +1,13 @@
 import { getActiveSuppliersOptions, getAllSuppliers, getSupplierDetail } from "./suppliers.service.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { parseHistoryWindowQuery, parseOptionalSearch, parseOptionalStatus, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getSuppliers(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const { search = "" } = req.query
-        const suppliers = await getAllSuppliers({storeId, search})
+        const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+
+        const suppliers = await getAllSuppliers({ storeId, search, status })
 
         res.json(suppliers)
     } catch (error) {
@@ -14,17 +16,12 @@ export async function getSuppliers(req, res, next) {
 }
 
 export async function getSupplierById(req, res, next) {
-    const { sort = "recent", page = 1 } = req.query
-    const orderDirection = sort === 'oldest' ? 'ASC' : 'DESC'
-    const { id } = req.params
-    const currentPage = requirePositiveInteger(page, "page")
-    const limit = 20
-    const offset = (currentPage - 1) * limit
-
-
     try {
+        const id = requirePositiveInteger(req.params.id, "id")
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
         const storeId = req.store.storeId
-        const supplier = await getSupplierDetail({id, orderDirection, limit, offset, storeId})
+
+        const supplier = await getSupplierDetail({ id, orderDirection, limit, rowOffset, dayOffset, period, storeId })
 
         res.json(supplier)
     } catch (error) {
@@ -35,7 +32,8 @@ export async function getSupplierById(req, res, next) {
 export async function getSupplierOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const suppliers = await getActiveSuppliersOptions({storeId})
+
+        const suppliers = await getActiveSuppliersOptions({ storeId })
 
         res.json(suppliers)
     } catch (error) {

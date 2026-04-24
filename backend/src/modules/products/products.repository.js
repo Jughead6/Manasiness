@@ -1,21 +1,19 @@
 import pool from "../../config/db.js"
 
 export async function findAllProducts(data) {
-    const { storeId, search = "" } = data
+    const { storeId, search = "", status = "all", categoryId = null } = data
     const cleanSearch = search.trim()
     const searchValue = `%${cleanSearch}%`
+    const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
         SELECT
             products.id,
-            products.category_id,
             products.name,
             products.image,
             products.cost_price,
             products.sale_price,
             products.stock,
-            products.created_at,
-            products.updated_at,
             products.is_active,
             categories.name AS category
         FROM products
@@ -26,8 +24,10 @@ export async function findAllProducts(data) {
                 OR products.name ILIKE $3
                 OR categories.name ILIKE $3
             )
+            AND ($4::boolean IS NULL OR products.is_active = $4)
+            AND ($5::integer IS NULL OR products.category_id = $5)
         ORDER BY products.id ASC
-    `, [storeId, cleanSearch, searchValue])
+    `, [storeId, cleanSearch, searchValue, isActive, categoryId])
 
     return result.rows
 }

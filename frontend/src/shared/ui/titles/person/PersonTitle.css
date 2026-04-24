@@ -1,6 +1,12 @@
 .shared-person-title {
-    border: 1px solid black;
     text-align: center;
-    padding: 20px;
-    background-color: #c6d4e1;
+    padding: 14px;
+    font-family: "Sekuya";
+    color: #44749d;
 }
+
+.shared-person-title > h2{
+    font-family: "Sekuya";
+    color: black;
+}
+

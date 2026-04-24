@@ -1,9 +1,10 @@
 import pool from "../../config/db.js"
 
 export async function findAllCategories(data) {
-    const { storeId, search = "" } = data
+    const { storeId, search = "", status = "all" } = data
     const cleanSearch = search.trim()
     const searchValue = `%${cleanSearch}%`
+    const isActive = status === "active" ? true : status === "inactive" ? false : null
 
     const result = await pool.query(`
         SELECT id, name, image, created_at, updated_at, is_active
@@ -13,8 +14,9 @@ export async function findAllCategories(data) {
                 $2 = ''
                 OR name ILIKE $3
             )
+            AND ($4::boolean IS NULL OR is_active = $4)
         ORDER BY id ASC
-    `, [storeId, cleanSearch, searchValue])
+    `, [storeId, cleanSearch, searchValue, isActive])
 
     return result.rows
 }

@@ -1,14 +1,12 @@
-import { findActiveCustomersOptions, findAllCustomers, findCustomerBaseById, findCustomerRowsById, getCustomerTotalRows } from "./customers.repository.js"
+import { findActiveCustomersOptions, findAllCustomers, findCustomerBaseById, findCustomerRowsById, getCustomerTotalRows, getCustomerWindowInfo } from "./customers.repository.js"
 import { notFound } from "../../errors/http-errors.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
 
 export async function getAllCustomers(data) {
     return findAllCustomers(data)
 }
 
 export async function getCustomerDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
+    const { id, storeId } = data
 
     const customer = await findCustomerBaseById({ id, storeId })
 
@@ -16,13 +14,20 @@ export async function getCustomerDetail(data) {
         throw notFound("Customer not found")
     }
 
-    const rows = await findCustomerRowsById({ ...data, id, storeId })
-    const totalRows = await getCustomerTotalRows({ id, storeId })
+    const [rows, totalRows, windowInfo] = await Promise.all([
+        findCustomerRowsById({ ...data, id, storeId }),
+        getCustomerTotalRows({ id, storeId, dayOffset: data.dayOffset }),
+        getCustomerWindowInfo({ id, storeId, dayOffset: data.dayOffset })
+    ])
 
     return {
         ...customer,
         rows,
-        total_rows: Number(totalRows.total_rows)
+        total_rows: Number(totalRows.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 

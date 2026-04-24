@@ -1,32 +1,34 @@
-export function mapProductsToCards(data) {
+import { formatCurrency } from "../../../shared/utils/currency.js"
+
+export function mapProductsToCards(data, currencyCode = "PEN") {
     return data.map((item) => ({
         id: item.id,
         name: item.name,
         image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
         details: [
             `Category: ${item.category}`,
-            `Cost Price: ${item.cost_price}`,
-            `Sale Price: ${item.sale_price}`,
-            `Stock: ${item.stock}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            `Cost Price: ${formatCurrency(item.cost_price, currencyCode)}`,
+            `Sale Price: ${formatCurrency(item.sale_price, currencyCode)}`,
+            `Stock: ${item.stock}`
         ]
     }))
 }
 
-export function mapProductToDetail(item) {
+export function mapProductToDetail(item, currencyCode = "PEN") {
     return {
         id: item.id,
         name: item.name,
         image: item.image,
         isActive: item.is_active,
         details: [
-            `Category: ${item.category}`,
-            `Cost Price: ${item.cost_price}`,
-            `Sale Price: ${item.sale_price}`,
-            `Stock: ${item.stock}`,
-            `Created At: ${item.created_at}`,
-            `Updated At: ${item.updated_at || 'No updates yet'}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            { label: "Category", value: item.category },
+            { label: "Cost Price", value: formatCurrency(item.cost_price, currencyCode) },
+            { label: "Sale Price", value: formatCurrency(item.sale_price, currencyCode) },
+            { label: "Stock", value: item.stock },
+            { label: "Created At", value: item.created_at },
+            { label: "Updated At", value: item.updated_at || "No updates yet" },
+            { label: "Active", value: item.is_active ? "Yes" : "No" }
         ]
     }
 }

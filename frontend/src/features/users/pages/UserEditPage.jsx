@@ -45,11 +45,7 @@ function UserEditPage() {
         navigate(`/dashboard/users/${id}`)
     }
 
-    if (isLoading) {
-        return <div>Loading user...</div>
-    }
-
-    if (hasError || !editValues) {
+    if (hasError || !editValues && !isLoading) {
         return (
             <div>
                 <h2>Could not load user</h2>
@@ -62,11 +58,12 @@ function UserEditPage() {
     return (
         <EntityEditForm 
         fields={userEditFields} 
-        values={editValues} 
+        values={editValues || {}} 
         sectionLabel="Users" 
         title="Edit User"
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        isLoading={isLoading}
         />
     )
 }

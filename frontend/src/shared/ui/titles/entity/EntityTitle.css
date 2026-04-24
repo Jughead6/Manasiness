@@ -1,6 +1,7 @@
 .shared-entity-title {
-    border: 1px solid black;
     text-align: center;
-    padding: 20px;
-    background-color: #c6d4e1;
+    padding: 10px;
+    font-family: "Sekuya";
+    color: #44749d;
+    font-size: 18px;
 }

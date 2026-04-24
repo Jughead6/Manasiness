@@ -1,16 +1,28 @@
 .shared-entity-edit-form {
     flex: 1;
-    border: 1px solid black;
+    border: 2px solid black;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 
 .shared-entity-edit-form-hero {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
     padding: 20px;
-    line-height: 37px;
-    background-color: #bdb8ad;
+    color: #44749d;
+    background-color: #dfd3b7;
+    font-size: 18px;
 }
+
+.shared-entity-edit-form-hero > h4 {
+    font-family: "Oswald";
+}
+
+.shared-entity-edit-form-hero > h1 {
+    font-family: "Sekuya";
+}
+
 
 .shared-entity-edit-form-content {
     padding: 50px;
@@ -29,8 +41,41 @@
 }
 
 .shared-entity-edit-form-actions > button {
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "Sekuya";
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    background-color: #4b4b4b;
+    color: white;
 }
+
+.shared-entity-edit-form-actions > button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.shared-entity-edit-form-actions > #submit:hover:not(:disabled) {
+    background-color: #44749d;
+}
+
+.shared-entity-edit-form-actions > #submit:active:not(:disabled) {
+    transform: scale(0.97);
+    background-color: #304f6b;
+}
+
+.shared-entity-edit-form-actions > #cancel:hover:not(:disabled) {
+    background-color: #974545;
+}
+
+.shared-entity-edit-form-actions > #cancel:active:not(:disabled) {
+    transform: scale(0.97);
+    background-color: #743a3a;
+}
+
 
 .shared-entity-edit-form-group {
     display: flex;
@@ -38,8 +83,14 @@
     gap: 10px;
 }
 
+.shared-entity-edit-form-group > label {
+    font-family: "Sekuya";
+    color: #44749d;
+}
+
 .shared-entity-edit-form-group > input,
 .shared-entity-edit-form-group > select,
 .shared-entity-edit-form-group > textarea {
     padding: 10px;
+    border: 2px solid black;
 }

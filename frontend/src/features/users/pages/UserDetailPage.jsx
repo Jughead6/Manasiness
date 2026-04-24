@@ -1,7 +1,6 @@
 import { useParams, useNavigate  } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import EntityTitle from "../../../shared/ui/titles/entity/EntityTitle.jsx"
 import EntityLayout from "../../../shared/ui/layouts/entity/EntityLayout.jsx"
 import { activateUser, deactivateUser, getUserById } from "../api/users.api.js"
 import { mapUserToDetail } from "../mappers/users.mapper.js"
@@ -12,22 +11,18 @@ function UserDetailPage() {
     const navigate = useNavigate()
 
     const [detail, setDetail] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [isDeactivationOpen, setIsDeactivationOpen] = useState(false)
 
     useEffect(() => {
         async function fetchUserDetail() {
             try {
-                setIsLoading(true)
                 setHasError(false)
                 const data = await getUserById(id)
                 setDetail(mapUserToDetail(data))
             } catch {
                 setDetail(null)
                 setHasError(true)
-            } finally {
-                setIsLoading(false)
             }
         }
         fetchUserDetail()
@@ -56,9 +51,6 @@ function UserDetailPage() {
         }
     }
 
-    if (isLoading) {
-        return <div>Loading user...</div>
-    }
 
     if (hasError || !detail) {
         return (
@@ -72,11 +64,9 @@ function UserDetailPage() {
 
     return (
         <>
-            <EntityTitle 
+            <EntityLayout 
                 entity="User" 
                 idx={id}
-            />
-            <EntityLayout 
                 detail={detail} 
                 onDeactivateClick={() => setIsDeactivationOpen(true)}
                 onActivateClick={handleActivate}

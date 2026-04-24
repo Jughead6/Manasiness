@@ -1,11 +1,13 @@
 import { getActiveWorkersOptions, getAllWorkers, getWorkerDetail } from "./workers.service.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
+import { parseHistoryWindowQuery, parseOptionalSearch, parseOptionalStatus, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getWorkers(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const { search = "" } = req.query
-        const workers = await getAllWorkers({storeId, search})
+        const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+
+        const workers = await getAllWorkers({ storeId, search, status })
 
         res.json(workers)
     } catch (error) {
@@ -14,16 +16,12 @@ export async function getWorkers(req, res, next) {
 }
 
 export async function getWorkerById(req, res, next) {
-    const { sort = "recent", page = 1 } = req.query
-    const orderDirection = sort === 'oldest' ? 'ASC' : 'DESC'
-    const { id } = req.params
-    const currentPage = requirePositiveInteger(page, "page")
-    const limit = 20
-    const offset = (currentPage - 1) * limit
-
     try {
+        const id = requirePositiveInteger(req.params.id, "id")
+        const { orderDirection, limit, rowOffset, dayOffset, period } = parseHistoryWindowQuery(req.query)
         const storeId = req.store.storeId
-        const worker = await getWorkerDetail({id, orderDirection, limit, offset, storeId})
+
+        const worker = await getWorkerDetail({ id, orderDirection, limit, rowOffset, dayOffset, period, storeId })
 
         res.json(worker)
     } catch (error) {
@@ -34,7 +32,8 @@ export async function getWorkerById(req, res, next) {
 export async function getWorkerOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const workers = await getActiveWorkersOptions({storeId})
+
+        const workers = await getActiveWorkersOptions({ storeId })
 
         res.json(workers)
     } catch (error) {

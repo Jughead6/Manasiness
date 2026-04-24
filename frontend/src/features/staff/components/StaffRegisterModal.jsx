@@ -6,34 +6,55 @@ import { getStaffFormFields } from "../config/staffFormFields.jsx"
 import { getWorkerOptions } from "../api/staff.api.js"
 import { mapWorkerOptions } from "../mappers/staff.mapper.js"
 
-function StaffRegisterModal({onClose, onCreate }) {
-    const [ workerOptions, setWorkerOptions  ] = useState([])
+function StaffRegisterModal({ onClose, onCreate, isSubmitting }) {
+    const [workerOptions, setWorkerOptions] = useState([])
+    const [isLoadingOptions, setIsLoadingOptions] = useState(true)
+    const [helperMessage, setHelperMessage] = useState("")
 
     useEffect(() => {
-        async function fetchWorkerOptions() {
+        async function fetchOptions() {
             try {
+                setIsLoadingOptions(true)
                 const response = await getWorkerOptions()
-                setWorkerOptions(mapWorkerOptions(response))
+                const nextWorkerOptions = mapWorkerOptions(response)
+
+                setWorkerOptions(nextWorkerOptions)
+
+                if (!nextWorkerOptions.length) {
+                    setHelperMessage("You need active workers before registering a payment.")
+                    return
+                }
+
+                setHelperMessage("")
             } catch {
                 setWorkerOptions([])
+                setHelperMessage("The form options could not be loaded.")
+            } finally {
+                setIsLoadingOptions(false)
             }
         }
-        fetchWorkerOptions()
+
+        fetchOptions()
     }, [])
+
+    const isDisabled = isLoadingOptions || isSubmitting || !workerOptions.length
 
     return (
         <DrawerPanel onClose={onClose}>
-            <RegisterSpaceForm fields={getStaffFormFields(workerOptions)} 
-            sectionLabel="Staff" 
-            title="Register a new payment to a staff member!" 
-            onCancel={onClose} 
-            onSubmit={onCreate}
-        />
+            <RegisterSpaceForm
+                fields={getStaffFormFields(workerOptions, isDisabled)}
+                sectionLabel="Staff"
+                title="Register a new payment to a staff member!"
+                helperMessage={helperMessage || (isLoadingOptions ? "Loading options..." : "")}
+                onCancel={onClose}
+                onSubmit={onCreate}
+                isSubmitting={isSubmitting || isLoadingOptions}
+            />
             <div className="shared-drawer-banner-slot">
-                <CreatorBanner/>
+                <CreatorBanner />
             </div>
         </DrawerPanel>
     )
 }
 
-export default StaffRegisterModal   
+export default StaffRegisterModal

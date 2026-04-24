@@ -46,11 +46,7 @@ function CategoryEditPage() {
         navigate(`/dashboard/categories/${id}`)
     }
 
-    if (isLoading) {
-        return <div>Loading category...</div>
-    }
-
-    if (hasError || !editValues) {
+    if (hasError || !editValues && !isLoading) {
         return (
             <div>
                 <h2>Could not load category</h2>
@@ -62,11 +58,12 @@ function CategoryEditPage() {
     return (
         <EntityEditForm
             fields={categoryEditFields}
-            values={editValues}
+            values={editValues || {}}
             sectionLabel="Categories"
             title="Edit Category"
             onSubmit={handleSubmit}
             onCancel={handleCancel}
+            isLoading={isLoading}
         />
     )
 }

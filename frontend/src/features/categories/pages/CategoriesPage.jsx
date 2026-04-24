@@ -1,32 +1,41 @@
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
-import PageTitle from "../../../shared/ui/titles/page/PageTitle.jsx"
 import CardLayout from "../../../shared/ui/layouts/card/CardLayout.jsx"
+import useDebouncedValue from "../../../shared/hooks/useDebouncedValue.js"
 import { createCategory, getCategories } from "../api/categories.api.js"
 import { mapCategoriesToCards } from "../mappers/categories.mapper.js"
 import CategoryCreateModal from "../components/CategoryCreateModal.jsx"
 
 function CategoriesPage() {
     const [categories, setCategories] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-    const [searchTerm, setSearchTerm] = useState("")
+    const [searchInput, setSearchInput] = useState("")
+    const [statusFilter, setStatusFilter] = useState("all")
+    const searchTerm = useDebouncedValue(searchInput)
 
     useEffect(() => {
         async function fetchCategories() {
+            setIsLoading(true)
+
             try {
-                const data = await getCategories(searchTerm)
+                const data = await getCategories({ search: searchTerm, status: statusFilter })
                 setCategories(mapCategoriesToCards(data))
             } catch {
+                setCategories([])
                 toast.error("Could not load categories")
+            } finally {
+                setIsLoading(false)
             }
         }
+
         fetchCategories()
-    }, [searchTerm])
+    }, [searchTerm, statusFilter])
 
     async function handleCreateCategory(formData) {
         try {
             await createCategory(formData)
-            const data = await getCategories(searchTerm)
+            const data = await getCategories({ search: searchTerm, status: statusFilter })
             setCategories(mapCategoriesToCards(data))
             setIsCreateModalOpen(false)
             toast.success("Category created successfully")
@@ -36,22 +45,40 @@ function CategoriesPage() {
     }
 
     function handleSearchChange(e) {
-        setSearchTerm(e.target.value)
+        setSearchInput(e.target.value)
+    }
+
+    function handleStatusChange(e) {
+        setStatusFilter(e.target.value)
     }
 
     return (
         <>
-            <PageTitle  
+            <CardLayout 
                 title="Welcome to Categories" 
                 subtitle="In this section you can create, edit and view the categories you have"
-            />
-            <CardLayout 
                 data={categories} 
                 action="Categories" 
                 route="categories" 
                 onCreateClick={() => setIsCreateModalOpen(true)}
-                searchValue={searchTerm}
+                searchValue={searchInput}
                 onSearchChange={handleSearchChange}
+                filterGroups={[
+                    {
+                        key: "status",
+                        label: "Status",
+                        value: statusFilter,
+                        onChange: handleStatusChange,
+                        options: [
+                            { value: "all", label: "All" },
+                            { value: "active", label: "Active" },
+                            { value: "inactive", label: "Inactive" }
+                        ]
+                    }
+                ]}
+                resultsCount={categories.length}
+                emptyMessage="No categories match the current search"
+                isLoading={isLoading}
             />
             {isCreateModalOpen && <CategoryCreateModal 
                 onClose={() => setIsCreateModalOpen(false)} 

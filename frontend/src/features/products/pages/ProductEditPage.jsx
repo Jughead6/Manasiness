@@ -73,11 +73,7 @@ function ProductEditPage() {
         navigate(`/dashboard/products/${id}`)
     }
 
-    if (isLoading) {
-        return <div>Loading product...</div>
-    }
-
-    if (hasError || !editValues) {
+    if (hasError || !editValues && !isLoading) {
         return (
             <div>
                 <h2>Could not load product</h2>
@@ -89,11 +85,12 @@ function ProductEditPage() {
     return (
         <EntityEditForm
             fields={getProductEditFields(categoryOptions)}
-            values={editValues}
+            values={editValues || {}}
             sectionLabel="Products"
             title="Edit Product"
             onSubmit={handleSubmit}
             onCancel={handleCancel}
+            isLoading={isLoading}
         />
     )
 }

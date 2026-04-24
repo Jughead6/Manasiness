@@ -1,13 +1,15 @@
 import { getAllProducts, getProductDetail, createNewProduct, updateProduct, disableProduct, enableProduct, getActiveProductOptions } from "./products.service.js"
-
-const DEFAULT_PRODUCT_IMAGE = "https://i.postimg.cc/KYydTs9w/noimage.png"
+import { parseOptionalSearch, parseOptionalStatus, parseOptionalPositiveInteger, requirePositiveInteger, requireText, parseOptionalImage, requirePositiveNumber, requireNonNegativeNumber } from "../../utils/validators/index.js"
 
 export async function getProducts(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const { search = "" } = req.query
-        const products = await getAllProducts({storeId, search})
-        
+        const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+        const categoryId = parseOptionalPositiveInteger(req.query.categoryId, "categoryId")
+
+        const products = await getAllProducts({ storeId, search, status, categoryId })
+
         res.json(products)
     } catch (error) {
         next(error)
@@ -15,11 +17,11 @@ export async function getProducts(req, res, next) {
 }
 
 export async function getProductById(req, res, next) {
-    const { id } = req.params
-
     try {
         const storeId = req.store.storeId
-        const product = await getProductDetail({id, storeId})
+        const id = requirePositiveInteger(req.params.id, "id")
+
+        const product = await getProductDetail({ id, storeId })
 
         res.json(product)
     } catch (error) {
@@ -28,12 +30,16 @@ export async function getProductById(req, res, next) {
 }
 
 export async function createProduct(req, res, next) {
-    const { category_id, name, image, cost_price, sale_price, stock } = req.body
-
     try {
         const storeId = req.store.storeId
-        const cleanImage = image?.trim() || DEFAULT_PRODUCT_IMAGE
-        const product = await createNewProduct({category_id, name, image: cleanImage, cost_price, sale_price, stock, storeId})
+        const categoryId = requirePositiveInteger(req.body.category_id, "category_id")
+        const name = requireText(req.body.name, "name")
+        const image = parseOptionalImage(req.body.image, "image")
+        const costPrice = requirePositiveNumber(req.body.cost_price, "cost_price")
+        const salePrice = requirePositiveNumber(req.body.sale_price, "sale_price")
+        const stock = requireNonNegativeNumber(req.body.stock, "stock")
+
+        const product = await createNewProduct({ categoryId, name, image, costPrice, salePrice, stock, storeId })
 
         res.status(201).json({
             message: "Create successfully",
@@ -45,13 +51,17 @@ export async function createProduct(req, res, next) {
 }
 
 export async function editProduct(req, res, next) {
-    const { id } = req.params
-    const { category_id, name, image, cost_price, sale_price, stock } = req.body
-
     try {
         const storeId = req.store.storeId
-        const cleanImage = image?.trim() || DEFAULT_PRODUCT_IMAGE
-        const product = await updateProduct({id, category_id, name, image: cleanImage, cost_price, sale_price, stock, storeId})
+        const id = requirePositiveInteger(req.params.id, "id")
+        const categoryId = requirePositiveInteger(req.body.category_id, "category_id")
+        const name = requireText(req.body.name, "name")
+        const image = parseOptionalImage(req.body.image, "image")
+        const costPrice = requirePositiveNumber(req.body.cost_price, "cost_price")
+        const salePrice = requirePositiveNumber(req.body.sale_price, "sale_price")
+        const stock = requireNonNegativeNumber(req.body.stock, "stock")
+
+        const product = await updateProduct({ id, categoryId, name, image, costPrice, salePrice, stock, storeId })
 
         res.status(200).json({
             message: "Edit successfully",
@@ -63,12 +73,13 @@ export async function editProduct(req, res, next) {
 }
 
 export async function deactivateProduct(req, res, next) {
-    const { id } = req.params
     const isActive = false
 
     try {
         const storeId = req.store.storeId
-        const product = await disableProduct({id, storeId, isActive})
+        const id = requirePositiveInteger(req.params.id, "id")
+
+        const product = await disableProduct({ id, storeId, isActive })
 
         res.status(200).json({
             message: "Product deactivated successfully",
@@ -80,12 +91,13 @@ export async function deactivateProduct(req, res, next) {
 }
 
 export async function activateProduct(req, res, next) {
-    const { id } = req.params
     const isActive = true
 
     try {
         const storeId = req.store.storeId
-        const product = await enableProduct({id, storeId, isActive})
+        const id = requirePositiveInteger(req.params.id, "id")
+
+        const product = await enableProduct({ id, storeId, isActive })
 
         res.status(200).json({
             message: "Product activated successfully",
@@ -99,7 +111,9 @@ export async function activateProduct(req, res, next) {
 export async function getProductOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const products = await getActiveProductOptions({storeId})
+
+        const products = await getActiveProductOptions({ storeId })
+
         res.json(products)
     } catch (error) {
         next(error)

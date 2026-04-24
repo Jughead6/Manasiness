@@ -2,10 +2,13 @@ import "./PersonActions.css"
 import { StepForward, StepBack } from "lucide-react"
 
 function PersonActions({ currentPage, totalPage, onPrevPage, onNextPage }) {
+    const visibleTotalPage = totalPage > 0 ? totalPage : 1
+
     return (
         <div className="shared-person-actions">
-            {currentPage > 1 ? <button type="button" onClick={onPrevPage}><StepBack /></button> : null}
-            {currentPage < totalPage ? <button type="button" onClick={onNextPage}><StepForward /></button> : null}
+            <button type="button" onClick={onPrevPage} disabled={currentPage <= 1}><StepBack /></button>
+            <p>Page {currentPage} of {visibleTotalPage}</p>
+            <button type="button" onClick={onNextPage} disabled={currentPage >= totalPage || totalPage === 0}><StepForward /></button>
         </div>
     )
 }

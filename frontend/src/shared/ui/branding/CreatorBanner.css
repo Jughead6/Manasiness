@@ -1,7 +1,6 @@
 .shared-creator-banner {
-    border: 1px solid black;
-    border-radius: 18px;
-    padding: 30px;
+    border: 2px solid black;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -10,24 +9,38 @@
 }
 
 .shared-creator-banner > a > img {
-    width: 100px;
+    width: 150px;
     object-fit: cover;
+    height: 100%;
     border-radius: 12px;
 }
 
 .shared-creator-banner-info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 10px;
+}
+
+.shared-creator-banner-info > p {
+    font-size: 15px;
+}
+
+.shared-creator-banner-info-title > p{
+    font-family: "Oswald";
+    font-size: 18px;
+}
+
+.shared-creator-banner-info-title > h3{
+    font-family: "Sekuya";
+    font-size: 18px;
 }
 
 .shared-creator-banner-link {
     color: inherit;
 }
 
-.shared-creator-banner-label,
-.shared-creator-banner-info > h3,
-.shared-creator-banner-info > p {
-    margin: 0;
+.shared-creator-banner-info-footer {
+    display: flex;
+    gap: 5px;
+    font-style: italic;
 }

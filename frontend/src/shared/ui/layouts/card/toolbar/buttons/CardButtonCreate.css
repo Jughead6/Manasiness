@@ -1,3 +1,20 @@
 .shared-card-button > button {
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: "Sekuya";
+    background-color: #ebe7e0;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.shared-card-button > button:hover {
+    background-color: #dfdad2;
+}
+
+.shared-card-button > button:active {
+    background-color: #d2cbc1;
+    transform: scale(0.97);
 }

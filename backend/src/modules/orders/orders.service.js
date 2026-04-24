@@ -1,29 +1,27 @@
-import { findAllOrders, getOrdersTotalRows, insertOrder } from "./orders.repository.js"
+import { findAllOrders, getOrdersTotalRows, getOrdersWindowInfo, insertOrder } from "./orders.repository.js"
 import { findProductById } from "../products/products.repository.js"
 import { findUserById } from "../users/users.repository.js"
 import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
-import { requireAllowedValue, requirePositiveInteger } from "../../utils/validators.js"
-
-const ORDER_STATES = ["pending", "paid", "canceled"]
 
 export async function getAllOrders(data) {
-    const [rows, total] = await Promise.all([
+    const [rows, total, windowInfo] = await Promise.all([
         findAllOrders(data),
-        getOrdersTotalRows(data)
+        getOrdersTotalRows(data),
+        getOrdersWindowInfo(data)
     ])
 
     return {
         rows,
-        total_rows: Number(total.total_rows)
+        total_rows: Number(total.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 
 export async function createNewOrder(data) {
-    const storeId = data.storeId
-    const productId = requirePositiveInteger(data.product_id, "product_id")
-    const userId = requirePositiveInteger(data.user_id, "user_id")
-    const quantity = requirePositiveInteger(data.quantity, "quantity")
-    const state = requireAllowedValue(data.state, ORDER_STATES, "state")
+    const { storeId, productId, userId, quantity, state } = data
 
     const product = await findProductById({ id: productId, storeId })
 
@@ -47,6 +45,10 @@ export async function createNewOrder(data) {
 
     if (user.role !== "supplier") {
         throw badRequest("Invalid supplier")
+    }
+
+    if (user.is_default && state === "pending") {
+        throw badRequest("Invalid state")
     }
 
     return insertOrder({

@@ -1,12 +1,15 @@
+import { formatPhone } from "../../../shared/utils/phone.js"
+
 export function mapUsersToCards(data) {
     return data.map((item) => ({
         id: item.id,
         name: item.name,
         image: item.image,
+        status: item.is_active ? "Active" : "Inactive",
         details: [
-            `Phone: ${item.phone}`,
+            `Phone: ${formatPhone(item.phone)}`,
             `Role: ${item.role}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            `Created At: ${item.created_at}`
         ]
     }))
 }
@@ -18,11 +21,11 @@ export function mapUserToDetail(item) {
         image: item.image,
         isActive: item.is_active,
         details: [
-            `Phone: ${item.phone}`,
-            `Role: ${item.role}`,
-            `Created At: ${item.created_at}`,
-            `Updated At: ${item.updated_at || 'No updates yet'}`,
-            `Active: ${item.is_active ? 'Yes' : 'No'}`
+            { label: "Phone", value: formatPhone(item.phone) },
+            { label: "Role", value: item.role },
+            { label: "Created At", value: item.created_at },
+            { label: "Updated At", value: item.updated_at || "No updates yet" },
+            { label: "Active", value: item.is_active ? "Yes" : "No" }
         ]
     }
 }

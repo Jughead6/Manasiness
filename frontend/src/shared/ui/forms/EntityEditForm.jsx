@@ -1,17 +1,24 @@
 import "./EntityEditForm.css"
+import LoadingOverlay from "../modal/LoadingOverlay.jsx"
+import PhoneInput from "./PhoneInput.jsx"
 
-function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit }) {
+function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmit, isLoading = false }) {
     const safeFields = Array.isArray(fields) ? fields : []
 
     function handleSubmit(e) {
         e.preventDefault()
+
+        if (isLoading) {
+            return
+        }
+
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
         onSubmit(data)
     }
 
     return (
-        <form className="shared-entity-edit-form" onSubmit={handleSubmit}>
+        <form key={JSON.stringify(values)} className="shared-entity-edit-form" onSubmit={handleSubmit}>
             <div className="shared-entity-edit-form-hero">
                 <h4>{sectionLabel}----</h4>
                 <h1>{title}</h1>
@@ -27,7 +34,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 name={field.name}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             >
                                 {field.options.map((option) => (
                                     <option
@@ -39,6 +46,15 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                     </option>
                                 ))}
                             </select>
+                        ) : field.type === 'phone' ? (
+                            <PhoneInput
+                                id={field.id}
+                                name={field.name}
+                                placeholder={field.placeholder}
+                                defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
+                                required={field.required}
+                                disabled={field.disabled || isLoading}
+                            />
                         ) : field.type === 'textarea' ? (
                             <textarea
                                 id={field.id}
@@ -46,7 +62,7 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 placeholder={field.placeholder}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             />
                         ) : (
                             <input
@@ -56,16 +72,17 @@ function EntityEditForm({ fields, sectionLabel, title, values, onCancel, onSubmi
                                 type={field.type}
                                 defaultValue={values?.[field.name] ?? field.defaultValue ?? ''}
                                 required={field.required}
-                                disabled={field.disabled}
+                                disabled={field.disabled || isLoading}
                             />
                         )}
                     </div>
                 ))}
                 <div className="shared-entity-edit-form-actions">
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={onCancel}>Cancel</button>
+                    <button id="submit" type="submit" disabled={isLoading}>Save</button>
+                    <button id="cancel" type="button" onClick={onCancel} disabled={isLoading}>Cancel</button>
                 </div>
             </div>
+            {isLoading ? <LoadingOverlay /> : null}
         </form>
     )
 }

@@ -1,27 +1,26 @@
-import { findAllStaff, getStaffTotalRows, insertStaff } from "./staff.repository.js"
+import { findAllStaff, getStaffTotalRows, getStaffWindowInfo, insertStaff } from "./staff.repository.js"
 import { findUserById } from "../users/users.repository.js"
 import { badRequest, conflict, notFound } from "../../errors/http-errors.js"
-import { requireAllowedValue, requirePositiveInteger, requirePositiveNumber } from "../../utils/validators.js"
-
-const STAFF_STATES = ["pending", "paid", "canceled"]
 
 export async function getAllStaff(data) {
-    const [rows, total] = await Promise.all([
+    const [rows, total, windowInfo] = await Promise.all([
         findAllStaff(data),
-        getStaffTotalRows(data)
+        getStaffTotalRows(data),
+        getStaffWindowInfo(data)
     ])
 
     return {
         rows,
-        total_rows: Number(total.total_rows)
+        total_rows: Number(total.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 
 export async function createNewStaff(data) {
-    const storeId = data.storeId
-    const userId = requirePositiveInteger(data.user_id, "user_id")
-    const salary = requirePositiveNumber(data.salary, "salary")
-    const state = requireAllowedValue(data.state, STAFF_STATES, "state")
+    const { storeId, userId, salary, state } = data
 
     const user = await findUserById({ id: userId, storeId })
 
@@ -35,6 +34,10 @@ export async function createNewStaff(data) {
 
     if (user.role !== "worker") {
         throw badRequest("Invalid worker")
+    }
+
+    if (user.is_default && state === "pending") {
+        throw badRequest("Invalid state")
     }
 
     return insertStaff({

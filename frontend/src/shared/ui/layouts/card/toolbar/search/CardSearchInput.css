@@ -7,19 +7,33 @@
     width: 1px;
     height: 1px;
     padding: 0;
-    margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
 }
 
 .shared-card-searchbar {
+    height: 40px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0 12px;
+    gap: 8px;
+}
+
+.shared-card-search-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
 }
 
 .shared-card-search-input {
-    padding: 6px 10px;
+    width: 170px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 14px;
 }

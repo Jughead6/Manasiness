@@ -1,14 +1,12 @@
-import { findActiveWorkersOptions, findAllWorkers, findWorkerBaseById, findWorkerRowsById, getWorkerTotalRows } from "./workers.repository.js"
+import { findActiveWorkersOptions, findAllWorkers, findWorkerBaseById, findWorkerRowsById, getWorkerTotalRows, getWorkerWindowInfo } from "./workers.repository.js"
 import { notFound } from "../../errors/http-errors.js"
-import { requirePositiveInteger } from "../../utils/validators.js"
 
 export async function getAllWorkers(data) {
     return findAllWorkers(data)
 }
 
 export async function getWorkerDetail(data) {
-    const storeId = data.storeId
-    const id = requirePositiveInteger(data.id, "user_id")
+    const { id, storeId } = data
 
     const worker = await findWorkerBaseById({ id, storeId })
 
@@ -16,13 +14,20 @@ export async function getWorkerDetail(data) {
         throw notFound("Worker not found")
     }
 
-    const rows = await findWorkerRowsById({ ...data, id, storeId })
-    const totalRows = await getWorkerTotalRows({ id, storeId })
+    const [rows, totalRows, windowInfo] = await Promise.all([
+        findWorkerRowsById({ ...data, id, storeId }),
+        getWorkerTotalRows({ id, storeId, dayOffset: data.dayOffset }),
+        getWorkerWindowInfo({ id, storeId, dayOffset: data.dayOffset })
+    ])
 
     return {
         ...worker,
         rows,
-        total_rows: Number(totalRows.total_rows)
+        total_rows: Number(totalRows.total_rows),
+        start_date: windowInfo.start_date,
+        end_date: windowInfo.end_date,
+        has_older: windowInfo.has_older,
+        has_newer: windowInfo.has_newer
     }
 }
 

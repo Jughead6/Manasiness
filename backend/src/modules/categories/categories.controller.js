@@ -1,12 +1,13 @@
 import { createNewCategory, disableCategory, enableCategory, getActiveCategoryOptions, getAllCategories, getCategoryDetail, updateCategory } from "./categories.service.js"
-
-const DEFAULT_CATEGORY_IMAGE = "https://i.postimg.cc/KYydTs9w/noimage.png"
+import { parseOptionalSearch, parseOptionalStatus, requireText, parseOptionalImage, requirePositiveInteger } from "../../utils/validators/index.js"
 
 export async function getCategories(req, res, next) {
     try {
         const storeId = req.store.storeId
-        const { search = "" } = req.query
-        const categories = await getAllCategories({storeId, search})
+        const search = parseOptionalSearch(req.query.search, "search")
+        const status = parseOptionalStatus(req.query.status, "status")
+
+        const categories = await getAllCategories({ storeId, search, status })
 
         res.json(categories)
     } catch (error) {
@@ -15,10 +16,10 @@ export async function getCategories(req, res, next) {
 }
 
 export async function getCategoryById(req, res, next) {
-    const { id } = req.params
-
     try {
         const storeId = req.store.storeId
+        const id = requirePositiveInteger(req.params.id, "id")
+
         const category = await getCategoryDetail({id, storeId})
 
 
@@ -29,12 +30,12 @@ export async function getCategoryById(req, res, next) {
 }
 
 export async function createCategory(req, res, next) {
-    const { name, image } = req.body
-
     try {
         const storeId = req.store.storeId
-        const cleanImage = image?.trim() || DEFAULT_CATEGORY_IMAGE
-        const category = await createNewCategory({name, image: cleanImage, storeId})
+        const name = requireText(req.body.name, "name")
+        const image = parseOptionalImage(req.body.image, "image")
+
+        const category = await createNewCategory({name, image, storeId})
 
         res.status(201).json({
             message: 'Create successfully',
@@ -46,13 +47,13 @@ export async function createCategory(req, res, next) {
 }
 
 export async function editCategory(req, res, next) {
-    const { id } = req.params
-    const { name, image } = req.body
-
     try {
         const storeId = req.store.storeId
-        const cleanImage = image?.trim() || DEFAULT_CATEGORY_IMAGE
-        const category = await updateCategory({id, name, image: cleanImage, storeId})
+        const id = requirePositiveInteger(req.params.id, "id")
+        const name = requireText(req.body.name, "name")
+        const image = parseOptionalImage(req.body.image, "image")
+
+        const category = await updateCategory({id, name, image, storeId})
 
         res.status(200).json({
             message: 'Edit successfully',
@@ -64,11 +65,12 @@ export async function editCategory(req, res, next) {
 }
 
 export async function deactivateCategory(req, res, next) {
-    const { id } = req.params
     const isActive = false
 
     try {
         const storeId = req.store.storeId
+        const id = requirePositiveInteger(req.params.id, "id")
+
         const category = await disableCategory({id, isActive, storeId})
 
 
@@ -82,11 +84,12 @@ export async function deactivateCategory(req, res, next) {
 }
 
 export async function activateCategory(req, res, next) {
-    const { id } = req.params
     const isActive = true
 
     try {
         const storeId = req.store.storeId
+        const id = requirePositiveInteger(req.params.id, "id")
+
         const category = await enableCategory({id, isActive, storeId})
 
 
@@ -102,6 +105,7 @@ export async function activateCategory(req, res, next) {
 export async function getCategoryOptions(req, res, next) {
     try {
         const storeId = req.store.storeId
+        
         const categories = await getActiveCategoryOptions({storeId})
 
         res.json(categories)

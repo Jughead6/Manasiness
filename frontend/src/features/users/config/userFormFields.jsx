@@ -16,10 +16,10 @@ export const userFormFields = [
     },
     {
         label: 'Phone',
-        placeholder: 'Write phone',
+        placeholder: '999 999 999',
         id: 'user-phone',
         name: 'phone',
-        type: 'text',
+        type: 'phone',
         required: true
     },
     {
@@ -53,10 +53,10 @@ export const userEditFields = [
     },
     {
         label: 'Phone',
-        placeholder: 'Write phone',
+        placeholder: '999 999 999',
         id: 'user-phone',
         name: 'phone',
-        type: 'text',
+        type: 'phone',
         required: true
     }
 ]
